@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  front:
+    build:
+      context: front/
+      dockerfile: Dockerfile
+      args: 
+        - ENV_FILE=./local.env
+    ports:
+      - 7000:80
+    environment:
+      - NODE_ENV=development
+  back:
+    init: true
+    build:
+      context: back/
+      dockerfile: Dockerfile
+    ports:
+      - 7001:3000
+    environment:
+      - NODE_ENV=production

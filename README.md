@@ -2,13 +2,15 @@
 Description project
 
 ## Project's structure
-Srtucture explanation
+Components:
+* [Front](front).
+* [Back](back).
 
 ## Build and run
-Build and run description
-
 ### Locally
-Explanation to build and run locally
+```
+docker-compose up --build --remove-orphans
+```
 
 ### Production
 Explanation to build and run in production

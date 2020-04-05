@@ -1,0 +1,22 @@
+{
+  "name": "categories-repository",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc ",
+    "start": "node ./dist/index.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.3",
+    "@types/morgan": "^1.9.0",
+    "@types/node": "^13.9.5",
+    "typescript": "^3.8.3"
+  }
+}
