@@ -8,9 +8,12 @@ Components:
 
 ## Build and run
 ### Locally
+Execute: 
 ```
 docker-compose up --build --remove-orphans
 ```
+
+Then, go to http://localhost:7000.
 
 ### Production
 Explanation to build and run in production
