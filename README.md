@@ -3,8 +3,9 @@ Description project
 
 ## Project's structure
 Components:
-* [Front](front).
-* [Back](back).
+* [Front](front). Web App.
+* [Back](back). API.
+* [Postgres](postgres). Initialization script for the Postgres DB.
 
 ## Build and run
 ### Locally

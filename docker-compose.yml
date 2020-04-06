@@ -19,3 +19,18 @@ services:
       - 7001:3000
     environment:
       - NODE_ENV=production
+      - PGHOST=database
+      - PGPORT= 5432
+      - PGUSER=test-user
+      - PGPASSWORD=test-password
+      - PGDATABASE=test
+  database:
+    image: postgres:11.7-alpine
+    expose: 
+      - 5432
+    environment:
+      - POSTGRES_USER=test-user
+      - POSTGRES_PASSWORD=test-password
+      - POSTGRES_DB=test
+    volumes: 
+      - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d

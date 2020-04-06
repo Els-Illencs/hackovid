@@ -1,26 +1,12 @@
 import express from 'express';
+import { UsersRepository } from '../lib/users/UsersRepository';
+
+const usersRepository = new UsersRepository();
 
 const router = express.Router();
 
-router.get('/', function(req, res, next) {
-    res.send([
-        {
-            name: 'Ignasi Coll',
-            company: 'Hotellinking'
-        },
-        {
-            name: 'Xavier Coll',
-            company: 'FDSA Desarrollo'
-        }, 
-        {
-            name: 'Joan Rechach',
-            company: 'Trivago'
-        },
-        {
-            name: 'Llorenç Seguí',
-            company: 'Hotelbeds'
-        }
-    ]);
+router.get('/', async function(req, res, next) {
+    res.send(await usersRepository.getAll());
 })
 
 export default router;
