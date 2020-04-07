@@ -6,7 +6,8 @@ import {
 } from "@material-ui/core";
 import ServerMessage from './components/ServerMessage';
 import UsersList from './components/UsersList';
-import ApplicationBar from './components/ApplicationBar/ApplicationBar';
+import { ApplicationBar } from './global/components/applicationbar/ApplicationBar';
+import { AppContext } from './global/context/AppContext';
 
 const theme = createMuiTheme({
   palette: {
@@ -18,10 +19,16 @@ function App() {
 
   return (<>
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <ApplicationBar />
-      <ServerMessage />
-      <UsersList />
+      <AppContext.Provider value={{
+        user: {
+          name: 'User example',
+        }
+      }}>
+        <CssBaseline />
+        <ApplicationBar />
+        <ServerMessage />
+        <UsersList />
+      </AppContext.Provider>
     </ThemeProvider>
   </>);
 }

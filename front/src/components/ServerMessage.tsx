@@ -11,7 +11,9 @@ const ServerMessage: FC= () => {
     }, []);
     
     return (
+      <>
         <p>Server message: {serverMessage}</p>
+        </>
     );
 }
 
