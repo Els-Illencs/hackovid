@@ -28,27 +28,33 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const goToCardList = () => {
-  // TODO when we have the router and the Card List screen
-  console.log("goToCardList");
-}
+export interface ApplicationBarProps {
+  onTapMenu: () => void;
+};
 
-export const ApplicationBar = () => {
+
+
+export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ onTapMenu }) => {
   const classes = useStyles();
   const { user } = useContext(AppContext);
+
+  const goToCardList = () => {
+    // TODO when we have the router and the Card List screen
+    console.log("goToCardList");
+  }
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="menu">
+          <IconButton onClick={onTapMenu} edge="start" color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             < img className={classes.logo} src={Logo.default} alt="" />
 
           </Typography>
-          <IconButton onClick={goToCardList} edge="start" color="inherit" aria-label="menu">
+          <IconButton onClick={() => goToCardList()} edge="start" color="inherit" aria-label="menu">
             <ShoppingCartIcon />
           </IconButton>
         </Toolbar>

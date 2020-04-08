@@ -19,7 +19,7 @@ function App() {
 
   return (<>
     <MuiThemeProvider theme={theme}>
-      <ApplicationBar />
+      <ApplicationBar onTapMenu={() => console.log("onTapMenu")} />
       <Categories />
     </MuiThemeProvider>
   </>);
