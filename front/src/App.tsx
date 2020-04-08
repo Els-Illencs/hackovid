@@ -1,35 +1,25 @@
 import React from 'react';
-import { ThemeProvider } from "@material-ui/styles";
-import {
-  CssBaseline,
-  createMuiTheme
-} from "@material-ui/core";
-import ServerMessage from './components/ServerMessage';
-import UsersList from './components/UsersList';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { blue, red } from '@material-ui/core/colors';
 import { ApplicationBar } from './global/components/applicationbar/ApplicationBar';
-import { AppContext } from './global/context/AppContext';
 
 const theme = createMuiTheme({
   palette: {
-    type: "dark"
-  }
+      primary: blue,
+      secondary: blue,
+      error: red
+  },
+  typography: {
+      fontFamily: 'Architects Daughter',
+  },
 });
 
 function App() {
 
   return (<>
-    <ThemeProvider theme={theme}>
-      <AppContext.Provider value={{
-        user: {
-          name: 'User example',
-        }
-      }}>
-        <CssBaseline />
-        <ApplicationBar />
-        <ServerMessage />
-        <UsersList />
-      </AppContext.Provider>
-    </ThemeProvider>
+    <MuiThemeProvider theme={theme}>
+      <ApplicationBar />
+    </MuiThemeProvider>
   </>);
 }
 

@@ -30,7 +30,7 @@ export const ApplicationBar = () => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Els illencs: {user.name}
+            Els illencs
           </Typography>
           <Button color="inherit">Cistella</Button>
         </Toolbar>
