@@ -3,12 +3,12 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton } from '@material-ui/core';
 import { AppContext } from "../../context/AppContext";
 import * as Logo from "./logo.png";
+import { ShoppingCartNumberOfItems } from '../ShoppingCartNumberOfItems';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,6 +24,14 @@ const useStyles = makeStyles((theme: Theme) =>
     logo: {
       width: "160px",
       paddingTop: "8px"
+    },
+    shoppingCart: {
+      position: "relative"
+    },
+    shoppingCartItems: {
+      position: "absolute",
+      bottom: "30px",
+      right: "7px",
     }
   }),
 );
@@ -52,9 +60,14 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
             < img className={classes.logo} src={Logo.default} alt="" />
 
           </Typography>
-          <IconButton onClick={() => goToCardList()} edge="start" color="inherit" aria-label="menu">
-            <ShoppingCartIcon />
-          </IconButton>
+          <div className={classes.shoppingCart}>
+            <IconButton onClick={() => goToCardList()} edge="start" color="inherit" aria-label="menu">
+              <ShoppingCartIcon />
+            </IconButton>
+            <div className={classes.shoppingCartItems}>
+              <ShoppingCartNumberOfItems text={9} />
+            </div>
+          </div>
         </Toolbar>
       </AppBar>
     </div>
