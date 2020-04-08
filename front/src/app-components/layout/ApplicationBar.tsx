@@ -56,7 +56,7 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ m
     console.log("goToCardList");
   }
 
-  const openDrawer = () =>  setDrawerOpen(true);
+  const openDrawer = () => setDrawerOpen(true);
   const closeDrawer = () => setDrawerOpen(false);
 
   return (
@@ -67,13 +67,16 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ m
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            < img className={classes.logo} src={Logo.default} alt="" />
-
+            <Link to="/">
+              < img className={classes.logo} src={Logo.default} alt="" />
+            </Link>
           </Typography>
           <div className={classes.shoppingCart}>
-            <IconButton onClick={() => goToCardList()} edge="start" color="inherit" aria-label="menu">
-              <ShoppingCartIcon />
-            </IconButton>
+            <Link to="/carret-de-compra">
+              <IconButton onClick={() => goToCardList()} edge="start" color="inherit" aria-label="menu">
+                <ShoppingCartIcon />
+              </IconButton>
+            </Link>
             <div className={classes.shoppingCartItems}>
               <ShoppingCartNumberOfItems text={9} />
             </div>
@@ -84,7 +87,7 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ m
         <List>
           {menuItems.map((mi) => (
             <ListItem button component={Link} to={mi.path} onClick={closeDrawer} key={mi.path}>
-              <ListItemText primary={mi.label}/>
+              <ListItemText primary={mi.label} />
             </ListItem>
           ))}
         </List>
