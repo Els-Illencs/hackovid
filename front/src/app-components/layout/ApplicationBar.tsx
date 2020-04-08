@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import MenuIcon from '@material-ui/icons/Menu';
-import { IconButton } from '@material-ui/core';
-import { AppContext } from "../../context/AppContext";
+import { IconButton, Drawer, List, ListItem, ListItemText } from '@material-ui/core';
+import { AppContext } from "../context/AppContext";
 import * as Logo from "./logo.png";
-import { ShoppingCartNumberOfItems } from '../ShoppingCartNumberOfItems';
+import { ShoppingCartNumberOfItems } from './ShoppingCartNumberOfItems';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,11 +37,17 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export interface ApplicationBarProps {
-  onTapMenu: () => void;
+type MenuItem = {
+  label: string,
+  path: string
+}
+
+type ApplicationBarProps = {
+  menuItems: readonly MenuItem[]
 };
 
-export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ onTapMenu }) => {
+export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ menuItems }) => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const classes = useStyles();
   const { user } = useContext(AppContext);
 
@@ -49,11 +56,14 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
     console.log("goToCardList");
   }
 
+  const openDrawer = () =>  setDrawerOpen(true);
+  const closeDrawer = () => setDrawerOpen(false);
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton onClick={onTapMenu} edge="start" color="inherit" aria-label="menu">
+          <IconButton onClick={openDrawer} edge="start" color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
@@ -70,6 +80,15 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
           </div>
         </Toolbar>
       </AppBar>
+      <Drawer anchor="left" open={drawerOpen} onClose={closeDrawer}>
+        <List>
+          {menuItems.map((mi) => (
+            <ListItem button component={Link} to={mi.path} onClick={closeDrawer} key={mi.path}>
+              <ListItemText primary={mi.label}/>
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
     </div>
   );
 }

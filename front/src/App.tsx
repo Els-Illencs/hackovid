@@ -1,8 +1,9 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { blue, red } from '@material-ui/core/colors';
-import { ApplicationBar } from './global/components/applicationbar/ApplicationBar';
+import { AppLayout } from './app-components';
 import Categories from './views/categories/Categories';
+import Home from './views/home/Home';
 
 const theme = createMuiTheme({
   palette: {
@@ -19,8 +20,12 @@ function App() {
 
   return (<>
     <MuiThemeProvider theme={theme}>
-      <ApplicationBar onTapMenu={() => console.log("onTapMenu")} />
-      <Categories />
+      <AppLayout 
+        onTapMenu={() => console.log("onTapMenu")}
+        pages={[
+          { label: "Inici", path: "/", content: (<Home />) },
+          { label: "Categories", path: "/categories", content: (<Categories />) }
+        ]} />
     </MuiThemeProvider>
   </>);
 }
