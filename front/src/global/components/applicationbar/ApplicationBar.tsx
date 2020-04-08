@@ -32,8 +32,6 @@ export interface ApplicationBarProps {
   onTapMenu: () => void;
 };
 
-
-
 export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ onTapMenu }) => {
   const classes = useStyles();
   const { user } = useContext(AppContext);

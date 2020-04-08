@@ -23,13 +23,17 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function CustomGridList(props: any) {
+export interface CustomGridListProps {
+  list: Category[];
+};
+
+export const CustomGridList: React.FunctionComponent<CustomGridListProps> = ({ list }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <GridList cellHeight={180} className={classes.gridList} spacing={4} cols={2}>
-        {props.list.map((category: Category) => (
+        {list.map((category: Category) => (
           <GridListTile key={category.id}>
             <img src={category.image} alt={category.name} />
             <GridListTileBar
