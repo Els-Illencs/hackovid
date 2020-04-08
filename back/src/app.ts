@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
 import home from './routes/home';
-import users from './routes/users';
+import categories from './routes/categories';
 
 const app = express();
 
@@ -15,6 +15,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', home);
-app.use('/users', users);
+app.use('/categories', categories);
 
 export default app;

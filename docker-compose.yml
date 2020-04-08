@@ -28,6 +28,8 @@ services:
     image: postgres:11.7-alpine
     expose: 
       - 5432
+    ports:
+      - 5432:5432
     environment:
       - POSTGRES_USER=test-user
       - POSTGRES_PASSWORD=test-password
