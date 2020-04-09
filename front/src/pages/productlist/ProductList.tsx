@@ -15,7 +15,7 @@ const ProductList: FC = () => {
   return (
     <div>
         {productList.map((product: Product) => (
-            <ProductItem product={product}/>
+            <ProductItem key={String(product.id)} product={product}/>
         ))}
     </div>
   );
