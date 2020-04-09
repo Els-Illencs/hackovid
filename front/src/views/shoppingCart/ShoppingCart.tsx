@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Product } from "../../models/producs/Product";
+import { Product } from "../../models/product/Product";
 import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
 
 const apiClient = new ShoppingCartApiClient();

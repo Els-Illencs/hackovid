@@ -5,7 +5,6 @@ on:
     branches: [ master ]
 
 jobs: 
-  
   build:
     runs-on: ubuntu-18.04
     
@@ -27,4 +26,30 @@ jobs:
         registry: docker.pkg.github.com
         repository: els-illencs/hackovid/${{ matrix.project }}
         path: ${{ matrix.project }}
+        build_args: ENV_FILE=./production.env
         tags: latest,${{ github.run_number }}
+
+
+  publish:
+    needs:
+    - build
+
+    runs-on: ubuntu-18.04
+    
+    strategy:
+      matrix:
+        project:
+        - back
+        - front
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v2
+      
+    - name: Publish version to Heroku
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: |
+        chmod +x workflow-utils/deploy-docker-image-to-heroku.sh;
+        ./workflow-utils/deploy-docker-image-to-heroku.sh ${{ matrix.project }} hackovid-els-illencs-${{ matrix.project }} 

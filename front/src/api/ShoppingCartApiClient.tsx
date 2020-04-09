@@ -1,4 +1,4 @@
-import { Product } from "../models/producs/Product";
+import { Product } from "../models/product/Product";
 
 const SHOPPING_CART_KEY = 'shopping_cart';
 
