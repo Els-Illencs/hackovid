@@ -36,14 +36,14 @@ function App() {
   return (<>
     <MuiThemeProvider theme={theme}>
       {/*<ApplicationBar onTapMenu={() => console.log("onTapMenu")} />*/}
-      <ProductItem product={product}/>
-      {/*<AppLayout 
+      {/*<ProductItem product={product}/>*/}
+      <AppLayout 
         onTapMenu={() => console.log("onTapMenu")}
         pages={[
           { label: "Inici", path: "/", content: (<Home />) },
           { label: "Categories", path: "/categories", content: (<Categories />) },
           { label: "CarretDeCompra", path: "/carret-de-compra", content: (<ShoppingCart />) },
-        ]} />*/}
+        ]} />
     </MuiThemeProvider>
   </>);
 }
