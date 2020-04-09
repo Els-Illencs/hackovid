@@ -14,10 +14,10 @@ function App() {
     <MuiThemeProvider theme={theme}>
     <AppLayout
         pages={[
-          { label: "Inici", path: "/", content: (<Home />) },
-          { label: "CarretDeCompra", path: "/carret-de-compra", content: (<ShoppingCart />) },
-          { label: "LlistatDeProductes", path: "/productes", content: (<ProductList />) },
-          { label: "Checkout", path: "/checkout", content: (<Checkout />) }, // TODO hide this page from menu
+          { path: "/", content: (<Home />), menuItem: { label: "Inici" } },
+          { path: "/shopping-cart", content: (<ShoppingCart />), menuItem: { label: "Cistella" } },
+          { path: "/product-list", content: (<ProductList />) },
+          { path: "/checkout", content: (<Checkout />) }
         ]} />
     </MuiThemeProvider>
   </>);

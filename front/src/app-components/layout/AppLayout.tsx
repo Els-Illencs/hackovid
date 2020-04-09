@@ -1,15 +1,19 @@
-import React, { FC, ReactNode, useState, useEffect } from "react";
+import React, { FC, ReactNode, useState, useEffect, useContext } from "react";
 import { ApplicationBar } from "./ApplicationBar";
 import { Switch, Route, Link } from "react-router-dom";
 import { makeStyles, Drawer, List, ListItem, ListItemText } from "@material-ui/core";
 import { AppContext } from "../context/AppContext";
 import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
-import { Product, ProductShoppingCart } from "../../models/product/Product";
+import { ProductShoppingCart } from "../../models/product/Product";
+import { User } from "../../models/user/User";
+import { AccountCircle } from '@material-ui/icons';
 
 type Page = {
-  label: string,
   path: string
-  content: ReactNode
+  content: ReactNode,
+  menuItem?: {
+    label: string
+  }
 };
 
 type AppLayoutProps = {
@@ -19,12 +23,17 @@ type AppLayoutProps = {
 const useStyles = makeStyles((theme) => ({
   content: {
     padding: 20
+  },
+  account: {
+    marginTop: 16,
+    marginLeft: 16,
+    marginBottom: 12,
   }
 }))
 
 const shoppingCartApiClient = new ShoppingCartApiClient();
 
-const AppLayout: FC<AppLayoutProps> = (props) => {
+const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
   const styles = useStyles(props);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [shoppingCartProducts, setShoppingCartProducts] = useState<ProductShoppingCart[]>([]);
@@ -76,6 +85,7 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
   }
 
   return (<AppContext.Provider value={{
+    user: mockUser, // TODO use real data
     shoppingCart: {
       products: shoppingCartProducts,
       addProduct: addProductToTheShoppingCart,
@@ -86,13 +96,16 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
     <ApplicationBar onMenuButtonClick={openDrawer} />
     <main className={styles.content}>
       <Drawer anchor="left" open={drawerOpen} onClose={closeDrawer}>
-        <List>
-          {props.pages.map((p) => (
-            <ListItem button component={Link} to={p.path} onClick={closeDrawer} key={p.path}>
-              <ListItemText primary={p.label} />
-            </ListItem>
-          ))}
-        </List>
+        <div style={{minWidth: 260 }}>
+          <AccountCircle className={styles.account} />
+          <List>
+            {props.pages.filter(p => !!p.menuItem).map((p) => (
+              <ListItem button component={Link} to={p.path} onClick={closeDrawer} key={p.path}>
+                <ListItemText primary={p.menuItem!.label} />
+              </ListItem>
+            ))}
+          </List>
+        </div>
       </Drawer>
       <Switch>
         {props.pages.map((p, i) =>
@@ -105,5 +118,13 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
 
   </AppContext.Provider >);
 };
+
+const mockUser: User = {
+  id: 1,
+  name: "Name Surname1 Surname2",
+  email: "example@example.com",
+  address: "Avinguda segona, 24A, 3B",
+  phone: "666333999666",
+}
 
 export default AppLayout;
