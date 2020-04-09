@@ -16,7 +16,9 @@ RUN npm run build
 
 FROM nginx:1.17.9-alpine
 
-COPY ./nginx /container-data
+COPY ./nginx /nginx-container-data
 COPY --from=build /usr/src/app/build /usr/share/nginx/html
 
-ENTRYPOINT ["/container-data/entrypoint.sh"]
+RUN chmod +x /nginx-container-data/entrypoint.sh
+
+ENTRYPOINT ["/nginx-container-data/entrypoint.sh"]
