@@ -29,3 +29,19 @@ jobs:
         path: ${{ matrix.project }}
         build_args: ENV_FILE=./production.env
         tags: latest,${{ github.run_number }}
+
+  publish:
+    runs-on: ubuntu-18.04
+    
+    strategy:
+      matrix:
+        project:
+        - back
+        - front
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v2
+      
+    - name: Publish version to Heroku
+      run: workflow-utils/deploy-docker-image-to-heroku.sh ${{ matrix.project }}
