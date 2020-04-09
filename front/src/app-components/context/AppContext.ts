@@ -1,10 +1,11 @@
 import React from "react";
-import { Product } from "../../models/product/Product";
+import { ProductShoppingCart } from "../../models/product/Product";
 
 type App = {
     shoppingCart: {
-        products: Product[];
-        addProduct: (product: Product) => void;
+        products: ProductShoppingCart[];
+        addProduct: (product: ProductShoppingCart) => void;
+        updateProduct: (product: ProductShoppingCart) => void;
         deleteProduct: (productId: number) => void;
     }
 }

@@ -4,7 +4,7 @@ import { Switch, Route, Link } from "react-router-dom";
 import { makeStyles, Drawer, List, ListItem, ListItemText } from "@material-ui/core";
 import { AppContext } from "../context/AppContext";
 import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
-import { Product } from "../../models/product/Product";
+import { Product, ProductShoppingCart } from "../../models/product/Product";
 
 type Page = {
   label: string,
@@ -27,7 +27,7 @@ const shoppingCartApiClient = new ShoppingCartApiClient();
 const AppLayout: FC<AppLayoutProps> = (props) => {
   const styles = useStyles(props);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [shoppingCartProducts, setShoppingCartProducts] = useState<Product[]>([]);
+  const [shoppingCartProducts, setShoppingCartProducts] = useState<ProductShoppingCart[]>([]);
 
   const openDrawer = () => setDrawerOpen(true);
   const closeDrawer = () => setDrawerOpen(false);
@@ -37,7 +37,7 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
     getShoppingCartProducts();
   }, []);
 
-  const addProductToTheShoppingCart = (product: Product) => {
+  const addProductToTheShoppingCart = (product: ProductShoppingCart) => {
     const nextShoppingCartProducts = shoppingCartProducts.slice();
     nextShoppingCartProducts.push(product);
     shoppingCartApiClient.saveItems(nextShoppingCartProducts);
@@ -55,10 +55,22 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
     setShoppingCartProducts(nextShoppingCartProducts);
   }
 
+  const updateProductFromTheShoppingCart = (product: ProductShoppingCart) => {
+    const nextShoppingCartProducts = shoppingCartProducts.slice();
+    const index = nextShoppingCartProducts.findIndex(({ id }) => id === product.id);
+    if (index === -1) {
+      return;
+    }
+    nextShoppingCartProducts[index] = product;
+    shoppingCartApiClient.saveItems(nextShoppingCartProducts);
+    setShoppingCartProducts(nextShoppingCartProducts);
+  }
+
   return (<AppContext.Provider value={{
     shoppingCart: {
       products: shoppingCartProducts,
       addProduct: addProductToTheShoppingCart,
+      updateProduct: updateProductFromTheShoppingCart,
       deleteProduct: deleteProductFromTheShoppingCart,
     }
   }}>
