@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Product } from "../../models/product/Product";
 import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
 import { Card, makeStyles, Theme, createStyles, CardHeader, CardActionArea, Button, ButtonGroup, CardContent } from "@material-ui/core";
+import { ProductItem } from "../../components/ProductItem";
 
 const apiClient = new ShoppingCartApiClient();
 
@@ -17,6 +18,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       width: "100%"
+    },
+    productCard: {
+      paddingTop: 16,
     }
   }),
 );
@@ -38,7 +42,7 @@ export const ShoppingCart: React.FunctionComponent = () => {
   return (
     <div>
       <Card className={classes.header}>
-        {products.length !== 0 ? // TODO !== condition is temporal, change for ===
+        {products.length === 0 ?
           <CardContent>
             Cistella buida
          </CardContent> :
@@ -55,6 +59,8 @@ export const ShoppingCart: React.FunctionComponent = () => {
           </>
         }
       </Card>
+
+      {products.map((productTmp) => <div className={classes.productCard}><ProductItem product={productTmp} shopName="Shop name" /> </div>)}
     </div>
   );
 }
