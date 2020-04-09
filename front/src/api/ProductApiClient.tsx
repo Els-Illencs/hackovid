@@ -4,23 +4,14 @@ import { Product } from "../models/product/Product";
 
 export class ProductApiClient {
     async getProducts() {
-        //const res = await Axios.get(process.env.REACT_APP_API_URL + 'products');
+        const res = await Axios.get(process.env.REACT_APP_API_URL + 'products');
 
-        //return res.data as Product[];
+        return res.data as Product[];
+    }
 
-        const products: Product[] = [
-            {
-                id: 1,
-                name: "Nom producte",
-                image: "https://material-ui.com/static/images/cards/contemplative-reptile.jpg",
-                shopId: 1,
-                categoryId: 1,
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                active: true,
-                price: 10
-              }
-        ];
+    async getProductsBycategory(categoryId: number) {
+        const res = await Axios.get(process.env.REACT_APP_API_URL + 'products?categoryId=' + categoryId);
 
-        return products as Product[];
+        return res.data as Product[];
     }
 }
