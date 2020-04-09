@@ -28,7 +28,7 @@ export const ShoppingCart: React.FunctionComponent = () => {
 
   const classes = useStyles();
 
-  const totalPrice = products.reduce((priceSum, { price }) => priceSum + price, 0);
+  const totalPrice = products.reduce((priceSum, { price, quantity }) => priceSum + price * quantity, 0);
 
   return (
     <div>
