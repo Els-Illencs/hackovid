@@ -16,9 +16,10 @@ jobs:
         - front
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout source code
+      uses: actions/checkout@v2
       
-    - name: Push to GitHub Packages
+    - name: Build Docker image and push to GitHub Packages
       uses: docker/build-push-action@v1
       with:
         username: ${{ github.actor }}
@@ -26,4 +27,4 @@ jobs:
         registry: docker.pkg.github.com
         repository: els-illencs/hackovid/${{ matrix.project }}
         path: ${{ matrix.project }}
-        tag_with_ref: "true"
+        tags: latest,${{ github.run_number }}
