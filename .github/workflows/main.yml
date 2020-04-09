@@ -27,4 +27,5 @@ jobs:
         registry: docker.pkg.github.com
         repository: els-illencs/hackovid/${{ matrix.project }}
         path: ${{ matrix.project }}
+        build_args: ENV_FILE=./production.env
         tags: latest,${{ github.run_number }}
