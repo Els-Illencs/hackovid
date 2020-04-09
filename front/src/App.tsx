@@ -8,6 +8,7 @@ import { ShoppingCart } from './views/shoppingCart/ShoppingCart';
 import { ProductItem } from './views/product/ProductItem';
 import { ApplicationBar } from './app-components/layout/ApplicationBar';
 import { Product } from './models/product/Product';
+import ProductList from './views/productlist/ProductList';
 
 const theme = createMuiTheme({
   palette: {
@@ -36,7 +37,7 @@ function App() {
   return (<>
     <MuiThemeProvider theme={theme}>
       {/*<ApplicationBar onTapMenu={() => console.log("onTapMenu")} />*/}
-      <ProductItem product={product}/>
+      <ProductList />
       {/*<AppLayout 
         onTapMenu={() => console.log("onTapMenu")}
         pages={[

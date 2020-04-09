@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Product } from '../../models/product/Product';
+import StarsIcon from '@material-ui/icons/Stars';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,19 +30,16 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       paddingLeft: theme.spacing(1),
       paddingBottom: theme.spacing(1),
-    },
-    playIcon: {
-      height: 38,
-      width: 38,
-    },
+    }
   }),
 );
 
 export interface ProductItemListProps {
   product: Product;
+  shopName: string;
 };
 
-export const ProductItem: React.FunctionComponent<ProductItemListProps> = ({ product }) => {
+export const ProductItem: React.FunctionComponent<ProductItemListProps> = ({ product, shopName }) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -54,17 +52,31 @@ export const ProductItem: React.FunctionComponent<ProductItemListProps> = ({ pro
       />
       <div className={classes.details}>
         <CardContent className={classes.content}>
-          <Typography component="h5" variant="h5">
-            {product.name}
-          </Typography>
-          <Typography variant="subtitle1" color="textSecondary">
-            {product.description}
-          </Typography>
+          <Grid container spacing={1}>
+            <Grid item xs={8}>
+            <Typography component="h5" variant="h5">
+              {product.name}
+            </Typography>
+            </Grid>
+            <Grid item xs={4} justify="flex-end">
+              <StarsIcon fontSize="small" color="primary"/><StarsIcon fontSize="small" color="primary"/>
+              <Typography variant="caption" display="block" gutterBottom>
+                {shopName}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Typography variant="subtitle1" color="textSecondary">
+                {product.description}
+              </Typography>
+            </Grid>
+          </Grid>
         </CardContent>
         <div className={classes.mainContent}>
         <Grid container spacing={1}>
           <Grid item xs={4} md={8}>
-            <Typography component="h4" variant="h4">
+            <Typography component="h5" variant="h5">
             {product.price} €/Kg
             </Typography>
           </Grid>         
@@ -72,7 +84,7 @@ export const ProductItem: React.FunctionComponent<ProductItemListProps> = ({ pro
             <TextField id="outlined-basic" type="number" size="small" label="Quantitat" variant="outlined" />
           </Grid>
           <Grid item xs={4} md={2}>
-          <Button variant="outlined" size="medium" color="primary">
+          <Button variant="contained" size="medium" color="primary">
             Afegir
           </Button>
           </Grid>
