@@ -49,6 +49,7 @@ jobs:
     - name: Publish version to Heroku
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: |
         chmod +x workflow-utils/deploy-docker-image-to-heroku.sh;
-        ./workflow-utils/deploy-docker-image-to-heroku.sh ${{ matrix.project }}
+        ./workflow-utils/deploy-docker-image-to-heroku.sh ${{ matrix.project }} hackovid-els-illencs-${{ matrix.project }} 

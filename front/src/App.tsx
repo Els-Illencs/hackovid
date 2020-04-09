@@ -37,14 +37,19 @@ function App() {
   return (<>
     <MuiThemeProvider theme={theme}>
       {/*<ApplicationBar onTapMenu={() => console.log("onTapMenu")} />*/}
+<<<<<<< HEAD
       <ProductList />
       {/*<AppLayout 
+=======
+      {/*<ProductItem product={product}/>*/}
+      <AppLayout 
+>>>>>>> ef0f9ee04a0df9d61cfd2bd7b667196c455dd814
         onTapMenu={() => console.log("onTapMenu")}
         pages={[
           { label: "Inici", path: "/", content: (<Home />) },
           { label: "Categories", path: "/categories", content: (<Categories />) },
           { label: "CarretDeCompra", path: "/carret-de-compra", content: (<ShoppingCart />) },
-        ]} />*/}
+        ]} />
     </MuiThemeProvider>
   </>);
 }
