@@ -13,7 +13,7 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     largeIcon: {
-      fontSize: '6rem'
+      fontSize: '4rem'
     }
   }),
 );

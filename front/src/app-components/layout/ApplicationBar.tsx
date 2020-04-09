@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, useRef, useEffect, useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,10 +15,6 @@ import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      flexGrow: 1,
-      marginBottom: '9em'
-    },
     menuButton: {
       marginRight: theme.spacing(2),
     },
@@ -57,16 +53,28 @@ type ApplicationBarProps = {
 };
 
 export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ onMenuButtonClick }) => {
+  /* Since the AppBar is 'fixed, we need to get its height dinamically and set a div with that value,
+  so the AppBar is not put on top of the main page */
   const classes = useStyles();
+  const [height, setHeight] = useState(0);
+  const appBarRef = useRef<HTMLElement>(null);
 
   const goToCardList = () => {
     // TODO when we have the router and the Card List screen
     console.log("goToCardList");
   }
 
+  useEffect(() => {
+    if (!appBarRef.current?.offsetHeight) {
+      return;
+    }
+    setHeight(appBarRef.current.offsetHeight);
+  }, [ appBarRef ]);
+
   return (
-    <div className={classes.root}>
-      <AppBar position="fixed" >
+    <>
+      <div style={ {height }} />
+      <AppBar position="fixed" ref={appBarRef} >
         <Toolbar>
           <IconButton onClick={onMenuButtonClick} edge="start" color="inherit" aria-label="menu">
             <MenuIcon />
@@ -97,6 +105,6 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
           </IconButton>
         </Paper>
       </AppBar>
-    </div>
+    </>
   );
 }
