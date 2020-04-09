@@ -47,12 +47,13 @@ export const ProductItem: React.FunctionComponent<ProductItemProps> = ({ product
         <div className={classes.mainContent}>
           <Grid container spacing={1}>
             <Grid item xs={6} md={3}>
-              <TextField className={classes.quantity} id="outlined-basic" type="number" size="small" label="Quantitat"
+              <TextField className={classes.quantity} id="outlined-basic" type="number" size="small" label="Quantitat"  
+              InputProps={{ inputProps: {  min: 0 } }}
                 variant="outlined" value={quantity} onChange={(event) => setQuantity(+event.target.value)}
               />
             </Grid>
             <Grid item xs={6} md={3}>
-              <Button onClick={addProductToShoppingCart} variant="contained" size="large" color="primary">
+              <Button onClick={addProductToShoppingCart} variant="contained" size="large" color="primary" disabled={quantity === 0}>
                 Afegir
                 </Button>
             </Grid>
