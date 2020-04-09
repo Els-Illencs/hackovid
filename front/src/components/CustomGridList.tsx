@@ -44,7 +44,7 @@ export const CustomGridList: React.FunctionComponent<CustomGridListProps> = ({ l
       <GridList cellHeight={180} className={classes.gridList} spacing={4} cols={2}>
         {list.map((category: Category) => (
             <GridListTile key={category.id}>
-              <Link to={{ pathname: '/productes/', state: { category: category.id} }} >
+              <Link to={{ pathname: '/product-list/', state: { category: category.id} }} >
                 <img className={classes.image} src={category.image} alt={category.name} />
                 <GridListTileBar
                   className={classes.title}
