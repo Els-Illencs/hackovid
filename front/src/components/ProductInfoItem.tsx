@@ -31,13 +31,6 @@ const useStyles = makeStyles((theme: Theme) =>
       width: 80,
       height: 80,
       display: 'flex',
-    },
-    mainContent: {
-      display: 'flex',
-      alignItems: 'center',
-    },
-    quantity: {
-      width: "100%"
     }
   }),
 );
