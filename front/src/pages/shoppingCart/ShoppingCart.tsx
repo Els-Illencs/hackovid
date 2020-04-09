@@ -20,9 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       width: "100%"
     },
-    productCard: {
-      paddingTop: 16,
-    }
   }),
 );
 
@@ -54,7 +51,7 @@ export const ShoppingCart: React.FunctionComponent = () => {
         }
       </Card>
 
-      {products.map((productTmp) => <div className={classes.productCard}><ProductShoppingCartItem product={productTmp} /> </div>)}
+      {products.map((productTmp) => <ProductShoppingCartItem product={productTmp} />)}
     </div>
   );
 }

@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
+      marginBottom: 16,
     },
     details: {
       display: 'flex',
