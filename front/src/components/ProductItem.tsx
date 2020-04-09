@@ -96,12 +96,12 @@ export const ProductItem: React.FunctionComponent<ProductItemListProps> = ({ pro
               <Grid item xs={12}>
                 <Typography component="h5" variant="h5">
                   {product.price} €/Kg
-            </Typography>
+                </Typography>
               </Grid>
-              <Grid item xs={6} md={2}>
+              <Grid item xs={6} md={3}>
                 <TextField className={classes.quantity} id="outlined-basic" type="number" size="small" label="Quantitat" variant="outlined" />
               </Grid>
-              <Grid item xs={6} md={2}>
+              <Grid item xs={6} md={3}>
                 <Button variant="contained" size="large" color="primary">
                   Afegir
                 </Button>
