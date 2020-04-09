@@ -57,7 +57,7 @@ type ApplicationBarProps = {
 };
 
 export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ onMenuButtonClick }) => {
-  /* Since the AppBar is 'fixed, we need to get its height dinamically and set a div with that value,
+  /* Since the AppBar is 'fixed', we need to get its height dinamically and set a div with that value,
   so the AppBar is not put on top of the main page */
   const { shoppingCart: { products } } = useContext(AppContext);
   const history:any = useHistory();

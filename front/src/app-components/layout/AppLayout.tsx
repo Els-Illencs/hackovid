@@ -1,6 +1,6 @@
 import React, { FC, ReactNode, useState, useEffect, useContext } from "react";
 import { ApplicationBar } from "./ApplicationBar";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
 import { makeStyles, Drawer, List, ListItem, ListItemText } from "@material-ui/core";
 import { AppContext } from "../context/AppContext";
 import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
@@ -11,8 +11,10 @@ import { AccountCircle } from '@material-ui/icons';
 type Page = {
   path: string
   content: ReactNode,
+  fullScreen?: boolean,
   menuItem?: {
-    label: string
+    label: string,
+    right?: ReactNode
   }
 };
 
@@ -34,7 +36,9 @@ const useStyles = makeStyles((theme) => ({
 const shoppingCartApiClient = new ShoppingCartApiClient();
 
 const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
-  const styles = useStyles(props);
+  const matchPageWithAppBar = useRouteMatch(
+    props.pages.filter(p => !p.fullScreen).map(p=> p.path));
+  const classes = useStyles(props);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [shoppingCartProducts, setShoppingCartProducts] = useState<ProductShoppingCart[]>([]);
 
@@ -93,15 +97,16 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
       deleteProduct: deleteProductFromTheShoppingCart,
     }
   }}>
-    <ApplicationBar onMenuButtonClick={openDrawer} />
-    <main className={styles.content}>
+    {matchPageWithAppBar && <ApplicationBar onMenuButtonClick={openDrawer} />}
+    <main className={classes.content}>
       <Drawer anchor="left" open={drawerOpen} onClose={closeDrawer}>
         <div style={{minWidth: 260 }}>
-          <AccountCircle className={styles.account} />
+          <AccountCircle className={classes.account} />
           <List>
             {props.pages.filter(p => !!p.menuItem).map((p) => (
               <ListItem button component={Link} to={p.path} onClick={closeDrawer} key={p.path}>
                 <ListItemText primary={p.menuItem!.label} />
+                {p.menuItem!.right}
               </ListItem>
             ))}
           </List>
@@ -109,7 +114,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
       </Drawer>
       <Switch>
         {props.pages.map((p, i) =>
-          <Route path={p.path} key={i} exact={p.path === '/'}>
+          <Route path={p.path} key={i}>
             {p.content}
           </Route>
         )}
