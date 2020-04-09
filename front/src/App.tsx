@@ -5,7 +5,6 @@ import Home from './pages/home/Home';
 import { ShoppingCart } from './pages/shoppingCart/ShoppingCart';
 import ProductList from './pages/productlist/ProductList';
 import { Checkout } from './pages/checkout/Checkout';
-import StreetRequestDialog from './components/StreetRequestDialog';
 
 const theme = createMuiTheme({});
 
@@ -13,7 +12,13 @@ function App() {
 
   return (<>
     <MuiThemeProvider theme={theme}>
-    <StreetRequestDialog />
+    <AppLayout
+        pages={[
+          { path: "/", content: (<Home />), menuItem: { label: "Inici" } },
+          { path: "/shopping-cart", content: (<ShoppingCart />), menuItem: { label: "Cistella" } },
+          { path: "/product-list", content: (<ProductList />) },
+          { path: "/checkout", content: (<Checkout />) }
+        ]} />
     </MuiThemeProvider>
   </>);
 }
