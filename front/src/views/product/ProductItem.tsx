@@ -67,7 +67,7 @@ export const ProductItem: React.FunctionComponent<ProductItemListProps> = ({ pro
             <Typography component="h4" variant="h4">
             {product.price} €/Kg
             </Typography>
-          </Grid>
+          </Grid>         
           <Grid item xs={4} md={2}>
             <TextField id="outlined-basic" type="number" size="small" label="Quantitat" variant="outlined" />
           </Grid>
