@@ -51,7 +51,6 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
       deleteProduct: (productId: number) => {
         const nextShoppingCartProducts = shoppingCartProducts.slice();
         const index = nextShoppingCartProducts.findIndex(({ id }) => id === productId);
-        console.log(index)
         if (index === -1) {
           return;
         }
