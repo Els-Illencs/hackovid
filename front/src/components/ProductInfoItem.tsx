@@ -76,7 +76,7 @@ export const ProductInfoItem: React.FunctionComponent<ProductInfoItemProps> = ({
               <StarsIcon fontSize="small" color="primary" />
               <StarsIcon fontSize="small" color="primary" />
               <Typography variant="caption" display="block" gutterBottom>
-                {product.shopName} Shop name
+                {product.shopName}
               </Typography>
             </Grid>
           </Grid>

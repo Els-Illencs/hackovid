@@ -11,11 +11,11 @@ const apiClient = new ShoppingCartApiClient();
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
-      marginTop: 30,
       paddingLeft: 16,
       paddingRight: 16,
       paddingTop: 0,
-      paddingBottom: 16
+      paddingBottom: 16,
+      marginBottom: 16
     },
     button: {
       width: "100%"
@@ -28,7 +28,7 @@ export const ShoppingCart: React.FunctionComponent = () => {
 
   const classes = useStyles();
 
-  const totalPrice = products.reduce((priceSum, { price }) => priceSum + price, 0);
+  const totalPrice = products.reduce((priceSum, { price, quantity }) => priceSum + price * quantity, 0);
 
   return (
     <div>
@@ -51,7 +51,7 @@ export const ShoppingCart: React.FunctionComponent = () => {
         }
       </Card>
 
-      {products.map((productTmp) => <ProductShoppingCartItem product={productTmp} />)}
+      {products.map((productTmp) => <ProductShoppingCartItem key={String(productTmp.id)} product={productTmp} />)}
     </div>
   );
 }

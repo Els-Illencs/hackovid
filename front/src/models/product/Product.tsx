@@ -9,3 +9,7 @@ export interface Product {
     active: boolean,
     price: number
 }
+
+export type ProductShoppingCart = {
+    quantity: number;
+} & Product;
