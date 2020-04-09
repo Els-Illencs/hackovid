@@ -4,7 +4,8 @@ import { Switch, Route, Link } from "react-router-dom";
 import { makeStyles, Drawer, List, ListItem, ListItemText } from "@material-ui/core";
 import { AppContext } from "../context/AppContext";
 import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
-import { Product, ProductShoppingCart } from "../../models/product/Product";
+import { ProductShoppingCart } from "../../models/product/Product";
+import { User } from "../../models/user/User";
 
 type Page = {
   label: string,
@@ -76,6 +77,7 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
   }
 
   return (<AppContext.Provider value={{
+    user: mockUser, // TODO use real data
     shoppingCart: {
       products: shoppingCartProducts,
       addProduct: addProductToTheShoppingCart,
@@ -105,5 +107,13 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
 
   </AppContext.Provider >);
 };
+
+const mockUser: User = {
+  id: 1,
+  name: "Name Surname1 Surname2",
+  email: "example@example.com",
+  address: "Avinguda segona, 24A, 3B",
+  phone: "666333999666",
+}
 
 export default AppLayout;
