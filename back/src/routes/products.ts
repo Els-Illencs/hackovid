@@ -6,7 +6,12 @@ const productRepository = new ProductRepository();
 const router = express.Router();
 
 router.get('/', async function(req, res, next) {
-    res.send(await productRepository.get());
+    let categoryId: number = req.query ? req.query.categoryId : null;
+    if(categoryId) {
+        res.send(await productRepository.getByCategory(categoryId));
+    } else {
+        res.send(await productRepository.get());
+    }
 })
 
 export default router;
