@@ -3,7 +3,6 @@ import { CustomGridList } from '../../components/CustomGridList';
 import { HomeCarrousel } from '../../components/HomeCarouselInfo';
 import { Category } from '../../models/category/Category';
 import { CategoryApiClient } from '../../api/CategoryApiClient';
-import { Divider } from '@material-ui/core';
 
 const apiClient = new CategoryApiClient();
 
