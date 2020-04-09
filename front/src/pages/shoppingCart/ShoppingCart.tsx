@@ -60,7 +60,7 @@ export const ShoppingCart: React.FunctionComponent = () => {
         }
       </Card>
 
-      {products.map((productTmp) => <div className={classes.productCard}><ProductItem product={productTmp} shopName="Shop name" /> </div>)}
+      {products.map((productTmp) => <div className={classes.productCard}><ProductItem product={productTmp} /> </div>)}
     </div>
   );
 }
