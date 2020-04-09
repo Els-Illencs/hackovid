@@ -51,4 +51,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         chmod +x workflow-utils/deploy-docker-image-to-heroku.sh;
-        ./workflow-utils/deploy-docker-image-to-heroku.sh ${{ matrix.project }}
+        ./workflow-utils/deploy-docker-image-to-heroku.sh ${{ matrix.project }} hackovid-els-illencs-${{ matrix.project }} 
