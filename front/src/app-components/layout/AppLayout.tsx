@@ -18,8 +18,7 @@ type AppLayoutProps = {
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    padding: 20,
-    marginTop: 30
+    padding: 20
   }
 }))
 
