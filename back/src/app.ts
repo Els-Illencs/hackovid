@@ -5,6 +5,7 @@ import cors from 'cors';
 
 import home from './routes/home';
 import categories from './routes/categories';
+import products from './routes/products';
 
 const app = express();
 
@@ -16,5 +17,6 @@ app.use(cookieParser());
 
 app.use('/', home);
 app.use('/categories', categories);
+app.use('/products', products);
 
 export default app;
