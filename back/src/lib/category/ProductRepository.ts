@@ -23,4 +23,19 @@ export class ProductRepository {
 
         return res.rows;
     }
+    
+    async getByName(name: string) {
+        const searchName = name.replace(/\s/g, ' & ');
+        console.log("Search name", [searchName]);
+        const res = await pool.query<Product>(`
+            SELECT id, name, image, description, price, active, category_id AS categoryId, shop_id AS shopId, score
+                FROM (
+                    SELECT ts_rank_cd(name_tokens, to_tsquery('${searchName}')) AS score, id, name, image, description, price, active, category_id, shop_id
+                    FROM products
+                ) S
+            WHERE score > 0
+            ORDER BY score DESC`);
+
+        return res.rows;
+    }
 }
