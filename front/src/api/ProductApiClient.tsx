@@ -14,4 +14,10 @@ export class ProductApiClient {
 
         return res.data as Product[];
     }
+    
+    async getProductsByName(name: string) {
+        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?name=${name}`);
+
+        return res.data as Product[];
+    }
 }

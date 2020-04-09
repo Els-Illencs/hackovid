@@ -60,8 +60,7 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
   /* Since the AppBar is 'fixed, we need to get its height dinamically and set a div with that value,
   so the AppBar is not put on top of the main page */
   const { shoppingCart: { products } } = useContext(AppContext);
-  const history = useHistory();
-
+  const history:any = useHistory();
 
   const classes = useStyles();
   const [height, setHeight] = useState(0);
@@ -76,7 +75,13 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
 
   const redirectToProductPage = (e: any) => {
     e.preventDefault();
-    history.push('/productes');
+
+    history.push({
+      pathname: '/productes',
+      state: { name:  e.target.querySelector('input').value }
+    });  
+
+    history.go(0);
   };
   
 
