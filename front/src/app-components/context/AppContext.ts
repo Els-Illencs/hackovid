@@ -1,10 +1,13 @@
 import React from "react";
+import { Product } from "../../models/product/Product";
 
 type App = {
-    user: any, // TODO define type any
-    // TODO add more global data
+    shoppingCart: {
+        products: Product[];
+        addProduct: (product: Product) => void;
+        deleteProduct: (productId: number) => void;
+    }
 }
 
 export const AppContext = React.createContext<App>({} as any);
-
 

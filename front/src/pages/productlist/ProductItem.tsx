@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import CardContent from '@material-ui/core/CardContent';
@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import { Product } from '../../models/product/Product';
 import { ProductInfoItem } from '../../components/ProductInfoItem';
 import { ShoppingCartApiClient } from '../../api/ShoppingCartApiClient';
+import { AppContext } from '../../app-components';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,12 +28,11 @@ export interface ProductItemProps {
 };
 
 export const ProductItem: React.FunctionComponent<ProductItemProps> = ({ product }) => {
+  const { shoppingCart } = useContext(AppContext);
+
   const classes = useStyles();
 
-  const addProductToShoppingCart = async () => {
-    await shoppingCartApiClient.saveItem(product);
-    // TODO shopping cart number should be updated
-  }
+  const addProductToShoppingCart = async () => shoppingCart.addProduct(product);
 
   return (
     <ProductInfoItem product={product} >

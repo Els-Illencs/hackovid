@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Product } from "../../models/product/Product";
 import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
 import { Card, makeStyles, Theme, createStyles, CardActionArea, Button, CardContent } from "@material-ui/core";
 import { ProductShoppingCartItem } from "./ProductShoppingCartItem";
+import { AppContext } from '../../app-components';
 
 const apiClient = new ShoppingCartApiClient();
 
@@ -26,16 +27,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const ShoppingCart: React.FunctionComponent = () => {
-  const [products, setProducts] = useState([] as Product[]);
+  const { shoppingCart: { products } } = useContext(AppContext);
 
   const classes = useStyles();
-
-  useEffect(() => {
-    const getProducts = async () => {
-      setProducts(await apiClient.getItems());
-    }
-    getProducts();
-  }, []);
 
   const totalPrice = products.reduce((priceSum, { price }) => priceSum + price, 0);
 

@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useRef, useEffect, useState } from 'react';
+import React, { MouseEventHandler, useRef, useEffect, useState, useContext } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import { AppContext } from '..';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -55,6 +56,8 @@ type ApplicationBarProps = {
 export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ onMenuButtonClick }) => {
   /* Since the AppBar is 'fixed, we need to get its height dinamically and set a div with that value,
   so the AppBar is not put on top of the main page */
+  const { shoppingCart: { products } } = useContext(AppContext);
+
   const classes = useStyles();
   const [height, setHeight] = useState(0);
   const appBarRef = useRef<HTMLElement>(null);
@@ -69,11 +72,11 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
       return;
     }
     setHeight(appBarRef.current.offsetHeight);
-  }, [ appBarRef ]);
+  }, [appBarRef]);
 
   return (
     <>
-      <div style={ {height }} />
+      <div style={{ height }} />
       <AppBar position="fixed" ref={appBarRef} >
         <Toolbar>
           <IconButton onClick={onMenuButtonClick} edge="start" color="inherit" aria-label="menu">
@@ -91,7 +94,7 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
               </IconButton>
             </Link>
             <div className={classes.shoppingCartItems}>
-              <ShoppingCartNumberOfItems text={9} />
+              <ShoppingCartNumberOfItems text={products.length} />
             </div>
           </div>
         </Toolbar>
