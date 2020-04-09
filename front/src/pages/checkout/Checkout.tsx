@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Checkout: React.FunctionComponent = () => {
-  const { user, shoppingCart: { products } } = useContext(AppContext);
+  const { user: { user }, shoppingCart: { products } } = useContext(AppContext);
 
   const classes = useStyles();
 
@@ -81,10 +81,10 @@ export const Checkout: React.FunctionComponent = () => {
           <Grid item xs={11}>
             <h4>Direcció d'enviament</h4>
             <Typography component="p">
-              {user.name}
+              {user!.name} {user!.surname}
             </Typography>
             <Typography component="p" className={classes.marginBottom}>
-              {user.address}
+              {user!.address}
             </Typography>
           </Grid>
           <Grid item xs={1} className={classes.arrowButton}>

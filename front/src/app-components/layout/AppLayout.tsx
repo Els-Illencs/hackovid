@@ -36,6 +36,7 @@ const shoppingCartApiClient = new ShoppingCartApiClient();
 const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
   const styles = useStyles(props);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [user, setUser] = useState<User | undefined>(mockUser); // TODO add logic to get the real data of the user
   const [shoppingCartProducts, setShoppingCartProducts] = useState<ProductShoppingCart[]>([]);
 
   const openDrawer = () => setDrawerOpen(true);
@@ -46,6 +47,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     getShoppingCartProducts();
   }, []);
 
+  // TODO move AppContext in a different file / component
   const addProductToTheShoppingCart = (product: ProductShoppingCart) => {
     const index = shoppingCartProducts.findIndex(({ id }) => id === product.id);
     if (index !== -1) {
@@ -85,7 +87,10 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
   }
 
   return (<AppContext.Provider value={{
-    user: mockUser, // TODO use real data
+    user: {
+      user,
+      updateUser: (user: User | undefined) => setUser(user),
+    },
     shoppingCart: {
       products: shoppingCartProducts,
       addProduct: addProductToTheShoppingCart,
@@ -96,7 +101,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     <ApplicationBar onMenuButtonClick={openDrawer} />
     <main className={styles.content}>
       <Drawer anchor="left" open={drawerOpen} onClose={closeDrawer}>
-        <div style={{minWidth: 260 }}>
+        <div style={{ minWidth: 260 }}>
           <AccountCircle className={styles.account} />
           <List>
             {props.pages.filter(p => !!p.menuItem).map((p) => (
@@ -121,7 +126,8 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
 
 const mockUser: User = {
   id: 1,
-  name: "Name Surname1 Surname2",
+  name: "Name",
+  surname: "Surname",
   email: "example@example.com",
   address: "Avinguda segona, 24A, 3B",
   phone: "666333999666",
