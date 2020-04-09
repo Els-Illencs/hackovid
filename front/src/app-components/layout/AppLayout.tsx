@@ -38,15 +38,15 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
   }, []);
 
   const addProductToTheShoppingCart = (product: ProductShoppingCart) => {
-    const nextShoppingCartProducts = shoppingCartProducts.slice();
-    const index = nextShoppingCartProducts.findIndex(({ id }) => id === product.id);
+    const index = shoppingCartProducts.findIndex(({ id }) => id === product.id);
     if (index !== -1) {
-      updateProductFromTheShoppingCart(product);
-      return;
+      updateProduct(index, shoppingCartProducts[index].quantity + product.quantity);
+    } else {
+      const nextShoppingCartProducts = shoppingCartProducts.slice();
+      nextShoppingCartProducts.push(product);
+      shoppingCartApiClient.saveItems(nextShoppingCartProducts);
+      setShoppingCartProducts(nextShoppingCartProducts);
     }
-    nextShoppingCartProducts.push(product);
-    shoppingCartApiClient.saveItems(nextShoppingCartProducts);
-    setShoppingCartProducts(nextShoppingCartProducts);
   }
 
   const deleteProductFromTheShoppingCart = (productId: number) => {
@@ -61,12 +61,16 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
   }
 
   const updateProductFromTheShoppingCart = (product: ProductShoppingCart) => {
-    const nextShoppingCartProducts = shoppingCartProducts.slice();
-    const index = nextShoppingCartProducts.findIndex(({ id }) => id === product.id);
+    const index = shoppingCartProducts.findIndex(({ id }) => id === product.id);
     if (index === -1) {
       return;
     }
-    nextShoppingCartProducts[index].quantity += product.quantity;
+    updateProduct(index, product.quantity);
+  }
+
+  const updateProduct = (index: number, quantity: number) => {
+    const nextShoppingCartProducts = shoppingCartProducts.slice();
+    nextShoppingCartProducts[index].quantity = quantity;
     shoppingCartApiClient.saveItems(nextShoppingCartProducts);
     setShoppingCartProducts(nextShoppingCartProducts);
   }
