@@ -21,15 +21,25 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flex: '1 0 auto',
+      paddingBottom: 0
+    },
+    image: {
+      marginTop: 16,
+      display: 'flex',
+      flexDirection: 'column'
     },
     cover: {
-      width: 300,
+      alignItems: 'center',
+      width: 80,
+      height: 80,
+      display: 'flex',
     },
     mainContent: {
       display: 'flex',
       alignItems: 'center',
-      paddingLeft: theme.spacing(1),
-      paddingBottom: theme.spacing(1),
+    },
+    quantity: {
+      width: "100%"
     }
   }),
 );
@@ -44,23 +54,19 @@ export const ProductItem: React.FunctionComponent<ProductItemListProps> = ({ pro
 
   return (
     <Card className={classes.root}>
-      <CardMedia
-        className={classes.cover}
-        image={product.image}
-        title={product.name}
-      />
+      <div className={classes.image}>
+        <CardMedia
+          className={classes.cover}
+          image={product.image}
+          title={product.name}
+        />
+      </div>
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <Grid container spacing={1}>
             <Grid item xs={8}>
-            <Typography component="h5" variant="h5">
-              {product.name}
-            </Typography>
-            </Grid>
-            <Grid item xs={4} justify="flex-end">
-              <StarsIcon fontSize="small" color="primary"/><StarsIcon fontSize="small" color="primary"/>
-              <Typography variant="caption" display="block" gutterBottom>
-                {product.shopName}
+              <Typography component="p">
+                {product.name}
               </Typography>
             </Grid>
           </Grid>
@@ -71,24 +77,39 @@ export const ProductItem: React.FunctionComponent<ProductItemListProps> = ({ pro
               </Typography>
             </Grid>
           </Grid>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <StarsIcon fontSize="small" color="primary" />
+              <StarsIcon fontSize="small" color="primary" />
+              <StarsIcon fontSize="small" color="primary" />
+              <StarsIcon fontSize="small" color="primary" />
+              <StarsIcon fontSize="small" color="primary" />
+              <Typography variant="caption" display="block" gutterBottom>
+                {product.shopName} Shop name
+              </Typography>
+            </Grid>
+          </Grid>
         </CardContent>
-        <div className={classes.mainContent}>
-        <Grid container spacing={1}>
-          <Grid item xs={4} md={8}>
-            <Typography component="h5" variant="h5">
-            {product.price} €/Kg
+        <CardContent>
+          <div className={classes.mainContent}>
+            <Grid container spacing={1}>
+              <Grid item xs={12}>
+                <Typography component="h5" variant="h5">
+                  {product.price} €/Kg
             </Typography>
-          </Grid>         
-          <Grid item xs={4} md={2}>
-            <TextField id="outlined-basic" type="number" size="small" label="Quantitat" variant="outlined" />
-          </Grid>
-          <Grid item xs={4} md={2}>
-          <Button variant="contained" size="medium" color="primary">
-            Afegir
-          </Button>
-          </Grid>
-        </Grid>
-        </div>
+              </Grid>
+              <Grid item xs={6} md={2}>
+                <TextField className={classes.quantity} id="outlined-basic" type="number" size="small" label="Quantitat" variant="outlined" />
+              </Grid>
+              <Grid item xs={6} md={2}>
+                <Button variant="contained" size="large" color="primary">
+                  Afegir
+                </Button>
+              </Grid>
+            </Grid>
+          </div>
+        </CardContent>
+
       </div>
     </Card>
   );
