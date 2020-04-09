@@ -4,6 +4,7 @@ import { blue, red } from '@material-ui/core/colors';
 import { AppLayout } from './app-components';
 import Home from './pages/home/Home';
 import { ShoppingCart } from './pages/shoppingCart/ShoppingCart';
+import ProductList from './pages/productlist/ProductList';
 
 const theme = createMuiTheme({
   palette: {
@@ -20,11 +21,7 @@ function App() {
 
   return (<>
     <MuiThemeProvider theme={theme}>
-      <AppLayout
-        pages={[
-          { label: "Inici", path: "/", content: (<Home />) },
-          { label: "CarretDeCompra", path: "/carret-de-compra", content: (<ShoppingCart />) },
-        ]} />
+      <ProductList />
     </MuiThemeProvider>
   </>);
 }
