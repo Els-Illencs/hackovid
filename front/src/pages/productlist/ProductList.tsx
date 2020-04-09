@@ -10,13 +10,14 @@ const ProductList: FC = () => {
   const [productList, setProducts] = useState([] as Product[]);
 
   useEffect(() => {
+    console.log("Product list");
     apiClient.getProducts().then(setProducts);
   }, []);
 
   return (
     <div>
         {productList.map((product: Product) => (
-          <ProductItem product={product}/>
+            <ProductItem product={product}/>
         ))}
     </div>
   );
