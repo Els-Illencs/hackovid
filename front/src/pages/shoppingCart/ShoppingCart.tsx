@@ -11,11 +11,11 @@ const apiClient = new ShoppingCartApiClient();
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
-      marginTop: 30,
       paddingLeft: 16,
       paddingRight: 16,
       paddingTop: 0,
-      paddingBottom: 16
+      paddingBottom: 16,
+      marginBottom: 16
     },
     button: {
       width: "100%"
