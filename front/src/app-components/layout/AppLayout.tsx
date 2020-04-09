@@ -39,6 +39,11 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
 
   const addProductToTheShoppingCart = (product: ProductShoppingCart) => {
     const nextShoppingCartProducts = shoppingCartProducts.slice();
+    const index = nextShoppingCartProducts.findIndex(({ id }) => id === product.id);
+    if (index !== -1) {
+      updateProductFromTheShoppingCart(product);
+      return;
+    }
     nextShoppingCartProducts.push(product);
     shoppingCartApiClient.saveItems(nextShoppingCartProducts);
     setShoppingCartProducts(nextShoppingCartProducts);
@@ -61,7 +66,7 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
     if (index === -1) {
       return;
     }
-    nextShoppingCartProducts[index] = product;
+    nextShoppingCartProducts[index].quantity += product.quantity;
     shoppingCartApiClient.saveItems(nextShoppingCartProducts);
     setShoppingCartProducts(nextShoppingCartProducts);
   }
