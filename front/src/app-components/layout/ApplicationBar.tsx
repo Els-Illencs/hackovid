@@ -13,6 +13,7 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { AppContext } from '..';
+import { common } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -62,11 +63,6 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
   const [height, setHeight] = useState(0);
   const appBarRef = useRef<HTMLElement>(null);
 
-  const goToCardList = () => {
-    // TODO when we have the router and the Card List screen
-    console.log("goToCardList");
-  }
-
   useEffect(() => {
     if (!appBarRef.current?.offsetHeight) {
       return;
@@ -84,15 +80,13 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             <Link to="/">
-              < img className={classes.logo} src={Logo.default} alt="" />
+              <img className={classes.logo} src={Logo.default} alt="" />
             </Link>
           </Typography>
           <div className={classes.shoppingCart}>
-            <Link to="/carret-de-compra">
-              <IconButton onClick={() => goToCardList()} edge="start" color="inherit" aria-label="menu">
-                <ShoppingCartIcon />
-              </IconButton>
-            </Link>
+            <IconButton component={Link} to="/carret-de-compra" edge="start" style={{color: common.white}} aria-label="menu">
+              <ShoppingCartIcon />
+            </IconButton>
             <div className={classes.shoppingCartItems}>
               <ShoppingCartNumberOfItems text={products.length} />
             </div>

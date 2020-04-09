@@ -23,7 +23,7 @@ const Home: FC = () => {
             </Typography>
             <HomeCarousel />
 
-            <h2>Què estàs cercant?</h2>
+            <h2>Les nostres categories</h2>
             <CustomGridList list={categories} />
         </div>
         
