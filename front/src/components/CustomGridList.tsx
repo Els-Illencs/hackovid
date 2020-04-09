@@ -24,6 +24,11 @@ const useStyles = makeStyles((theme: Theme) =>
     icon: {
       color: 'rgba(255, 255, 255, 0.54)',
     },
+    imageStyle: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover'
+    }
   }),
 );
 
@@ -38,15 +43,15 @@ export const CustomGridList: React.FunctionComponent<CustomGridListProps> = ({ l
     <div className={classes.root}>
       <GridList cellHeight={180} className={classes.gridList} spacing={4} cols={2}>
         {list.map((category: Category) => (
+            <Link to="/productes">
             <GridListTile key={category.id}>
-              <Link to="/products">
               <img src={category.image} alt={category.name} />
               <GridListTileBar
                 className={classes.title}
                 title={category.name}
               />
-              </Link>
             </GridListTile>
+            </Link>
         ))}
       </GridList>
     </div>
