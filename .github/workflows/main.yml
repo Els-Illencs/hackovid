@@ -5,7 +5,6 @@ on:
     branches: [ master ]
 
 jobs: 
-  
   build:
     runs-on: ubuntu-18.04
     
@@ -30,7 +29,11 @@ jobs:
         build_args: ENV_FILE=./production.env
         tags: latest,${{ github.run_number }}
 
+
   publish:
+    needs:
+    - build
+
     runs-on: ubuntu-18.04
     
     strategy:
@@ -45,5 +48,5 @@ jobs:
       
     - name: Publish version to Heroku
       run: |
-        chmod +x workflow-utils/deploy-docker-image-to-heroku.sh
-        workflow-utils/deploy-docker-image-to-heroku.sh ${{ matrix.project }}
+        chmod +x workflow-utils/deploy-docker-image-to-heroku.sh;
+        ./workflow-utils/deploy-docker-image-to-heroku.sh ${{ matrix.project }}
