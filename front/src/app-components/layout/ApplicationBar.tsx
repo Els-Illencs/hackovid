@@ -9,6 +9,7 @@ import { IconButton } from '@material-ui/core';
 import { AppContext } from "../context/AppContext";
 import * as Logo from "./logo.png";
 import { ShoppingCartNumberOfItems } from './ShoppingCartNumberOfItems';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -57,13 +58,16 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            < img className={classes.logo} src={Logo.default} alt="" />
-
+            <Link to="/">
+              < img className={classes.logo} src={Logo.default} alt="" />
+            </Link>
           </Typography>
           <div className={classes.shoppingCart}>
-            <IconButton onClick={() => goToCardList()} edge="start" color="inherit" aria-label="menu">
-              <ShoppingCartIcon />
-            </IconButton>
+            <Link to="/carret-de-compra">
+              <IconButton onClick={() => goToCardList()} edge="start" color="inherit" aria-label="menu">
+                <ShoppingCartIcon />
+              </IconButton>
+            </Link>
             <div className={classes.shoppingCartItems}>
               <ShoppingCartNumberOfItems text={9} />
             </div>
