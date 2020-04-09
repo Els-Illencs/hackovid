@@ -38,26 +38,29 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
     getShoppingCartProducts();
   }, []);
 
+  const addProductToTheShoppingCart = (product: Product) => {
+    const nextShoppingCartProducts = shoppingCartProducts.slice();
+    nextShoppingCartProducts.push(product);
+    shoppingCartApiClient.saveItems(nextShoppingCartProducts);
+    setShoppingCartProducts(nextShoppingCartProducts);
+  }
+
+  const deleteProductFromTheShoppingCart = (productId: number) => {
+    const nextShoppingCartProducts = shoppingCartProducts.slice();
+    const index = nextShoppingCartProducts.findIndex(({ id }) => id === productId);
+    if (index === -1) {
+      return;
+    }
+    nextShoppingCartProducts.splice(index, 1);
+    shoppingCartApiClient.saveItems(nextShoppingCartProducts);
+    setShoppingCartProducts(nextShoppingCartProducts);
+  }
 
   return (<AppContext.Provider value={{
     shoppingCart: {
       products: shoppingCartProducts,
-      addProduct: (product: Product) => {
-        const nextShoppingCartProducts = shoppingCartProducts.slice();
-        nextShoppingCartProducts.push(product);
-        shoppingCartApiClient.saveItems(nextShoppingCartProducts);
-        setShoppingCartProducts(nextShoppingCartProducts);
-      },
-      deleteProduct: (productId: number) => {
-        const nextShoppingCartProducts = shoppingCartProducts.slice();
-        const index = nextShoppingCartProducts.findIndex(({ id }) => id === productId);
-        if (index === -1) {
-          return;
-        }
-        nextShoppingCartProducts.splice(index, 1);
-        shoppingCartApiClient.saveItems(nextShoppingCartProducts);
-        setShoppingCartProducts(nextShoppingCartProducts);
-      },
+      addProduct: addProductToTheShoppingCart,
+      deleteProduct: deleteProductFromTheShoppingCart,
     }
   }}>
     <ApplicationBar onMenuButtonClick={openDrawer} />
@@ -80,7 +83,7 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
       </Switch>
     </main>
 
-  </AppContext.Provider>);
+  </AppContext.Provider >);
 };
 
 export default AppLayout;
