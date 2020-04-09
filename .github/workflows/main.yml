@@ -44,4 +44,6 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Publish version to Heroku
-      run: workflow-utils/deploy-docker-image-to-heroku.sh ${{ matrix.project }}
+      run: |
+        chmod +x workflow-utils/deploy-docker-image-to-heroku.sh
+        workflow-utils/deploy-docker-image-to-heroku.sh ${{ matrix.project }}
