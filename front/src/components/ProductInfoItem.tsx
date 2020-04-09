@@ -44,11 +44,11 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export interface ProductItemListProps {
+export interface ProductInfoItemProps {
   product: Product;
 };
 
-export const ProductItem: React.FunctionComponent<ProductItemListProps> = ({ product }) => {
+export const ProductInfoItem: React.FunctionComponent<ProductInfoItemProps> = ({ product, children }) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -89,27 +89,13 @@ export const ProductItem: React.FunctionComponent<ProductItemListProps> = ({ pro
               </Typography>
             </Grid>
           </Grid>
-        </CardContent>
-        <CardContent>
-          <div className={classes.mainContent}>
-            <Grid container spacing={1}>
-              <Grid item xs={12}>
-                <Typography component="h5" variant="h5">
-                  {product.price} €/Kg
+          <Grid item xs={12}>
+            <Typography component="h5" variant="h5">
+              {product.price} €/Kg
                 </Typography>
-              </Grid>
-              <Grid item xs={6} md={3}>
-                <TextField className={classes.quantity} id="outlined-basic" type="number" size="small" label="Quantitat" variant="outlined" />
-              </Grid>
-              <Grid item xs={6} md={3}>
-                <Button variant="contained" size="large" color="primary">
-                  Afegir
-                </Button>
-              </Grid>
-            </Grid>
-          </div>
+          </Grid>
         </CardContent>
-
+        {children}
       </div>
     </Card>
   );
