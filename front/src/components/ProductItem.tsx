@@ -36,10 +36,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export interface ProductItemListProps {
   product: Product;
-  shopName: string;
 };
 
-export const ProductItem: React.FunctionComponent<ProductItemListProps> = ({ product, shopName }) => {
+export const ProductItem: React.FunctionComponent<ProductItemListProps> = ({ product }) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -61,7 +60,7 @@ export const ProductItem: React.FunctionComponent<ProductItemListProps> = ({ pro
             <Grid item xs={4} justify="flex-end">
               <StarsIcon fontSize="small" color="primary"/><StarsIcon fontSize="small" color="primary"/>
               <Typography variant="caption" display="block" gutterBottom>
-                {shopName}
+                {product.shopName}
               </Typography>
             </Grid>
           </Grid>

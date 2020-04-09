@@ -3,6 +3,7 @@ export interface Product {
     name: string,
     image: string,
     shopId: number,
+    shopName: string,
     categoryId: number,
     description: string,
     active: boolean,

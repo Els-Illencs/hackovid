@@ -16,7 +16,7 @@ const ProductList: FC = () => {
   return (
     <div>
         {productList.map((product: Product) => (
-          <ProductItem product={product} shopName="Nom comerç"/>
+          <ProductItem product={product}/>
         ))}
     </div>
   );
