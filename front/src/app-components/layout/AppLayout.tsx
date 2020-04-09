@@ -15,13 +15,12 @@ type AppLayoutProps = {
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    padding: 20,
-    marginTop: 30
+    padding: 20
   }
 }))
 
 const AppLayout: FC<AppLayoutProps> = (props) => {
-  const styles = useStyles(props);
+  const classes = useStyles(props);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const openDrawer = () =>  setDrawerOpen(true);
@@ -29,7 +28,7 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
 
   return(<>
     <ApplicationBar onMenuButtonClick={openDrawer} />
-    <main className={styles.content}>
+    <main className={classes.content}>
       <Drawer anchor="left" open={drawerOpen} onClose={closeDrawer}>
         <List>
           {props.pages.map((p) => (

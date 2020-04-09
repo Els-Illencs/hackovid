@@ -1,18 +1,14 @@
 import React from 'react';
-import { Theme, createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import StarsIcon from '@material-ui/icons/Stars';
 import { Product } from '../../models/product/Product';
 import { ProductInfoItem } from '../../components/ProductInfoItem';
 import { ShoppingCartApiClient } from '../../api/ShoppingCartApiClient';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       display: 'flex',
@@ -54,7 +50,6 @@ export interface ProductShoppingCartItemProps {
 
 export const ProductShoppingCartItem: React.FunctionComponent<ProductShoppingCartItemProps> = ({ product }) => {
   const classes = useStyles();
-  const theme = useTheme();
 
   const deleteProduct = async () => {
     await shoppingCartApiClient.deleteItem(product.id);
