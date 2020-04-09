@@ -10,12 +10,15 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: 'flex',
       flexWrap: 'wrap',
-      justifyContent: 'space-around',
+      justifyContent: 'center',
       overflow: 'hidden',
-      backgroundColor: theme.palette.background.paper,
+      backgroundColor: theme.palette.background.paper
     },
     gridList: {
-      width: 500
+      width: "100%"
+    },
+    title: {
+      fontWeight: "bold"
     },
     icon: {
       color: 'rgba(255, 255, 255, 0.54)',
@@ -24,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export interface CustomGridListProps {
-  list: Category[];
+  list: Category[]
 };
 
 export const CustomGridList: React.FunctionComponent<CustomGridListProps> = ({ list }) => {
@@ -37,6 +40,7 @@ export const CustomGridList: React.FunctionComponent<CustomGridListProps> = ({ l
           <GridListTile key={category.id}>
             <img src={category.image} alt={category.name} />
             <GridListTileBar
+              className={classes.title}
               title={category.name}
             />
           </GridListTile>
