@@ -14,6 +14,8 @@ import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { AppContext } from '..';
 import { common } from '@material-ui/core/colors';
+import { useHistory } from "react-router-dom";
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -58,6 +60,8 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
   /* Since the AppBar is 'fixed, we need to get its height dinamically and set a div with that value,
   so the AppBar is not put on top of the main page */
   const { shoppingCart: { products } } = useContext(AppContext);
+  const history = useHistory();
+
 
   const classes = useStyles();
   const [height, setHeight] = useState(0);
@@ -69,6 +73,12 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
     }
     setHeight(appBarRef.current.offsetHeight);
   }, [appBarRef]);
+
+  const redirectToProductPage = (e: any) => {
+    e.preventDefault();
+    history.push('/productes');
+  };
+  
 
   return (
     <>
@@ -92,15 +102,17 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
             </div>
           </div>
         </Toolbar>
-        <Paper className={classes.searchBarWrapper}>
-          <InputBase
-            className={classes.searchBarInput}
-            placeholder="Què estàs cercant?"
-          />
-          <IconButton className={classes.searchBarIconButton} type="submit" aria-label="search">
-            <SearchIcon />
-          </IconButton>
-        </Paper>
+        <form onSubmit={redirectToProductPage}>
+          <Paper className={classes.searchBarWrapper}>
+              <InputBase
+                className={classes.searchBarInput}
+                placeholder="Què estàs cercant?"
+              />
+              <IconButton className={classes.searchBarIconButton} type="submit" aria-label="search"> 
+                <SearchIcon/>
+              </IconButton>
+          </Paper>
+        </form>
       </AppBar>
     </>
   );
