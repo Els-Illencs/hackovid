@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useState, useEffect } from "react";
+import React, { FC, ReactNode, useState, useEffect, useContext } from "react";
 import { ApplicationBar } from "./ApplicationBar";
 import { Switch, Route, Link } from "react-router-dom";
 import { makeStyles, Drawer, List, ListItem, ListItemText } from "@material-ui/core";
@@ -6,6 +6,7 @@ import { AppContext } from "../context/AppContext";
 import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
 import { ProductShoppingCart } from "../../models/product/Product";
 import { User } from "../../models/user/User";
+import { AccountCircle } from '@material-ui/icons';
 
 type Page = {
   label: string,
@@ -20,12 +21,17 @@ type AppLayoutProps = {
 const useStyles = makeStyles((theme) => ({
   content: {
     padding: 20
+  },
+  account: {
+    marginTop: 16,
+    marginLeft: 16,
+    marginBottom: 12,
   }
 }))
 
 const shoppingCartApiClient = new ShoppingCartApiClient();
 
-const AppLayout: FC<AppLayoutProps> = (props) => {
+const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
   const styles = useStyles(props);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [shoppingCartProducts, setShoppingCartProducts] = useState<ProductShoppingCart[]>([]);
@@ -88,6 +94,7 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
     <ApplicationBar onMenuButtonClick={openDrawer} />
     <main className={styles.content}>
       <Drawer anchor="left" open={drawerOpen} onClose={closeDrawer}>
+        <AccountCircle className={styles.account} />
         <List>
           {props.pages.map((p) => (
             <ListItem button component={Link} to={p.path} onClick={closeDrawer} key={p.path}>
