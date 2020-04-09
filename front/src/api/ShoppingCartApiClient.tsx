@@ -26,4 +26,21 @@ export class ShoppingCartApiClient {
 
     return products;
   }
+
+  async deleteItem(productId: number): Promise<boolean> {
+    const res = localStorage.getItem(SHOPPING_CART_KEY);
+
+    const products: Product[] = res === null ? [] : JSON.parse(res);
+
+    const indexProduct = products.findIndex(({ id }) => id === productId);
+    if (indexProduct === -1) {
+      return false;
+    }
+
+    products.splice(indexProduct, 1);
+
+    localStorage.setItem(SHOPPING_CART_KEY, JSON.stringify(products));
+
+    return false;
+  }
 }
