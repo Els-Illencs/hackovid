@@ -43,8 +43,6 @@ const useStyles = makeStyles(() =>
   }),
 );
 
-const shoppingCartApiClient = new ShoppingCartApiClient();
-
 export interface ProductShoppingCartItemProps {
   product: ProductShoppingCart;
 };
@@ -72,6 +70,7 @@ export const ProductShoppingCartItem: React.FunctionComponent<ProductShoppingCar
           <Grid container spacing={0}>
             <Grid item xs={6} md={3}>
               <TextField className={classes.quantity} id="outlined-basic" type="number" size="small"
+                InputProps={{ inputProps: {  min: 0 } }}
                 label="Quantitat" variant="outlined" value={quantity} onChange={(event) => updateProduct(+event.target.value)}
               />
             </Grid>

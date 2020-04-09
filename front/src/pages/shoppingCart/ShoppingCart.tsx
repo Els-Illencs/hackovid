@@ -4,9 +4,7 @@ import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
 import { Card, makeStyles, Theme, createStyles, CardActionArea, Button, CardContent } from "@material-ui/core";
 import { ProductShoppingCartItem } from "./ProductShoppingCartItem";
 import { AppContext } from '../../app-components';
-
-const apiClient = new ShoppingCartApiClient();
-
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,9 +41,11 @@ export const ShoppingCart: React.FunctionComponent = () => {
               Subtotal ({products.length}) productes: {totalPrice} €
             </CardContent>
             <CardActionArea>
-              <Button className={classes.button} variant="contained" size="large" color="secondary">
-                Tramitar comanda
-              </Button>
+              <Link to="/checkout">
+                <Button className={classes.button} variant="contained" size="large" color="secondary" disabled={totalPrice === 0}>
+                  Tramitar comanda
+                </Button>
+              </Link>
             </CardActionArea>
           </>
         }
