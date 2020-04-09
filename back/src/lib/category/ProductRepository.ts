@@ -8,19 +8,19 @@ export type Product = {
     price: number,
     active: boolean,
     categoryId: number,
-    shopId: number
+    shopId: number,
+    shopName: string
 }
 
 export class ProductRepository {
     async get() {
-        const res = await pool.query<Product>('SELECT id, name, image, description, price, active, category_id as categoryId, shop_id as shopId FROM products');
+        const res = await pool.query<Product>('SELECT products.id, products.name, products.image, products.description, products.price, products.active, products.category_id as categoryId, products.shop_id as shopId, shops.name as shopName FROM products INNER JOIN shops ON products.shop_id = shops.id');
 
         return res.rows;
     }
 
     async getByCategory(categoryId: number) {
-        const res = await pool.query<Product>('SELECT id, name, image, description, price, active, category_id as categoryId, shop_id as shopId FROM products WHERE category_id = ' + categoryId);
-
+        const res = await pool.query<Product>('SELECT products.id, products.name, products.image, products.description, products.price, products.active, products.category_id as categoryId, products.shop_id as shopId, shops.name as shopName FROM products INNER JOIN shops ON products.shop_id = shops.id WHERE products.category_id = ' + categoryId);
         return res.rows;
     }
     

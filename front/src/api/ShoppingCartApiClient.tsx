@@ -1,4 +1,5 @@
 import { Product } from "../models/product/Product";
+import { ProductApiClient } from "./ProductApiClient";
 
 const SHOPPING_CART_KEY = 'shopping_cart';
 
@@ -6,7 +7,10 @@ export class ShoppingCartApiClient {
   async getItems(): Promise<Product[]> {
     const res = localStorage.getItem(SHOPPING_CART_KEY);
     if (res === null) {
-      return [];
+      // return []
+      // TODO fake data
+      console.log(await new ProductApiClient().getProducts());
+      return await new ProductApiClient().getProducts();
     }
 
     return JSON.parse(res);

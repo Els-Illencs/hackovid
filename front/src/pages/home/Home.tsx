@@ -1,8 +1,9 @@
 import React, { FC, useState, useEffect } from "react";
 import { CustomGridList } from '../../components/CustomGridList';
-import { HomeCarrousel } from '../../components/HomeCarouselInfo';
+import HomeCarousel from './HomeCarousel';
 import { Category } from '../../models/category/Category';
 import { CategoryApiClient } from '../../api/CategoryApiClient';
+import { Typography } from "@material-ui/core";
 
 const apiClient = new CategoryApiClient();
 
@@ -15,10 +16,10 @@ const Home: FC = () => {
 
     return (
         <div>
-            <h1>Ajuda al petit comerç desde la comoditat de la teva casa!</h1>
-            <HomeCarrousel />
+            <Typography variant="h4" align="center">Ajuda al petit comerç desde la comoditat de la teva casa!</Typography>
+            <HomeCarousel />
 
-            <h2>¿Què estàs buscant?</h2>
+            <h2>Què estàs cercant?</h2>
             <CustomGridList list={categories} />
         </div>
         
