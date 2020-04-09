@@ -14,7 +14,8 @@ export class ShoppingCartApiClient {
         categoryId: 1,
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         active: true,
-        price: 10
+        price: 10,
+        shopName: "Tenda 1"
       },
       {
         id: 1,
@@ -24,7 +25,8 @@ export class ShoppingCartApiClient {
         categoryId: 2,
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         active: true,
-        price: 12
+        price: 12,
+        shopName: "Tenda 2"
       }];
     }
 
