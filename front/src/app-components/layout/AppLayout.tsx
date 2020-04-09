@@ -9,9 +9,11 @@ import { User } from "../../models/user/User";
 import { AccountCircle } from '@material-ui/icons';
 
 type Page = {
-  label: string,
   path: string
-  content: ReactNode
+  content: ReactNode,
+  menuItem?: {
+    label: string
+  }
 };
 
 type AppLayoutProps = {
@@ -94,14 +96,16 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     <ApplicationBar onMenuButtonClick={openDrawer} />
     <main className={styles.content}>
       <Drawer anchor="left" open={drawerOpen} onClose={closeDrawer}>
-        <AccountCircle className={styles.account} />
-        <List>
-          {props.pages.map((p) => (
-            <ListItem button component={Link} to={p.path} onClick={closeDrawer} key={p.path}>
-              <ListItemText primary={p.label} />
-            </ListItem>
-          ))}
-        </List>
+        <div style={{minWidth: 260 }}>
+          <AccountCircle className={styles.account} />
+          <List>
+            {props.pages.filter(p => !!p.menuItem).map((p) => (
+              <ListItem button component={Link} to={p.path} onClick={closeDrawer} key={p.path}>
+                <ListItemText primary={p.menuItem!.label} />
+              </ListItem>
+            ))}
+          </List>
+        </div>
       </Drawer>
       <Switch>
         {props.pages.map((p, i) =>
