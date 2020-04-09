@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import { CssBaseline } from '@material-ui/core';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <CssBaseline />
-    <App />
+    <BrowserRouter>
+      <CssBaseline />
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

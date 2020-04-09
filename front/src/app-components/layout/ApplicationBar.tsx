@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, MouseEventHandler } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,9 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton } from '@material-ui/core';
-import { AppContext } from "../../context/AppContext";
+import { AppContext } from "../context/AppContext";
 import * as Logo from "./logo.png";
-import { ShoppingCartNumberOfItems } from '../ShoppingCartNumberOfItems';
+import { ShoppingCartNumberOfItems } from './ShoppingCartNumberOfItems';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,11 +37,11 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export interface ApplicationBarProps {
-  onTapMenu: () => void;
+type ApplicationBarProps = {
+  onMenuButtonClick: MouseEventHandler<HTMLButtonElement>
 };
 
-export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ onTapMenu }) => {
+export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ onMenuButtonClick }) => {
   const classes = useStyles();
   const { user } = useContext(AppContext);
 
@@ -53,17 +54,20 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton onClick={onTapMenu} edge="start" color="inherit" aria-label="menu">
+          <IconButton onClick={onMenuButtonClick} edge="start" color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            < img className={classes.logo} src={Logo.default} alt="" />
-
+            <Link to="/">
+              < img className={classes.logo} src={Logo.default} alt="" />
+            </Link>
           </Typography>
           <div className={classes.shoppingCart}>
-            <IconButton onClick={() => goToCardList()} edge="start" color="inherit" aria-label="menu">
-              <ShoppingCartIcon />
-            </IconButton>
+            <Link to="/carret-de-compra">
+              <IconButton onClick={() => goToCardList()} edge="start" color="inherit" aria-label="menu">
+                <ShoppingCartIcon />
+              </IconButton>
+            </Link>
             <div className={classes.shoppingCartItems}>
               <ShoppingCartNumberOfItems text={9} />
             </div>

@@ -1,0 +1,30 @@
+name: Build and publish to Heroku
+
+on:
+  push:
+    branches: [ master ]
+
+jobs: 
+  
+  build:
+    runs-on: ubuntu-18.04
+    
+    strategy:
+      matrix:
+        project:
+        - back
+        - front
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v2
+      
+    - name: Build Docker image and push to GitHub Packages
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: docker.pkg.github.com
+        repository: els-illencs/hackovid/${{ matrix.project }}
+        path: ${{ matrix.project }}
+        tags: latest,${{ github.run_number }}
