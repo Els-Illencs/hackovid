@@ -10,11 +10,15 @@ import { AppContext } from "../context/AppContext";
 import * as Logo from "./logo.png";
 import { ShoppingCartNumberOfItems } from './ShoppingCartNumberOfItems';
 import { Link } from 'react-router-dom';
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/InputBase';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      marginBottom: '9em'
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -33,7 +37,19 @@ const useStyles = makeStyles((theme: Theme) =>
       position: "absolute",
       bottom: "30px",
       right: "7px",
-    }
+    },
+    searchBarWrapper: {
+      display: 'flex',
+      alignItems: 'center',
+      margin: '10px 24px 10px 24px'
+    },
+    searchBarInput: {
+      flex: 1,
+      margin: '10px',
+    },
+    searchBarIconButton: {
+      padding: 10,
+    },
   }),
 );
 
@@ -73,6 +89,15 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
             </div>
           </div>
         </Toolbar>
+        <Paper className={classes.searchBarWrapper}>
+          <InputBase
+            className={classes.searchBarInput}
+            placeholder="¿Què estàs buscant?"
+          />
+          <IconButton className={classes.searchBarIconButton} type="submit" aria-label="search">
+            <SearchIcon />
+          </IconButton>
+        </Paper>
       </AppBar>
     </div>
   );
