@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Product } from "../../models/product/Product";
 import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
-import { Card, makeStyles, Theme, createStyles, CardHeader, CardActionArea, Button, ButtonGroup, CardContent } from "@material-ui/core";
-import { ProductInfoItem } from "../../components/ProductInfoItem";
+import { Card, makeStyles, Theme, createStyles, CardActionArea, Button, CardContent } from "@material-ui/core";
 import { ProductItem } from "../productlist/ProductItem";
 
 const apiClient = new ShoppingCartApiClient();
