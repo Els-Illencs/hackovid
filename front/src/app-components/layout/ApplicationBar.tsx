@@ -1,4 +1,4 @@
-import React, { useContext, MouseEventHandler } from 'react';
+import React, { MouseEventHandler } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton } from '@material-ui/core';
-import { AppContext } from "../context/AppContext";
 import * as Logo from "./logo.png";
 import { ShoppingCartNumberOfItems } from './ShoppingCartNumberOfItems';
 import { Link } from 'react-router-dom';
@@ -41,14 +40,14 @@ const useStyles = makeStyles((theme: Theme) =>
     searchBarWrapper: {
       display: 'flex',
       alignItems: 'center',
-      margin: '10px 24px 10px 24px'
+      margin: '0 24px 10px 24px'
     },
     searchBarInput: {
       flex: 1,
-      margin: '10px',
+      margin: '0 10px',
     },
     searchBarIconButton: {
-      padding: 10,
+      padding: '0 10px',
     },
   }),
 );
@@ -59,7 +58,6 @@ type ApplicationBarProps = {
 
 export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ onMenuButtonClick }) => {
   const classes = useStyles();
-  const { user } = useContext(AppContext);
 
   const goToCardList = () => {
     // TODO when we have the router and the Card List screen
@@ -92,7 +90,7 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
         <Paper className={classes.searchBarWrapper}>
           <InputBase
             className={classes.searchBarInput}
-            placeholder="¿Què estàs buscant?"
+            placeholder="Què estàs cercant?"
           />
           <IconButton className={classes.searchBarIconButton} type="submit" aria-label="search">
             <SearchIcon />

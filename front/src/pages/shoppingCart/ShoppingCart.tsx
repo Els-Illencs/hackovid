@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Product } from "../../models/product/Product";
 import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
-import { Card, makeStyles, Theme, createStyles, CardHeader, CardActionArea, Button, ButtonGroup, CardContent } from "@material-ui/core";
-import { ProductItem } from "../../components/ProductItem";
+import { Card, makeStyles, Theme, createStyles, CardActionArea, Button, CardContent } from "@material-ui/core";
+import { ProductShoppingCartItem } from "./ProductShoppingCartItem";
 
 const apiClient = new ShoppingCartApiClient();
 
@@ -60,7 +60,7 @@ export const ShoppingCart: React.FunctionComponent = () => {
         }
       </Card>
 
-      {products.map((productTmp) => <div className={classes.productCard}><ProductItem product={productTmp} /> </div>)}
+      {products.map((productTmp) => <div className={classes.productCard}><ProductShoppingCartItem product={productTmp} /> </div>)}
     </div>
   );
 }

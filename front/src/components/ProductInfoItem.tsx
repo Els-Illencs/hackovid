@@ -1,12 +1,10 @@
 import React from 'react';
-import { Theme, createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
+import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import StarsIcon from '@material-ui/icons/Stars';
 import { Product } from '../models/product/Product';
 
@@ -33,24 +31,16 @@ const useStyles = makeStyles((theme: Theme) =>
       width: 80,
       height: 80,
       display: 'flex',
-    },
-    mainContent: {
-      display: 'flex',
-      alignItems: 'center',
-    },
-    quantity: {
-      width: "100%"
     }
   }),
 );
 
-export interface ProductItemListProps {
+export interface ProductInfoItemProps {
   product: Product;
 };
 
-export const ProductItem: React.FunctionComponent<ProductItemListProps> = ({ product }) => {
+export const ProductInfoItem: React.FunctionComponent<ProductInfoItemProps> = ({ product, children }) => {
   const classes = useStyles();
-  const theme = useTheme();
 
   return (
     <Card className={classes.root}>
@@ -89,27 +79,13 @@ export const ProductItem: React.FunctionComponent<ProductItemListProps> = ({ pro
               </Typography>
             </Grid>
           </Grid>
-        </CardContent>
-        <CardContent>
-          <div className={classes.mainContent}>
-            <Grid container spacing={1}>
-              <Grid item xs={12}>
-                <Typography component="h5" variant="h5">
-                  {product.price} €/Kg
+          <Grid item xs={12}>
+            <Typography component="h5" variant="h5">
+              {product.price} €/Kg
                 </Typography>
-              </Grid>
-              <Grid item xs={6} md={3}>
-                <TextField className={classes.quantity} id="outlined-basic" type="number" size="small" label="Quantitat" variant="outlined" />
-              </Grid>
-              <Grid item xs={6} md={3}>
-                <Button variant="contained" size="large" color="primary">
-                  Afegir
-                </Button>
-              </Grid>
-            </Grid>
-          </div>
+          </Grid>
         </CardContent>
-
+        {children}
       </div>
     </Card>
   );
