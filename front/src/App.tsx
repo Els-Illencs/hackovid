@@ -4,6 +4,7 @@ import { AppLayout } from './app-components';
 import Home from './pages/home/Home';
 import { ShoppingCart } from './pages/shoppingCart/ShoppingCart';
 import ProductList from './pages/productlist/ProductList';
+import { Checkout } from './pages/checkout/Checkout';
 
 const theme = createMuiTheme({});
 
@@ -13,9 +14,10 @@ function App() {
     <MuiThemeProvider theme={theme}>
     <AppLayout
         pages={[
-          { label: "Inici", path: "/", content: (<Home />) },
-          { label: "CarretDeCompra", path: "/carret-de-compra", content: (<ShoppingCart />) },
-          { label: "LlistatDeProductes", path: "/productes", content: (<ProductList />) },
+          { path: "/", content: (<Home />), menuItem: { label: "Inici" } },
+          { path: "/shopping-cart", content: (<ShoppingCart />), menuItem: { label: "Cistella" } },
+          { path: "/product-list", content: (<ProductList />) },
+          { path: "/checkout", content: (<Checkout />) }
         ]} />
     </MuiThemeProvider>
   </>);
