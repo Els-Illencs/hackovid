@@ -81,7 +81,6 @@ export default function StreetRequestDialog() {
     geocodeByAddress(address)
     .then(results => getLatLng(results[0]))
     .then(({ lat, lng }) => {
-        debugger;
         const userAddress: UserAddress = {
             address: address,
             latitude: Number(lat),
@@ -112,6 +111,14 @@ export default function StreetRequestDialog() {
                 componentRestrictions: {
                   country: ['es'],
                 }
+            }}
+            inputStyle={{
+                fontSize: '18px',
+                padding: '10px 10px 10px 5px',
+                display: 'block',
+                width: '100%',
+                border: 'none',
+                borderBottom: '1px solid #757575'
             }}
         />
         </DialogContent>
