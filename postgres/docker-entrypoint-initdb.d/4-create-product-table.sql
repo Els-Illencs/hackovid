@@ -10,3 +10,6 @@ CREATE TABLE products (
 );
 
 CREATE INDEX products_name_idx ON products (name);
+INSERT INTO PRODUCTS (name, image, description, price, active, shop_id, category_id) VALUES
+('Cervesa Rosa blanca', 'https://a1.soysuper.com/cebf4d12d2f40630631e1c1198769420.1500.0.0.0.wmark.2ecbbbe0.jpg', 'Cervesa', 3.25, true, 1, 1),
+('Llet AGAMA Sencera', 'https://www.agamagrangesdemallorca.com/sites/default/files/elemento/2018-12/LC%20LecheEPak1L%2028sep18%2001.jpg', 'Llet fabricada a Mallorca', 0.79, true, 1, 2);

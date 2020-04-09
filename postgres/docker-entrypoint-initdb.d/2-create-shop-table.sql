@@ -7,3 +7,5 @@ CREATE TABLE shops (
 
 CREATE INDEX shop_name_idx ON shops (name);
 CREATE INDEX lat_lng_idx ON shops (lat, lng);
+
+INSERT INTO SHOPS (name, lat, lng) VALUES ('Agromart', 39.5800973, 2.6495213);
