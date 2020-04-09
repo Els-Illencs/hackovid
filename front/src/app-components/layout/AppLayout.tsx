@@ -10,8 +10,7 @@ type Page = {
 };
 
 type AppLayoutProps = {
-  pages: Page[],
-  onTapMenu: () => void
+  pages: Page[]
 };
 
 const useStyles = makeStyles((theme) => ({

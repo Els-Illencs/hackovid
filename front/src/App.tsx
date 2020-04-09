@@ -2,8 +2,8 @@ import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { blue, red } from '@material-ui/core/colors';
 import { AppLayout } from './app-components';
-import Home from './views/home/Home';
-import { ShoppingCart } from './views/shoppingCart/ShoppingCart';
+import Home from './pages/home/Home';
+import { ShoppingCart } from './pages/shoppingCart/ShoppingCart';
 
 const theme = createMuiTheme({
   palette: {
@@ -20,8 +20,7 @@ function App() {
 
   return (<>
     <MuiThemeProvider theme={theme}>
-      <AppLayout 
-        onTapMenu={() => console.log("onTapMenu")}
+      <AppLayout
         pages={[
           { label: "Inici", path: "/", content: (<Home />) },
           { label: "CarretDeCompra", path: "/carret-de-compra", content: (<ShoppingCart />) },
