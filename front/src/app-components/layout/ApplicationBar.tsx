@@ -77,7 +77,7 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
     e.preventDefault();
 
     history.push({
-      pathname: '/productes',
+      pathname: '/product-list',
       state: { name:  e.target.querySelector('input').value }
     });  
 
@@ -99,7 +99,7 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
             </Link>
           </Typography>
           <div className={classes.shoppingCart}>
-            <IconButton component={Link} to="/carret-de-compra" edge="start" style={{color: common.white}} aria-label="menu">
+            <IconButton component={Link} to="/shopping-cart" edge="start" style={{color: common.white}} aria-label="menu">
               <ShoppingCartIcon />
             </IconButton>
             <div className={classes.shoppingCartItems}>
