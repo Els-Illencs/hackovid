@@ -7,8 +7,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Product } from '../../models/product/Product';
 import StarsIcon from '@material-ui/icons/Stars';
+import { Product } from '../models/product/Product';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
