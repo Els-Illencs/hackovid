@@ -19,7 +19,16 @@ const styles = (theme: Theme) =>
       padding: theme.spacing(2),
     },
     suggestionAutoComplete: {
-      cursor: 'pointer'
+      cursor: 'pointer',
+      padding: '0 4px',
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+      lineHeight: '30px',
+      textAlign: 'left',
+      borderTop: '1px solid #e6e6e6',
+      fontSize: '18px',
+      color: '#000'
     }
 });
 
@@ -75,9 +84,6 @@ export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogP
       border: 'none',
       borderBottom: '1px solid #757575',
       outline:'none'
-    },
-    suggestion: {
-      cursor: 'pointer'
     }
   };
   
