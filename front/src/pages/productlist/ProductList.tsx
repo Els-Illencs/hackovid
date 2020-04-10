@@ -48,7 +48,6 @@ const ProductList: FunctionComponent = () => {
     getProducts();
   }, [address, category, name]);
 
-  console.log(isLoadingUserData, user, userAddress);
   return (
     <div>
       {isLoading || isLoadingUserData ?
