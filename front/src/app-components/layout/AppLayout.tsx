@@ -193,8 +193,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
           </Route>
         )}
       </Switch>
-    </main>}
-
+    </main>
 
   </AppContext.Provider >);
 };
