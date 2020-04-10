@@ -1,11 +1,13 @@
 import React, { useContext, useState, useEffect, FunctionComponent } from "react";
 import { ProductApiClient } from '../../api/ProductApiClient';
+import { ProductFilterFields } from "../../models/product/ProductFilterFields";
 import { Product } from "../../models/product/Product";
 import { ProductItem } from "./ProductItem";
 import { OrderItems } from "./OrderItems";
 import { useLocation } from "react-router-dom";
 import { CircularProgress, makeStyles, Theme, createStyles, Grid } from "@material-ui/core";
 import { AddressRequestDialog } from "../../components/AddressRequestDialog";
+import { ProductFilter } from "../../components/ProductFilter";
 import { AppContext } from '../../app-components';
 
 const apiClient = new ProductApiClient();
@@ -23,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const ProductList: FunctionComponent = () => {
   const { user: { isLoading: isLoadingUserData, user, userAddress, updateUserAddress } } = useContext(AppContext);
   const [productList, setProducts] = useState([] as Product[]);
+  const [productFilterFields, setProductFilterFields] = useState({} as ProductFilterFields);
   const [isLoading, setIsLoading] = useState(false);
   const query = useQuery();
 
@@ -62,6 +65,7 @@ const ProductList: FunctionComponent = () => {
 
   return (
     <div>
+      <ProductFilter productFilterFields={productFilterFields}/>
       <div className={classes.filterAndOrderBar}>
         <OrderItems />
       </div>

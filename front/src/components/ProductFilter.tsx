@@ -10,6 +10,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import { ProductFilterFields } from '../models/product/ProductFilterFields';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,13 +50,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export interface ProductFilterProps {
-    rating?: number,
-    minPrice?: number,
-    maxPrice?: number,
-    
-  };
+    productFilterFields: ProductFilterFields
+};
 
-export const ProductFilter: FunctionComponent<ProductFilterProps> = () => {
+export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFilterFields }) => {
   const classes = useStyles();
 
   return (
@@ -70,7 +68,7 @@ export const ProductFilter: FunctionComponent<ProductFilterProps> = () => {
             <Typography className={classes.heading}>Filtrar</Typography>
           </div>
           <div className={classes.column}>
-            <Typography className={classes.secondaryHeading}>Acota el llistat de procutes</Typography>
+            <Typography className={classes.secondaryHeading}>Acota el llistat de productes</Typography>
           </div>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>
