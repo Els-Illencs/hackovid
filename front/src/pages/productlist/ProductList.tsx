@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect, FunctionComponent } from "react
 import { ProductApiClient } from '../../api/ProductApiClient';
 import { Product } from "../../models/product/Product";
 import { ProductItem } from "./ProductItem";
+import { OrderItems } from "./OrderItems";
 import { useLocation } from "react-router-dom";
 import { CircularProgress, makeStyles, Theme, createStyles, Grid } from "@material-ui/core";
 import { AddressRequestDialog } from "../../components/AddressRequestDialog";
@@ -12,7 +13,10 @@ const apiClient = new ProductApiClient();
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     loading: {
-    }
+    },
+    filterAndOrderBar: {
+      paddingBottom: "1rem"
+    },
   }),
 );
 
@@ -29,6 +33,7 @@ const ProductList: FunctionComponent = () => {
   const categoryAsStr = query.get('category')
   const category = categoryAsStr ? parseInt(categoryAsStr, 10) : null;
   const name = query.get('name');
+  const order = query.get('order');
 
   useEffect(() => {
     if (!isLoadingUserData) {
@@ -44,7 +49,6 @@ const ProductList: FunctionComponent = () => {
 
     const getProducts = async () => {
       setIsLoading(true);
-
       const products =
         category ? await apiClient.getProductsBycategory(category) :
           name ? await apiClient.getProductsByName(name) :
@@ -54,10 +58,13 @@ const ProductList: FunctionComponent = () => {
       setIsLoading(false);
     }
     getProducts();
-  }, [category, name, isLoadingUserData, user, userAddress]);
+  }, [category, name, isLoadingUserData, user, userAddress, order]);
 
   return (
     <div>
+      <div className={classes.filterAndOrderBar}>
+        <OrderItems />
+      </div>
       {isLoading || isLoadingUserData ?
         <Grid
           container

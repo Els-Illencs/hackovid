@@ -38,7 +38,7 @@ export class ProductRepository {
     }
     
     async getByName(name: string) {
-        const searchName = name.replace(/\s/g, ' & ');
+        const searchName = name.replace(/\s/g, ' | ');
 
         const res = await pool.query<Product>(`
             SELECT id, name, image, description, price, active, categoryId, shopId, shopName, score, product_type_id, product_type_name

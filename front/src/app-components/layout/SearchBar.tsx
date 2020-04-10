@@ -2,6 +2,7 @@ import React, { FC, FormEvent, useState } from "react";
 import { Paper, InputBase, IconButton, makeStyles, Theme, createStyles } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import { Redirect } from "react-router-dom";
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -23,7 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const SearchBar: FC = () => {
     const classes = useStyles();
-    const [redirectToProductPage, setRedirectToProductPage] = useState<{name: string} | null>(null);
+    const [redirectToProductPage, setRedirectToProductPage] = useState<string | null>(null);
+    const history = useHistory()
 
     const doRedirectToProductPage = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -37,14 +39,18 @@ const SearchBar: FC = () => {
             return;
         }
 
-        setRedirectToProductPage({
-            name: searchText
-        });
+        const regex = /(name=)[^\&]+/;
+        const operator = history.location.search.indexOf("?") > -1 ? "&": "?"
+        setRedirectToProductPage(
+            regex.test(history.location.search) ? 
+                history.location.search.replace(regex, '$1' + searchText) :
+                `${history.location.search}${operator}name=${searchText}`
+        );
     };
 
 
     return (<>
-        {redirectToProductPage && <Redirect push to={`/product-list?name=${redirectToProductPage.name}`} /> }
+        {redirectToProductPage && <Redirect push to={`/product-list${redirectToProductPage}`} /> }
         <form onSubmit={doRedirectToProductPage}>
             <Paper className={classes.searchBarWrapper}>
                 <InputBase
