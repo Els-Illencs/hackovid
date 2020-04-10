@@ -28,12 +28,14 @@ const ProductList: FunctionComponent = () => {
   const query = useQuery();
 
   const retrieveProductFilterFieldsfromURL = (): ProductFilterFields => {
-    return {
+    const productFilterFields: ProductFilterFields =  {
       minPrice: query.get('minPrice') ? Number(query.get('minPrice')) : undefined,
       maxPrice: query.get('maxPrice')? Number(query.get('maxPrice')) : undefined,
       rating: query.get('rating') ? Number(query.get('rating')) : undefined,
       distance: query.get('distance') ? Number(query.get('distance')) : 1
-    } as ProductFilterFields;
+    };
+    console.log(productFilterFields);
+    return productFilterFields;
   }
 
   const { user: { isLoading: isLoadingUserData, user, userAddress, updateUserAddress } } = useContext(AppContext);
@@ -76,7 +78,7 @@ const ProductList: FunctionComponent = () => {
       setIsLoading(false);
     }
     getProducts();
-  }, [category, name, isLoadingUserData, user, userAddress, order]);
+  }, [category, name, isLoadingUserData, user, userAddress, order, productFilterFields]);
 
   const onChangeProductFilterFields = (productFilterFields: ProductFilterFields): void => {
     setProductFilterFields(productFilterFields);
