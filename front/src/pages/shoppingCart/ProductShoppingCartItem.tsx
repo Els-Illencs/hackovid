@@ -49,17 +49,17 @@ export interface ProductShoppingCartItemProps {
 export const ProductShoppingCartItem: React.FunctionComponent<ProductShoppingCartItemProps> = ({ product }) => {
   const { shoppingCart } = useContext(AppContext);
   const classes = useStyles();
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState("");
 
   useEffect(() => {
-    setQuantity(product.quantity)
+    setQuantity(String(product.quantity));
   }, [product]);
 
   const deleteProduct = () => shoppingCart.deleteProduct(product.id);
 
-  const updateProduct = (newQuantity: number) => {
+  const updateProduct = (newQuantity: string) => {
     setQuantity(newQuantity);
-    shoppingCart.updateProduct({ ...product, quantity: newQuantity, });
+    shoppingCart.updateProduct({ ...product, quantity: +newQuantity, });
   }
 
   return (
@@ -69,13 +69,13 @@ export const ProductShoppingCartItem: React.FunctionComponent<ProductShoppingCar
           <Grid container spacing={1}>
             <Grid item xs={6} md={3}>
               <TextField className={classes.quantity} id="outlined-basic" type="number" size="small"
-                InputProps={{ inputProps: {  min: 0 } }}
-                label="Quantitat" variant="outlined" value={quantity} onChange={(event) => updateProduct(+event.target.value)}
+                InputProps={{ inputProps: { min: 0 } }}
+                label="Quantitat" variant="outlined" value={quantity} onChange={(event) => updateProduct(event.target.value)}
               />
             </Grid>
             <Grid item xs={6} md={3}>
               <Button onClick={deleteProduct} variant="contained" size="medium" color="primary">
-                Elimnar
+                Eliminar
               </Button>
             </Grid>
           </Grid>

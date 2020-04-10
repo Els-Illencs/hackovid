@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  emailError: {
+    color: "red"
+  }
 }));
 
 const Login: FunctionComponent = () => {
@@ -39,10 +42,15 @@ const Login: FunctionComponent = () => {
   const { user: { updateUser } } = useContext(AppContext);
 
   const [email, setEmail] = useState("");
+  const [isEmailValidated, setIsEmailValidated] = useState(false);
   const [password, setPassword] = useState("");
 
   const applyLogin = async (event) => {
     event.preventDefault();
+    if (!isEmailCorrect()) {
+      setIsEmailValidated(true);
+      return;
+    }
     try {
       await loginApiClient.login(email, password);
     } catch (e) {
@@ -65,6 +73,9 @@ const Login: FunctionComponent = () => {
     }
   }
 
+  const isEmailCorrect = () => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+
+  console.log(isEmailCorrect());
   return (
     <Container maxWidth="xs">
       <div className={classes.paper}>
@@ -88,6 +99,9 @@ const Login: FunctionComponent = () => {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
+          {isEmailValidated && !isEmailCorrect() && <Typography component="p" className={classes.emailError}>
+            El format del correu electronic no és vàlid
+          </Typography>}
           <TextField
             variant="outlined"
             margin="normal"

@@ -26,14 +26,14 @@ export interface ProductItemProps {
 
 export const ProductItem: React.FunctionComponent<ProductItemProps> = ({ product }) => {
   const { shoppingCart } = useContext(AppContext);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState("");
 
   const classes = useStyles();
 
   const addProductToShoppingCart = async () => {
     const shoppingCartProduct: ProductShoppingCart = {
       ...product,
-      quantity,
+      quantity: +quantity,
     }
     shoppingCart.addProduct(shoppingCartProduct);
   }
@@ -44,13 +44,13 @@ export const ProductItem: React.FunctionComponent<ProductItemProps> = ({ product
         <div className={classes.mainContent}>
           <Grid container spacing={1}>
             <Grid item xs={6} md={3}>
-              <TextField className={classes.quantity} id="outlined-basic" type="number" size="small" label="Quantitat"  
-              InputProps={{ inputProps: {  min: 0 } }}
-                variant="outlined" value={quantity} onChange={(event) => setQuantity(+event.target.value)}
+              <TextField className={classes.quantity} id="outlined-basic" type="number" size="small" label="Quantitat"
+                InputProps={{ inputProps: { min: 0 } }}
+                variant="outlined" value={quantity} onChange={(event) => setQuantity(event.target.value)}
               />
             </Grid>
             <Grid item xs={6} md={3}>
-              <Button onClick={addProductToShoppingCart} variant="contained" size="large" color="primary" disabled={quantity === 0}>
+              <Button onClick={addProductToShoppingCart} variant="contained" size="large" color="primary" disabled={quantity === "" || +quantity === 0}>
                 Afegir
                 </Button>
             </Grid>
