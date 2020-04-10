@@ -11,7 +11,6 @@ import { ProductFilter } from "../../components/ProductFilter";
 import { AppContext } from '../../app-components';
 import { useHistory } from 'react-router-dom'
 import { Redirect } from "react-router-dom";
-import queryString from 'query-string';
 
 const apiClient = new ProductApiClient();
 
@@ -73,12 +72,11 @@ const ProductList: FunctionComponent = () => {
   }, []);
 
   const retrieveProductFilterFieldsfromURL = (): ProductFilterFields => {
-    const query = queryString.parse(history.location.search);
     return {
-      minPrice: query['minPrice'] ? Number(query['minPrice']) : undefined,
-      maxPrice: query['maxPrice'] ? Number(query['maxPrice']) : undefined,
-      rating: query['rating']? Number(query['rating']) : undefined,
-      distance: query['distance'] ? Number(query['distance']) : undefined
+      minPrice: query.get('minPrice') ? Number(query.get('minPrice')) : undefined,
+      maxPrice: query.get('maxPrice')? Number(query.get('maxPrice')) : undefined,
+      rating: query.get('rating') ? Number(query.get('rating')) : undefined,
+      distance: query.get('distance') ? Number(query.get('distance')) : undefined
     } as ProductFilterFields;
   }
 
