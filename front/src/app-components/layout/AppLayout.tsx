@@ -8,6 +8,8 @@ import { ProductShoppingCart } from "../../models/product/Product";
 import { User } from "../../models/user/User";
 import { AccountCircle } from '@material-ui/icons';
 import { common } from '@material-ui/core/colors';
+import { UserAddress } from "../../models/user/UserAddress";
+import { UserApiClient } from "../../api/UserApiClient";
 
 type Page = {
   path: string
@@ -42,11 +44,17 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 19,
     marginLeft: 16,
     fontStyle: "italic",
-    color: common.white
+    color: common.white,
+    textDecoration: "none"
+  },
+  userNameLink: {
+    color: common.white,
+    textDecoration: "none"
   }
-  }))
+}))
 
 const shoppingCartApiClient = new ShoppingCartApiClient();
+const userApiClient: UserApiClient = new UserApiClient();
 
 const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
   const matchPageWithAppBar = useRouteMatch(
@@ -54,8 +62,9 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
   const classes = useStyles(props);
   const styles = useStyles(props);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [user, setUser] = useState<User | undefined>(mockUser); // TODO add logic to get the real data of the user
+  const [user, setUser] = useState<User | undefined>();
   const [shoppingCartProducts, setShoppingCartProducts] = useState<ProductShoppingCart[]>([]);
+  const [userAddress, setUserAddress] = useState<UserAddress | undefined>();
 
   const openDrawer = () => setDrawerOpen(true);
   const closeDrawer = () => setDrawerOpen(false);
@@ -63,6 +72,16 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
   useEffect(() => {
     const getShoppingCartProducts = async () => setShoppingCartProducts(await shoppingCartApiClient.getItems());
     getShoppingCartProducts();
+  }, []);
+
+  useEffect(() => {
+    const getUserAddressFromLocalStorage = async () => setUserAddress(await userApiClient.getStoredUserAddress());
+    getUserAddressFromLocalStorage();
+  }, []);
+
+  useEffect(() => {
+    const getUserFromLocalStorage = async () => setUser(await userApiClient.getUser());
+    getUserFromLocalStorage();
   }, []);
 
   // TODO move AppContext in a different file / component
@@ -104,10 +123,22 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     setShoppingCartProducts(nextShoppingCartProducts);
   }
 
+  const updateUserAddress = (userAddress: UserAddress | undefined) => {
+    userApiClient.saveUserAddress(userAddress);
+    setUserAddress(userAddress);
+  }
+
+  const updateUser = (user: User | undefined) => {
+    userApiClient.saveUser(user);
+    setUser(user);
+  }
+
   return (<AppContext.Provider value={{
     user: {
       user,
-      updateUser: (user: User | undefined) => setUser(user),
+      updateUser,
+      userAddress,
+      updateUserAddress,
     },
     shoppingCart: {
       products: shoppingCartProducts,
@@ -121,15 +152,19 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
       <Drawer anchor="left" open={drawerOpen} onClose={closeDrawer}>
         <div style={{ minWidth: 260 }}>
           <Grid container spacing={1} className={classes.accountArea}>
-            <Grid item xs={2}>
-              <AccountCircle fontSize="large" className={styles.account} />
-            </Grid>
-            <Grid item xs={10}>
-              {user && <Typography className={styles.userName} variant="body1" color="textSecondary">
-                Hola {user.name}
-              </Typography>
-              }
-            </Grid>
+            <>
+              <Grid item xs={2}>
+                {!user ? <Link to="/login" onClick={() => setDrawerOpen(false)}>
+                  <AccountCircle fontSize="large" className={styles.account} />
+                </Link> : <AccountCircle fontSize="large" className={styles.account} />
+                }
+              </Grid>
+              <Grid item xs={10}>
+                <Typography className={styles.userName} variant="body1" color="textSecondary">
+                  {user ? `Hola ${user.name}` : <Link to="/login" onClick={() => setDrawerOpen(false)} className={styles.userNameLink}>Apply login</Link>}
+                </Typography>
+              </Grid>
+            </>
           </Grid>
           <List>
             {props.pages.filter(p => !!p.menuItem).map((p) => (
