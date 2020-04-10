@@ -84,13 +84,13 @@ function useAddress() {
   const userAddress = context.user.userAddress?.address || undefined;
   const logedUserAddress = context.user.user?.address || undefined;
   const [address, setAddress] = useState(userAddress || logedUserAddress);
-  const [openDialog, setOpenDialog] = useState(!address);
+  const [openDialog, setOpenDialog] = useState(!address || address === "");
 
   useEffect(() => {
     const userAddress = context.user.userAddress?.address || undefined;
     const logedUserAddress = context.user.user?.address || undefined;
     setAddress(userAddress || logedUserAddress);
-    setOpenDialog(context.user.userAddress?.address === "" || context.user.user?.address === "");
+    setOpenDialog(!address || address === "");
   }, [context, openDialog]);
 
   return {
