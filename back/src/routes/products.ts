@@ -10,6 +10,11 @@ router.get('/', async function(req, res, next) {
     let productName: string = req.query.name ? req.query.name : null;
     let order: string = req.query.order ? req.query.order : null;
 
+    let minPrice: number = req.query.minPrice ? req.query.minPrice : null;
+    let maxPrice: number = req.query.maxPrice ? req.query.maxPrice : null;
+    let rating: number = req.query.rating ? req.query.rating : null;
+    let distance: number = req.query.distance ? req.query.distance : null;
+
     if(categoryId) {
         res.send(await productRepository.getByCategory(categoryId, order));
     } else if(productName) {

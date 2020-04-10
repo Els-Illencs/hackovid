@@ -76,7 +76,7 @@ const ProductList: FunctionComponent = () => {
       minPrice: query.get('minPrice') ? Number(query.get('minPrice')) : undefined,
       maxPrice: query.get('maxPrice')? Number(query.get('maxPrice')) : undefined,
       rating: query.get('rating') ? Number(query.get('rating')) : undefined,
-      distance: query.get('distance') ? Number(query.get('distance')) : undefined
+      distance: query.get('distance') ? Number(query.get('distance')) : 1
     } as ProductFilterFields;
   }
 
