@@ -1,10 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { KeyboardArrowRight } from '@material-ui/icons';
 import { Card, makeStyles, Theme, createStyles, Button, Grid, Typography, IconButton } from "@material-ui/core";
 import { AppContext } from '../../app-components';
 import { ProductInfoItem } from "../../components/ProductInfoItem";
 import { useHistory } from "react-router-dom";
 import { saveLoginRedirect } from "../../services/LoginService";
+import { AddressRequestDialog } from "../../components/AddressRequestDialog";
+import { UserAddress } from "../../models/user/UserAddress";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,10 +44,16 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Checkout: React.FunctionComponent = () => {
-  const { user: { user }, shoppingCart: { products } } = useContext(AppContext);
-  const history = useHistory();
+  const { user: { user, userAddress }, shoppingCart: { products } } = useContext(AppContext);
+  const [isShowingSelectAddress, setIsShowingSelectAddress] = useState(false);
+  const [address, setAddress] = useState("");
 
+  const history = useHistory();
   const classes = useStyles();
+
+  useEffect(() => {
+    setAddress(userAddress !== undefined ? userAddress.address : user?.address!);
+  }, [userAddress, user]);
 
   useEffect(() => {
     if (!user) {
@@ -54,6 +62,11 @@ export const Checkout: React.FunctionComponent = () => {
     }
   }, []);
 
+  const updateAddress = (address: UserAddress) => {
+    setAddress(address.address);
+    // TODO reload data to check if deliver is available
+  }
+
   const totalPriceProducts: number = products.reduce((priceSum, { price, quantity }) => priceSum + price * quantity, 0);
   const shippingPrice = 10;
   const totalPrice: number = totalPriceProducts + shippingPrice;
@@ -61,7 +74,7 @@ export const Checkout: React.FunctionComponent = () => {
   const isBuyButtonDisabled = true; // TODO add logic
 
   return (
-    <>{String(user !== undefined)}{user && <div>
+    <>{user && <div>
       <Button className={classes.button} variant="contained" size="large" color="primary" disabled={isBuyButtonDisabled}>
         Comprar ara
       </Button>
@@ -94,11 +107,11 @@ export const Checkout: React.FunctionComponent = () => {
               {user!.name} {user!.surname}
             </Typography>
             <Typography component="p" className={classes.marginBottom}>
-              {user!.address}
+              {address}
             </Typography>
           </Grid>
           <Grid item xs={1} className={classes.arrowButton}>
-            <IconButton onClick={() => { }} edge="start" color="inherit" aria-label="menu">
+            <IconButton onClick={() => setIsShowingSelectAddress(true)} edge="start" color="inherit" aria-label="menu">
               <KeyboardArrowRight />
             </IconButton>
           </Grid>
@@ -126,7 +139,9 @@ export const Checkout: React.FunctionComponent = () => {
       <Button className={classes.button} variant="contained" size="large" color="primary" disabled={isBuyButtonDisabled}>
         Comprar ara
       </Button>
-    </div>}
+      <AddressRequestDialog open={isShowingSelectAddress} onClose={() => setIsShowingSelectAddress(false)} onSelectAddress={updateAddress} />
+    </div>
+    }
     </>
   );
 }
