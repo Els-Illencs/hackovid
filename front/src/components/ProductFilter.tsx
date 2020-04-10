@@ -113,7 +113,7 @@ export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFi
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item md={4} xs={12}>
+                <Grid item md={4} xs={12} justify="center">
                     <Typography component="legend">Valoració
                     </Typography>
                     <Rating

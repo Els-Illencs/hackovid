@@ -11,7 +11,6 @@ import { ProductFilter } from "../../components/ProductFilter";
 import { AppContext } from '../../app-components';
 import { useHistory } from 'react-router-dom'
 import { Redirect } from "react-router-dom";
-import queryString from 'query-string';
 
 const apiClient = new ProductApiClient();
 
@@ -58,9 +57,9 @@ const ProductList: FunctionComponent = () => {
     const getProducts = async () => {
       setIsLoading(true);
       const products =
-        category ? await apiClient.getProductsBycategory(category, order, userAddress) :
-          name ? await apiClient.getProductsByName(name, order, userAddress) :
-            await apiClient.getProducts(order, userAddress);
+        category ? await apiClient.getProductsBycategory(category, order, productFilterFields, userAddress) :
+          name ? await apiClient.getProductsByName(name, order, productFilterFields, userAddress) :
+            await apiClient.getProducts(order, productFilterFields, userAddress);
       setProducts(products)
 
       setIsLoading(false);
@@ -73,12 +72,11 @@ const ProductList: FunctionComponent = () => {
   }, []);
 
   const retrieveProductFilterFieldsfromURL = (): ProductFilterFields => {
-    const query = queryString.parse(history.location.search);
     return {
-      minPrice: query['minPrice'] ? Number(query['minPrice']) : undefined,
-      maxPrice: query['maxPrice'] ? Number(query['maxPrice']) : undefined,
-      rating: query['rating']? Number(query['rating']) : undefined,
-      distance: query['distance'] ? Number(query['distance']) : undefined
+      minPrice: query.get('minPrice') ? Number(query.get('minPrice')) : undefined,
+      maxPrice: query.get('maxPrice')? Number(query.get('maxPrice')) : undefined,
+      rating: query.get('rating') ? Number(query.get('rating')) : undefined,
+      distance: query.get('distance') ? Number(query.get('distance')) : 1
     } as ProductFilterFields;
   }
 
@@ -130,11 +128,6 @@ const ProductList: FunctionComponent = () => {
   return (
     <div>
       <Grid container>
-      <Grid item md={3} xs={12}>
-      <div className={classes.filterAndOrderBar}>
-        <OrderItems />
-      </div>
-      </Grid>
       <Grid item md={9} xs={12}>
       {redirectToProductPage && <Redirect push to={`/product-list${redirectToProductPage}`} /> }
       <ProductFilter 
@@ -142,6 +135,11 @@ const ProductList: FunctionComponent = () => {
         onChangeProductFilterFields={onChangeProductFilterFields}
         onClickAplyFilter={onClickAplyFilter}
       />
+      </Grid>
+      <Grid item md={3} xs={12}>
+      <div className={classes.filterAndOrderBar}>
+        <OrderItems />
+      </div>
       </Grid>
       </Grid>
       {isLoading || isLoadingUserData ?
