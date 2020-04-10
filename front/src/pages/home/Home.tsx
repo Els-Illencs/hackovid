@@ -36,6 +36,20 @@ const IconElement: FC<{icon: ReactNode, primary: string, secondary: string}> = (
         </Grid>
     </Grid>)
 
+const Section: FC<{title: string}> = ({title, children}) => (<>
+    <Typography variant="h5" align="center">
+        <Box component="span" fontWeight="bold">
+            {title}
+        </Box>
+    </Typography>
+
+    {children}
+</>);
+
+const SectionDivider: FC<{margin?: number}> = ({margin}) => (
+    <Divider style={{ margin: `${margin || 20}px 0` }} />
+);
+
 const Home: FC = () => {
     const classes = useStyles();
     const [categories, setCategories] = useState([] as Category[]);
@@ -46,84 +60,66 @@ const Home: FC = () => {
 
     return (
         <div>
-            <Typography variant="h5" align="center">
-                <Box component="span" fontWeight="bold">
-                    Ajuda al petit comerç desde la comoditat de la teva casa!
-                </Box>
-            </Typography>
-            <HomeCarousel />
+            <Section title="Ajuda al petit comerç desde la comoditat de la teva casa!">
+                <HomeCarousel />
 
-            <Grid container justify="center">
-                <HashLink to="/home#home-more-info" smooth>
-                    <Button>
-                        SABER MÉS
-                    </Button>
-                </HashLink>
-            </Grid>
+                <Grid container justify="center">
+                    <HashLink to="/home#home-more-info" smooth>
+                        <Button>
+                            SABER MÉS
+                        </Button>
+                    </HashLink>
+                </Grid>
+            </Section>
 
-            <Divider style={{ margin: '20px 0' }} />
+            <SectionDivider />
 
-            <Typography variant="h5" align="center">
-                <Box component="span" fontWeight="bold">
-                    Les nostres categories
-                </Box>
-            </Typography>
-            <CustomGridList list={categories} />
+            <Section title="Les nostres categories">
+                <CustomGridList list={categories} />
+            </Section>
 
             <span  id="home-more-info" />
-            <Divider style={{ margin: '50px 0' }} />
-            
-            <Typography  variant="h5" align="center">
-                <Box component="span" fontWeight="bold">
-                    El comerç local et necessita!
-                </Box>
-            </Typography>
-            <IconElement 
-                icon={<BusinessIcon className={classes.largeIcon} />}
-                primary="Dificultat per competir" 
-                secondary="Les grans superficies i les plataformes online proporcionen una quantitat de serveis difícils d'igualar" />
-            <IconElement 
-                icon={<LocalHospitalIcon className={classes.largeIcon} />}
-                primary="Crisis del confinament" 
-                secondary="La situació actual de confinament està provocant un impacte molt negatiu en els petits comerços" />
-            <IconElement 
-                icon={<LoopIcon className={classes.largeIcon} />}
-                primary="Economia sostenible" 
-                secondary="Invertir en el comerç local ens beneficia a tots: consumidors, productors locals..." />
-                            
-            <Divider style={{ margin: '20px 0' }} />
+            <SectionDivider margin={50} />
 
-            <Typography variant="h5" align="center">
-                <Box component="span" fontWeight="bold">
-                    Estalvia temps fent la compra al teu barri amb totes les comoditats
-                </Box>
-            </Typography>
-            <IconElement 
-                icon={<CreditCardIcon className={classes.largeIcon} />}
-                primary="Pagament online o a la tenda" 
-                secondary="Pots escollir el mètode de pagament que més et convingui" />
-            <IconElement 
-                icon={<LocalShippingIcon className={classes.largeIcon} />}
-                primary="T'ho portem a casa (si vols)" 
-                secondary="Evita sortir al carrer, nosaltres et duim tot el que necessitis" />
-            <IconElement 
-                icon={<StoreMallDirectoryIcon className={classes.largeIcon} />}
-                primary="Comanda única" 
-                secondary="Compra sense preocupar-te de quin comerç té cada producte" />
-            <IconElement 
-                icon={<LocationOnIcon className={classes.largeIcon} />}
-                primary="Seguiment de la comanda" 
-                secondary="Coneix l'estat de la compra, evita anar a buscar-la fins que estigui preparada" />
-       
+            <Section title="El comerç local et necessita!">
+                <IconElement 
+                    icon={<BusinessIcon className={classes.largeIcon} />}
+                    primary="Dificultat per competir" 
+                    secondary="Les grans superficies i les plataformes online proporcionen una quantitat de serveis difícils d'igualar" />
+                <IconElement 
+                    icon={<LocalHospitalIcon className={classes.largeIcon} />}
+                    primary="Crisis del confinament" 
+                    secondary="La situació actual de confinament està provocant un impacte molt negatiu en els petits comerços" />
+                <IconElement 
+                    icon={<LoopIcon className={classes.largeIcon} />}
+                    primary="Economia sostenible" 
+                    secondary="Invertir en el comerç local ens beneficia a tots: consumidors, productors locals..." />
+            </Section>
 
-            <Divider style={{ margin: '20px 0' }} />
+            <SectionDivider />
 
-            <Typography variant="h5" align="center">
-                <Box component="span" fontWeight="bold">
-                Salvem entre tots el comerç local sense sacrificar l'ús de les darreres tecnologies 
-                </Box>
-            </Typography>
-       
+            <Section title="Estalvia temps fent la compra al teu barri amb totes les comoditats">
+                <IconElement 
+                    icon={<CreditCardIcon className={classes.largeIcon} />}
+                    primary="Pagament online o a la tenda" 
+                    secondary="Pots escollir el mètode de pagament que més et convingui" />
+                <IconElement 
+                    icon={<LocalShippingIcon className={classes.largeIcon} />}
+                    primary="T'ho portem a casa (si vols)" 
+                    secondary="Evita sortir al carrer, nosaltres et duim tot el que necessitis" />
+                <IconElement 
+                    icon={<StoreMallDirectoryIcon className={classes.largeIcon} />}
+                    primary="Comanda única" 
+                    secondary="Compra sense preocupar-te de quin comerç té cada producte" />
+                <IconElement 
+                    icon={<LocationOnIcon className={classes.largeIcon} />}
+                    primary="Seguiment de la comanda" 
+                    secondary="Coneix l'estat de la compra, evita anar a buscar-la fins que estigui preparada" />
+            </Section>
+
+            <SectionDivider />
+
+            <Section title="Salvem entre tots el comerç local sense sacrificar l'ús de les darreres tecnologies" />
         </div>
         
     );
