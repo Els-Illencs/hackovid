@@ -23,7 +23,6 @@ const styles = (theme: Theme) =>
       padding: '0 4px',
       textOverflow: 'ellipsis',
       overflow: 'hidden',
-      whiteSpace: 'nowrap',
       lineHeight: '30px',
       textAlign: 'left',
       borderTop: '1px solid #e6e6e6',
@@ -52,7 +51,6 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
 const DialogContent = withStyles((theme: Theme) => ({
   root: {
     padding: theme.spacing(2),
-    maxWidth: '600px',
   },
 }))(MuiDialogContent);
 
