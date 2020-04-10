@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FunctionComponent, useState, useContext } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -6,6 +6,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useHistory } from "react-router-dom";
+import { LoginApiClient } from '../../api/LoginApiClient';
+import { AppContext } from '../../app-components';
+
+const loginApiClient = new LoginApiClient();
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -27,8 +32,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login: FC = () => {
+const Login: FunctionComponent = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const { user: { updateUser } } = useContext(AppContext);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const applyLogin = async (event) => {
+    event.preventDefault();
+    console.log(email, password)
+    try {
+      await loginApiClient.login(email, password);
+    } catch (e) {
+      console.log(e);
+      // TODO provisional until backend is done
+      updateUser({
+        id: 1,
+        name: "Name",
+        surname: "Surname",
+        email: "example@example.com",
+        address: "Avinguda segona, 24A, 3B",
+        phone: "666333999666",
+      });
+      history.goBack(); // TODO save previous url and go to that one instead of doing goBack
+    }
+  }
 
   return (
     <Container maxWidth="xs">
@@ -50,6 +80,8 @@ const Login: FC = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
           />
           <TextField
             variant="outlined"
@@ -61,6 +93,8 @@ const Login: FC = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
           />
           <Button
             type="submit"
@@ -68,6 +102,8 @@ const Login: FC = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={email === '' || password === ''}
+            onClick={applyLogin}
           >
             Accedeix
           </Button>
