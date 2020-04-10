@@ -46,6 +46,14 @@ const Section: FC<{title: string}> = ({title, children}) => (<>
     {children}
 </>);
 
+const CallToActionButton: FC<{elementToScrollId: string}> = ({elementToScrollId, children}) => (
+    <Grid container justify="center">
+        <HashLink to={`/home#${elementToScrollId}`} smooth>
+            <Button>{children}</Button>
+        </HashLink>
+    </Grid>
+)
+
 const SmallDivider: FC = () => (<Divider style={{ margin: '20px 0' }} />);
 const LargeDivider: FC = () => (<Divider style={{ margin: '50px 0' }} />);
 
@@ -61,14 +69,7 @@ const Home: FC = () => {
         <div>
             <Section title="Ajuda al petit comerç desde la comoditat de la teva casa!">
                 <HomeCarousel />
-
-                <Grid container justify="center">
-                    <HashLink to="/home#home-more-info" smooth>
-                        <Button>
-                            SABER MÉS
-                        </Button>
-                    </HashLink>
-                </Grid>
+                <CallToActionButton elementToScrollId="home-more-info">SABER MÉS</CallToActionButton>
             </Section>
 
             <SmallDivider />
@@ -132,6 +133,7 @@ const Home: FC = () => {
                     primary="Motiu 3" 
                     secondary="Descripció" />
 
+                <CallToActionButton elementToScrollId="home-contact-us">CONTACTA AMB NOSALTRES</CallToActionButton>
             </Section>
 
             <SmallDivider />
@@ -149,6 +151,15 @@ const Home: FC = () => {
                     icon={<LocationOnIcon className={classes.largeIcon} />}
                     primary="Motiu 3" 
                     secondary="Descripció" />
+
+                <CallToActionButton elementToScrollId="home-contact-us">CONTACTA AMB NOSALTRES</CallToActionButton>
+            </Section>
+
+            <span id="home-contact-us" />
+            <LargeDivider />
+
+            <Section title="Alguna pregunta?">
+                Aquí anirà es formulari. En construcció...
             </Section>
 
             <LargeDivider />
