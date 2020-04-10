@@ -21,10 +21,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const ProductList: FunctionComponent = () => {
+  const { user: { isLoading: isLoadingUserData, user, userAddress, updateUserAddress } } = useContext(AppContext);
   const [productList, setProducts] = useState([] as Product[]);
   const [isLoading, setIsLoading] = useState(false);
   const query = useQuery();
-  const { address, requestAddressComponent } = useAddress();
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   const classes = useStyles();
 
@@ -33,16 +35,20 @@ const ProductList: FunctionComponent = () => {
   const name = query.get('name');
   const order = query.get('order');
 
-  console.log("order", order);
+  useEffect(() => {
+    if (!isLoadingUserData) {
+      setOpenDialog(user === undefined && userAddress !== undefined && userAddress.address === '');
+    }
+  }, [isLoadingUserData, user, userAddress]);
 
   useEffect(() => {
-    if (!address) {
+    const isUserAddressMissing = user === undefined && userAddress !== undefined && userAddress.address === '';
+    if (openDialog || isLoadingUserData || isUserAddressMissing) {
       return;
     }
 
     const getProducts = async () => {
       setIsLoading(true);
-
       const products =
         category ? await apiClient.getProductsBycategory(category) :
           name ? await apiClient.getProductsByName(name) :
@@ -52,14 +58,15 @@ const ProductList: FunctionComponent = () => {
       setIsLoading(false);
     }
     getProducts();
-  }, [address, category, name, order]);
+  }, [category, name, isLoadingUserData, user, userAddress, order]);
 
+  console.log("ere", user, isLoadingUserData, userAddress);
   return (
     <div>
       <div className={classes.filterAndOrderBar}>
         <OrderItems />
       </div>
-      {isLoading ?
+      {isLoading || isLoadingUserData ?
         <Grid
           container
           spacing={0}
@@ -71,13 +78,13 @@ const ProductList: FunctionComponent = () => {
           <CircularProgress className={classes.loading} color="primary" />
         </Grid>
         :
-        productList.length > 0 ?
-          productList.map((product: Product) => (
+        <>
+          {productList.map((product: Product) => (
             <ProductItem key={String(product.id)} product={product} />
-          )) :
-          "No hem trobat resultats amb aquests criteris de cerca."
-        }
-      {requestAddressComponent}
+          ))}
+          {openDialog && <AddressRequestDialog open={openDialog} onClose={() => setOpenDialog(false)} onSelectAddress={updateUserAddress} />}
+        </>
+      }
     </div>
   );
 }
@@ -86,19 +93,4 @@ export default ProductList;
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
-}
-
-function useAddress() {
-  const context = useContext(AppContext);
-  const [address, setAddress] = useState(context.user.userAddress?.address || undefined);
-  const [openDialog, setOpenDialog] = useState(!address);
-
-  useEffect(() => {
-    setAddress(context.user.userAddress?.address || undefined);
-  }, [context, openDialog]);
-
-  return {
-    address,
-    requestAddressComponent: (<AddressRequestDialog open={openDialog} onClose={() => setOpenDialog(false)} onSelectAddress={context.user.updateUserAddress} />)
-  };
 }

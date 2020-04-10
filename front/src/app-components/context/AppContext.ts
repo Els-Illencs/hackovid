@@ -5,6 +5,7 @@ import { UserAddress } from "../../models/user/UserAddress";
 
 type App = {
     user: {
+        isLoading: boolean,
         user: User | undefined,
         updateUser: (user: User | undefined) => void, // undefined value in the param to disconnect
         userAddress: UserAddress | undefined,

@@ -17,9 +17,18 @@ const styles = (theme: Theme) =>
     root: {
       margin: 0,
       padding: theme.spacing(2),
+      width: '100%'
     },
     suggestionAutoComplete: {
-      cursor: 'pointer'
+      cursor: 'pointer',
+      padding: '0 4px',
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      lineHeight: '30px',
+      textAlign: 'left',
+      borderTop: '1px solid #e6e6e6',
+      fontSize: '18px',
+      color: '#000'
     }
 });
 
@@ -43,7 +52,6 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
 const DialogContent = withStyles((theme: Theme) => ({
   root: {
     padding: theme.spacing(2),
-    width: '600px',
   },
 }))(MuiDialogContent);
 
@@ -62,7 +70,6 @@ export interface AddressRequestDialogProps {
 
 export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogProps> = ({ open, onClose, onSelectAddress }) => {
   const [address, setAddress] = React.useState("");
-  const { user } = useContext(AppContext);
 
   const classes = usesStyles();
 
@@ -75,9 +82,6 @@ export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogP
       border: 'none',
       borderBottom: '1px solid #757575',
       outline:'none'
-    },
-    suggestion: {
-      cursor: 'pointer'
     }
   };
   
