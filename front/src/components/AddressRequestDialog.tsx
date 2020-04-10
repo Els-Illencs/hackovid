@@ -81,13 +81,13 @@ export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogP
   };
 
   const setAddressInLocalStorage = () => {
-    setAddress(address);
+    //setAddress(address);
     const userAddress: UserAddress = {
       address: "Carrer blanquerna",
       latitude: Number(1),
       longitude: Number(1)
-  };
-  apiClient.saveUserAddress(userAddress);
+    };
+    apiClient.saveUserAddress(userAddress);
   };
 
   return (
