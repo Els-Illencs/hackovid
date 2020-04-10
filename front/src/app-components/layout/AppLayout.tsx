@@ -7,6 +7,7 @@ import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
 import { ProductShoppingCart } from "../../models/product/Product";
 import { User } from "../../models/user/User";
 import { AccountCircle } from '@material-ui/icons';
+import { common } from '@material-ui/core/colors';
 
 type Page = {
   path: string
@@ -26,19 +27,24 @@ const useStyles = makeStyles((theme) => ({
   content: {
     padding: 20
   },
+  accountArea: {
+    backgroundColor: theme.palette.primary.main
+  },
   account: {
     marginTop: 16,
     marginLeft: 16,
     marginBottom: 12,
-    width: 30
+    width: 30,
+    color: common.white
   },
   userName: {
     fontSize: 20,
     marginTop: 19,
     marginLeft: 16,
-    fontStyle: "italic"
+    fontStyle: "italic",
+    color: common.white
   }
-}))
+  }))
 
 const shoppingCartApiClient = new ShoppingCartApiClient();
 
@@ -114,7 +120,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     <main className={classes.content}>
       <Drawer anchor="left" open={drawerOpen} onClose={closeDrawer}>
         <div style={{ minWidth: 260 }}>
-          <Grid container spacing={1}>
+          <Grid container spacing={1} className={classes.accountArea}>
             <Grid item xs={2}>
               <AccountCircle fontSize="large" className={styles.account} />
             </Grid>
