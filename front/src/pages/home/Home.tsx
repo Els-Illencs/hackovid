@@ -12,6 +12,7 @@ import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import StoreMallDirectoryIcon from '@material-ui/icons/StoreMallDirectory';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { HashLink } from "react-router-hash-link";
+import ContactUsForm from "./ContactUsForm";
 
 const apiClient = new CategoryApiClient();
 
@@ -47,9 +48,9 @@ const Section: FC<{title: string}> = ({title, children}) => (<>
 </>);
 
 const CallToActionButton: FC<{elementToScrollId: string}> = ({elementToScrollId, children}) => (
-    <Grid container justify="center">
+    <Grid container justify="center" style={{ marginTop: 15 }}>
         <HashLink to={`/home#${elementToScrollId}`} smooth>
-            <Button>{children}</Button>
+            <Button variant="outlined">{children}</Button>
         </HashLink>
     </Grid>
 )
@@ -159,7 +160,7 @@ const Home: FC = () => {
             <LargeDivider />
 
             <Section title="Alguna pregunta?">
-                Aquí anirà es formulari. En construcció...
+                <ContactUsForm />
             </Section>
 
             <LargeDivider />
