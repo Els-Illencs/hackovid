@@ -1,7 +1,7 @@
-import React, { FC, FormEvent } from "react";
+import React, { FC, FormEvent, useState } from "react";
 import { Paper, InputBase, IconButton, makeStyles, Theme, createStyles } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -23,28 +23,29 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const SearchBar: FC = () => {
     const classes = useStyles();
-    const history = useHistory();
+    const [redirectToProductPage, setRedirectToProductPage] = useState<{name: string} | null>(null);
 
-    const redirectToProductPage = (e: FormEvent<HTMLFormElement>) => {
+    const doRedirectToProductPage = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (!(e.target instanceof Element)) { 
             return;
         }
 
-        history.push({
-            pathname: '/product-list',
-            state: { 
-                name: e.target.querySelector('input')?.value 
-            }
-        });
+        const searchText = e.target.querySelector('input')?.value;
+        if (!searchText) {
+            return;
+        }
 
-        history.go(0);
+        setRedirectToProductPage({
+            name: searchText
+        });
     };
 
 
-    return (
-        <form onSubmit={redirectToProductPage}>
+    return (<>
+        {redirectToProductPage && <Redirect push to={`/product-list?name=${redirectToProductPage.name}`} /> }
+        <form onSubmit={doRedirectToProductPage}>
             <Paper className={classes.searchBarWrapper}>
                 <InputBase
                     className={classes.searchBarInput}
@@ -54,7 +55,8 @@ const SearchBar: FC = () => {
                     <SearchIcon />
                 </IconButton>
             </Paper>
-        </form>);
+        </form>
+    </>);
 }
 
 export default SearchBar;

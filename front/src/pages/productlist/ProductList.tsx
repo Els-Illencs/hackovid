@@ -17,32 +17,37 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 const ProductList: FunctionComponent = () => {
   const [productList, setProducts] = useState([] as Product[]);
   const [isLoading, setIsLoading] = useState(false);
   const [isAddressStoredInLocalStorage, setIsAddressStoredInLocalStorage] = useState(false);
-  const location: any = useLocation();
+  const query = useQuery();
 
   const classes = useStyles();
 
-  const category = location?.state?.category;
-  const name = location?.state?.name;
+  const categoryAsStr = query.get('category')
+  const category = categoryAsStr ? parseInt(categoryAsStr, 10) : null;
+  const name = query.get('name');
 
   useEffect(() => {
     const getProducts = async () => {
       setIsLoading(true);
-      if (category) {
-        setProducts(await apiClient.getProductsBycategory(category));
-      } else if (name) {
-        setProducts(await apiClient.getProductsByName(name));
-      } else {
-        setProducts(await apiClient.getProducts());
-      }
+
+      const products =
+        category ? await apiClient.getProductsBycategory(category) :
+        name ? await apiClient.getProductsByName(name) :
+        await apiClient.getProducts();
+      setProducts(products)
+
       setIsLoading(false);
       checkIsAddressStoredInLocalStorage();
     }
     getProducts();
-  }, []);
+  }, [category, name]);
 
   const checkIsAddressStoredInLocalStorage = (): void => {
     userApiClient.getStoredUserAddress().then(userAddress => {
