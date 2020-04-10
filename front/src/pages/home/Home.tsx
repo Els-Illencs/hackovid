@@ -13,6 +13,7 @@ import StoreMallDirectoryIcon from '@material-ui/icons/StoreMallDirectory';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { HashLink } from "react-router-hash-link";
 import ContactUsForm from "./ContactUsForm";
+import PackageList from "./PackageList";
 
 const apiClient = new CategoryApiClient();
 
@@ -43,8 +44,9 @@ const Section: FC<{title: string}> = ({title, children}) => (<>
             {title}
         </Box>
     </Typography>
-
-    {children}
+    <div style={{ marginTop: 15 }}>
+        {children}
+    </div>
 </>);
 
 const CallToActionButton: FC<{elementToScrollId: string}> = ({elementToScrollId, children}) => (
@@ -71,6 +73,17 @@ const Home: FC = () => {
             <Section title="Ajuda al petit comerç desde la comoditat de la teva casa!">
                 <HomeCarousel />
                 <CallToActionButton elementToScrollId="home-more-info">SABER MÉS</CallToActionButton>
+            </Section>
+
+            <SmallDivider />
+
+            <Section title="No perdis ni un minut! Comença la teva compra amb un dels packs disponibles">
+                <PackageList packages={[
+                    { id: 1, name: 'Els bàsics d\'alimentació', image: 'https://chilmedia.org/v2/media/1660c7a2-d335-44bd-8713-479ccfeea5b9.jpg' },
+                    { id: 2, name: 'Pà amb oli', image: 'https://adictaalacarta.com/wp-content/uploads/2018/03/JDLK8031-1100x825.png' },
+                    { id: 1, name: 'Fruites i verdures de temporada', image: 'https://cdn.ecotierra.es/tienda/productos-ecologicos/cesta-mixta-12kg/image_1_preview' },
+
+                ]} />
             </Section>
 
             <SmallDivider />
