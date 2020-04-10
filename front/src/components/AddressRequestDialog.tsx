@@ -71,7 +71,6 @@ export interface AddressRequestDialogProps {
 
 export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogProps> = ({ open, onClose, onSelectAddress }) => {
   const [address, setAddress] = React.useState("");
-  const { user } = useContext(AppContext);
 
   const classes = usesStyles();
 
