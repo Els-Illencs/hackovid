@@ -57,9 +57,9 @@ const ProductList: FunctionComponent = () => {
     const getProducts = async () => {
       setIsLoading(true);
       const products =
-        category ? await apiClient.getProductsBycategory(category, order) :
-          name ? await apiClient.getProductsByName(name, order) :
-            await apiClient.getProducts(order);
+        category ? await apiClient.getProductsBycategory(category, order, productFilterFields) :
+          name ? await apiClient.getProductsByName(name, order, productFilterFields) :
+            await apiClient.getProducts(order, productFilterFields);
       setProducts(products)
 
       setIsLoading(false);
