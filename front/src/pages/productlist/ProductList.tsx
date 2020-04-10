@@ -25,12 +25,23 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const ProductList: FunctionComponent = () => {
+  const query = useQuery();
+
+  const retrieveProductFilterFieldsfromURL = (): ProductFilterFields => {
+    return {
+      minPrice: query.get('minPrice') ? Number(query.get('minPrice')) : undefined,
+      maxPrice: query.get('maxPrice')? Number(query.get('maxPrice')) : undefined,
+      rating: query.get('rating') ? Number(query.get('rating')) : undefined,
+      distance: query.get('distance') ? Number(query.get('distance')) : 1
+    } as ProductFilterFields;
+  }
+
   const { user: { isLoading: isLoadingUserData, user, userAddress, updateUserAddress } } = useContext(AppContext);
   const [productList, setProducts] = useState([] as Product[]);
-  const [productFilterFields, setProductFilterFields] = useState({} as ProductFilterFields);
+  
+  const [productFilterFields, setProductFilterFields] = useState(retrieveProductFilterFieldsfromURL());
   const [redirectToProductPage, setRedirectToProductPage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const query = useQuery();
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -66,19 +77,6 @@ const ProductList: FunctionComponent = () => {
     }
     getProducts();
   }, [category, name, isLoadingUserData, user, userAddress, order]);
-
-  useEffect(() => {
-    retrieveProductFilterFieldsfromURL();
-  }, []);
-
-  const retrieveProductFilterFieldsfromURL = (): ProductFilterFields => {
-    return {
-      minPrice: query.get('minPrice') ? Number(query.get('minPrice')) : undefined,
-      maxPrice: query.get('maxPrice')? Number(query.get('maxPrice')) : undefined,
-      rating: query.get('rating') ? Number(query.get('rating')) : undefined,
-      distance: query.get('distance') ? Number(query.get('distance')) : 1
-    } as ProductFilterFields;
-  }
 
   const onChangeProductFilterFields = (productFilterFields: ProductFilterFields): void => {
     setProductFilterFields(productFilterFields);
