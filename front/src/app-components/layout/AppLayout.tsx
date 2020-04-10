@@ -68,17 +68,27 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
   const [user, setUser] = useState<User | undefined>();
   const [shoppingCartProducts, setShoppingCartProducts] = useState<ProductShoppingCart[]>([]);
   const [userAddress, setUserAddress] = useState<UserAddress | undefined>();
+  const [isLoadingUserAddress, setIsLoadingUserAddress] = useState(true);
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
 
   const openDrawer = () => setDrawerOpen(true);
   const closeDrawer = () => setDrawerOpen(false);
 
   useEffect(() => {
-    const getShoppingCartProducts = async () => setShoppingCartProducts(await shoppingCartApiClient.getItems());
+    const getShoppingCartProducts = async () => {
+      setIsLoadingUser(true);
+      setShoppingCartProducts(await shoppingCartApiClient.getItems());
+      setIsLoadingUser(false);
+    }
     getShoppingCartProducts();
   }, []);
 
   useEffect(() => {
-    const getUserAddressFromLocalStorage = async () => setUserAddress(await userApiClient.getStoredUserAddress());
+    const getUserAddressFromLocalStorage = async () => {
+      setIsLoadingUserAddress(true);
+      setUserAddress(await userApiClient.getStoredUserAddress());
+      setIsLoadingUserAddress(false);
+    }
     getUserAddressFromLocalStorage();
   }, []);
 
@@ -145,6 +155,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
 
   return (<AppContext.Provider value={{
     user: {
+      isLoading: isLoadingUser || isLoadingUserAddress,
       user,
       updateUser,
       userAddress,
