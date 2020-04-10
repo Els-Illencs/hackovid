@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -18,7 +18,12 @@ const styles = (theme: Theme) =>
       margin: 0,
       padding: theme.spacing(2),
     },
-  });
+    suggestionAutoComplete: {
+      cursor: 'pointer'
+    }
+});
+
+const usesStyles = makeStyles(styles);
 
 export interface DialogTitleProps extends WithStyles<typeof styles> {
   id: string;
@@ -38,7 +43,7 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
 const DialogContent = withStyles((theme: Theme) => ({
   root: {
     padding: theme.spacing(2),
-    width: '500px',
+    width: '600px',
   },
 }))(MuiDialogContent);
 
@@ -57,6 +62,23 @@ export interface AddressRequestDialogProps {
 export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogProps> = ({ open, onClose }) => {
   const [address, setAddress] = React.useState("");
   const { user } = useContext(AppContext);
+
+  const classes = usesStyles();
+
+  const autocompleteStyles = {
+    input: {
+      fontSize: '18px',
+      padding: '10px 10px 10px 5px',
+      display: 'block',
+      width: '100%',
+      border: 'none',
+      borderBottom: '1px solid #757575',
+      outline:'none'
+    },
+    suggestion: {
+      cursor: 'pointer'
+    }
+  };
   
   const handleClose = () => {
     setAddressInLocalStorage();
@@ -101,16 +123,21 @@ export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogP
                   country: ['es'],
                 }
             }}
-            inputStyle={{
-                fontSize: '18px',
-                padding: '10px 10px 10px 5px',
-                display: 'block',
-                width: '100%',
-                border: 'none',
-                borderBottom: '1px solid #757575',
-                outline:'none'
-            }}
-            suggestionsClassNames={{container: '', suggestion: '', suggestionActive: '' }}
+            inputStyle={autocompleteStyles.input}
+            renderSuggestions={((active, suggestions, onSelectSuggestion) => (
+              <div className="suggestions-container">
+                {
+                  suggestions.map((suggestion) => (
+                    <div
+                      className={classes.suggestionAutoComplete}
+                      onClick={(event) => onSelectSuggestion(suggestion, event)}
+                    >
+                      {suggestion.description}
+                    </div>
+                  ))
+                }
+              </div>
+            )) as any}
         />
         </DialogContent>
         <DialogActions>
