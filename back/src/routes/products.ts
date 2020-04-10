@@ -16,11 +16,11 @@ router.get('/', async function(req, res, next) {
     let distance: number = req.query.distance ? req.query.distance : null;
 
     if(categoryId) {
-        res.send(await productRepository.getByCategory(categoryId, order));
+        res.send(await productRepository.getByCategory(categoryId, order, minPrice, maxPrice, rating, distance));
     } else if(productName) {
-        res.send(await productRepository.getByName(productName, order));
+        res.send(await productRepository.getByName(productName, order, minPrice, maxPrice, rating, distance));
     } else  {
-        res.send(await productRepository.get(order));
+        res.send(await productRepository.get(order, minPrice, maxPrice, rating, distance));
     }
 })
 
