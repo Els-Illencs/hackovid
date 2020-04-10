@@ -38,8 +38,8 @@ const ProductList: FunctionComponent = () => {
 
       const products =
         category ? await apiClient.getProductsBycategory(category) :
-        name ? await apiClient.getProductsByName(name) :
-        await apiClient.getProducts();
+          name ? await apiClient.getProductsByName(name) :
+            await apiClient.getProducts();
       setProducts(products)
 
       setIsLoading(false);
@@ -64,7 +64,7 @@ const ProductList: FunctionComponent = () => {
         productList.map((product: Product) => (
           <ProductItem key={String(product.id)} product={product} />
         ))}
-        {requestAddressComponent}
+      {requestAddressComponent}
     </div>
   );
 }
@@ -83,9 +83,9 @@ function useAddress() {
   useEffect(() => {
     setAddress(context.user.userAddress?.address || null);
   }, [context, openDialog]);
-  
+
   return {
     address,
-    requestAddressComponent: (<AddressRequestDialog open={openDialog} onClose={() => setOpenDialog(false)}/>)
+    requestAddressComponent: (<AddressRequestDialog open={openDialog} onClose={() => setOpenDialog(false)} onSelectAddress={context.user.updateUserAddress} />)
   };
 }

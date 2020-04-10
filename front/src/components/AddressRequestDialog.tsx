@@ -52,11 +52,11 @@ const DialogActions = withStyles((theme: Theme) => ({
 export interface AddressRequestDialogProps {
   open: boolean;
   onClose: () => void
+  onSelectAddress: (userAddress: UserAddress) => void;
 };
 
-export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogProps> = ({ open, onClose }) => {
+export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogProps> = ({ open, onClose, onSelectAddress }) => {
   const [address, setAddress] = React.useState("");
-  const { user } = useContext(AppContext);
   
   const handleClose = () => {
     setAddressInLocalStorage();
@@ -78,10 +78,10 @@ export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogP
   const saveUserAddressobject = (address: string, latitude?:number, longitude?:number): void => {
     const userAddress: UserAddress = {
       address: address,
-      latitude: latitude,
-      longitude: longitude
+      latitude,
+      longitude,
     };
-    user.updateUserAddress(userAddress);
+    onSelectAddress(userAddress);
   };
 
   return (
