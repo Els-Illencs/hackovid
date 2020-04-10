@@ -13,6 +13,10 @@ import Divider from '@material-ui/core/Divider';
 import { ProductFilterFields } from '../models/product/ProductFilterFields';
 import TextField from '@material-ui/core/TextField';
 import Grid, { GridSpacing } from '@material-ui/core/Grid';
+import Rating from '@material-ui/lab/Rating';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,6 +73,10 @@ export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFi
     onClickAplyFilter(productFilterFields);
   }
 
+  const onCancel = (): void => {
+    onChangeProductFilterFields({} as ProductFilterFields);
+  }
+
   return (
     <div className={classes.root}>
       <ExpansionPanel defaultExpanded>
@@ -79,9 +87,6 @@ export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFi
         >
           <div className={classes.column}>
             <Typography className={classes.heading}>Filtrar</Typography>
-          </div>
-          <div className={classes.column}>
-            <Typography className={classes.secondaryHeading}>Acota el llistat de productes</Typography>
           </div>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>
@@ -109,28 +114,37 @@ export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFi
                     </Grid>
                 </Grid>
                 <Grid item md={4} xs={12}>
-                    <TextField
-                        id="rating"
+                    <Typography component="legend">Valoració
+                    </Typography>
+                    <Rating
                         name="rating"
-                        label="Valoració"
-                        type="number"
+                        value={productFilterFields.rating}
                         onChange={onChangeProductFilterFieldsAction}
                     />
                 </Grid>
                 <Grid item md={4} xs={12}>
-                    <TextField
-                        id="distance"
-                        name="distance"
-                        label="Distància"
-                        type="number"
-                        onChange={onChangeProductFilterFieldsAction}
-                    />
+                    <FormControl variant="outlined">
+                        <InputLabel htmlFor="distanceSelect">Distància</InputLabel>
+                        <Select
+                            native
+                            name="distance"
+                            label="Distància"
+                            onChange={onChangeProductFilterFieldsAction}
+                            inputProps={{
+                                id: 'distanceSelect',
+                            }}
+                        >
+                            <option value="1">1 Km</option>
+                            <option value="5">5 Km</option>
+                            <option value="20">20 Km</option>
+                        </Select>
+                    </FormControl>
                 </Grid>
             </Grid>
         </ExpansionPanelDetails>
         <Divider />
         <ExpansionPanelActions>
-          <Button size="small">Cancelar</Button>
+          <Button size="small" onClick={onCancel}>Cancelar</Button>
           <Button size="small" color="primary" onClick={onClickAplyFilterAction}>
             Aplicar
           </Button>

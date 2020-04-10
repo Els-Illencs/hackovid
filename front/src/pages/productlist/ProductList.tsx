@@ -11,6 +11,7 @@ import { ProductFilter } from "../../components/ProductFilter";
 import { AppContext } from '../../app-components';
 import { useHistory } from 'react-router-dom'
 import { Redirect } from "react-router-dom";
+import queryString from 'query-string';
 
 const apiClient = new ProductApiClient();
 
@@ -67,6 +68,20 @@ const ProductList: FunctionComponent = () => {
     getProducts();
   }, [category, name, isLoadingUserData, user, userAddress, order]);
 
+  useEffect(() => {
+    retrieveProductFilterFieldsfromURL();
+  }, []);
+
+  const retrieveProductFilterFieldsfromURL = (): ProductFilterFields => {
+    const query = queryString.parse(history.location.search);
+    return {
+      minPrice: query['minPrice'] ? Number(query['minPrice']) : undefined,
+      maxPrice: query['maxPrice'] ? Number(query['maxPrice']) : undefined,
+      rating: query['rating']? Number(query['rating']) : undefined,
+      distance: query['distance'] ? Number(query['distance']) : undefined
+    } as ProductFilterFields;
+  }
+
   const onChangeProductFilterFields = (productFilterFields: ProductFilterFields): void => {
     setProductFilterFields(productFilterFields);
   }
@@ -106,6 +121,7 @@ const ProductList: FunctionComponent = () => {
           `${path}&distance=${productFilterFields.distance}`;
     }
 
+    setProductFilterFields({} as ProductFilterFields);
     setRedirectToProductPage(
       path
     );
