@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const ProductList: FunctionComponent = () => {
+  const { user: { isLoading: isLoadingUserData, user, userAddress } } = useContext(AppContext);
   const [productList, setProducts] = useState([] as Product[]);
   const [isLoading, setIsLoading] = useState(false);
   const query = useQuery();
@@ -49,7 +50,7 @@ const ProductList: FunctionComponent = () => {
 
   return (
     <div>
-      {isLoading ?
+      {isLoading || isLoadingUserData ?
         <Grid
           container
           spacing={0}
@@ -61,10 +62,13 @@ const ProductList: FunctionComponent = () => {
           <CircularProgress className={classes.loading} color="primary" />
         </Grid>
         :
-        productList.map((product: Product) => (
-          <ProductItem key={String(product.id)} product={product} />
-        ))}
-      {requestAddressComponent}
+        <>
+          {productList.map((product: Product) => (
+            <ProductItem key={String(product.id)} product={product} />
+          ))}
+          {requestAddressComponent}
+        </>
+      }
     </div>
   );
 }
@@ -86,6 +90,7 @@ function useAddress() {
     const userAddress = context.user.userAddress?.address || undefined;
     const logedUserAddress = context.user.user?.address || undefined;
     setAddress(userAddress || logedUserAddress);
+    setOpenDialog(context.user.userAddress?.address === "" || context.user.user?.address === "");
   }, [context, openDialog]);
 
   return {
