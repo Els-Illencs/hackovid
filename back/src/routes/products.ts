@@ -9,6 +9,8 @@ router.get('/', async function(req, res, next) {
     let categoryId: number = req.query.categoryId ? req.query.categoryId : null;
     let productName: string = req.query.name ? req.query.name : null;
     let order: string = req.query.order ? req.query.order : null;
+    let lat: number = req.query.lat ? req.query.lat : null;
+    let lng: number = req.query.lng ? req.query.lng : null;
 
     let minPrice: number = req.query.minPrice ? req.query.minPrice : null;
     let maxPrice: number = req.query.maxPrice ? req.query.maxPrice : null;
@@ -16,11 +18,11 @@ router.get('/', async function(req, res, next) {
     let distance: number = req.query.distance ? req.query.distance : null;
 
     if(categoryId) {
-        res.send(await productRepository.getByCategory(categoryId, order, minPrice, maxPrice, rating, distance));
+        res.send(await productRepository.getByCategory(categoryId, order, minPrice, maxPrice, rating, distance, lat, lng));
     } else if(productName) {
-        res.send(await productRepository.getByName(productName, order, minPrice, maxPrice, rating, distance));
+        res.send(await productRepository.getByName(productName, order, minPrice, maxPrice, rating, distance, lat, lng));
     } else  {
-        res.send(await productRepository.get(order, minPrice, maxPrice, rating, distance));
+        res.send(await productRepository.get(order, minPrice, maxPrice, rating, distance, lat, lng));
     }
 })
 

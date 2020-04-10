@@ -4,23 +4,23 @@ import { ProductFilterFields } from "../models/product/ProductFilterFields";
 
 
 export class ProductApiClient {
-    async getProducts(order: string | null, productFilterFields: ProductFilterFields | null) {
+    async getProducts(order: string | null, productFilterFields: ProductFilterFields | null, userAddress) {
         const filter: string = this.buildFilterParams(productFilterFields);
-        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?order=${order}${filter}`);
+        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?order=${order}${filter}&lat=${userAddress.latitude}&lng=${userAddress.longitude}`);
 
         return res.data as Product[];
     }
 
-    async getProductsBycategory(categoryId: number, order: string | null, productFilterFields: ProductFilterFields | null) {
+    async getProductsBycategory(categoryId: number, order: string | null, productFilterFields: ProductFilterFields | null, userAddress) {
         const filter: string = this.buildFilterParams(productFilterFields);
-        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?categoryId=${categoryId}&order=${order}${filter}`);
+        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?categoryId=${categoryId}&order=${order}${filter}&lat=${userAddress.latitude}&lng=${userAddress.longitude}`);
 
         return res.data as Product[];
     }
     
-    async getProductsByName(name: string, order:string | null, productFilterFields: ProductFilterFields | null) {
+    async getProductsByName(name: string, order:string | null, productFilterFields: ProductFilterFields | null, userAddress) {
         const filter: string = this.buildFilterParams(productFilterFields);
-        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?name=${name}&order=${order}${filter}`);
+        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?name=${name}&order=${order}${filter}&lat=${userAddress.latitude}&lng=${userAddress.longitude}`);
 
         return res.data as Product[];
     }
