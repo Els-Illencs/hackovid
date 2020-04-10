@@ -67,7 +67,7 @@ export const ProductShoppingCartItem: React.FunctionComponent<ProductShoppingCar
     <ProductInfoItem product={product} >
       <CardContent>
         <div className={classes.mainContent}>
-          <Grid container spacing={0}>
+          <Grid container spacing={1}>
             <Grid item xs={6} md={3}>
               <TextField className={classes.quantity} id="outlined-basic" type="number" size="small"
                 InputProps={{ inputProps: {  min: 0 } }}
