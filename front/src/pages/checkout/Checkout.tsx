@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { KeyboardArrowRight } from '@material-ui/icons';
 import { Card, makeStyles, Theme, createStyles, Button, Grid, Typography, IconButton } from "@material-ui/core";
 import { AppContext } from '../../app-components';
 import { ProductInfoItem } from "../../components/ProductInfoItem";
+import { useHistory } from "react-router-dom";
+import { saveLoginRedirect } from "../../services/LoginService";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,8 +43,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Checkout: React.FunctionComponent = () => {
   const { user: { user }, shoppingCart: { products } } = useContext(AppContext);
+  const history = useHistory();
 
   const classes = useStyles();
+
+  useEffect(() => {
+    if (!user) {
+      saveLoginRedirect('/checkout');
+      history.push("/login");
+    }
+  }, []);
 
   const totalPriceProducts: number = products.reduce((priceSum, { price, quantity }) => priceSum + price * quantity, 0);
   const shippingPrice = 10;
@@ -51,7 +61,7 @@ export const Checkout: React.FunctionComponent = () => {
   const isBuyButtonDisabled = true; // TODO add logic
 
   return (
-    <div>
+    <>{String(user !== undefined)}{user && <div>
       <Button className={classes.button} variant="contained" size="large" color="primary" disabled={isBuyButtonDisabled}>
         Comprar ara
       </Button>
@@ -116,6 +126,7 @@ export const Checkout: React.FunctionComponent = () => {
       <Button className={classes.button} variant="contained" size="large" color="primary" disabled={isBuyButtonDisabled}>
         Comprar ara
       </Button>
-    </div>
+    </div>}
+    </>
   );
 }

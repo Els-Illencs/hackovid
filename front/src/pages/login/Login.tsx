@@ -9,6 +9,7 @@ import Container from '@material-ui/core/Container';
 import { useHistory } from "react-router-dom";
 import { LoginApiClient } from '../../api/LoginApiClient';
 import { AppContext } from '../../app-components';
+import { getLoginRedirect } from '../../services/LoginService';
 
 const loginApiClient = new LoginApiClient();
 
@@ -42,11 +43,9 @@ const Login: FunctionComponent = () => {
 
   const applyLogin = async (event) => {
     event.preventDefault();
-    console.log(email, password)
     try {
       await loginApiClient.login(email, password);
     } catch (e) {
-      console.log(e);
       // TODO provisional until backend is done
       updateUser({
         id: 1,
@@ -56,7 +55,12 @@ const Login: FunctionComponent = () => {
         address: "Avinguda segona, 24A, 3B",
         phone: "666333999666",
       });
-      history.goBack(); // TODO save previous url and go to that one instead of doing goBack
+      const redirect = await getLoginRedirect();
+      if (redirect !== undefined) {
+        history.push(redirect);
+      } else {
+        history.push('/');
+      }
     }
   }
 
