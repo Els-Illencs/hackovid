@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const ShoppingCart: React.FunctionComponent = () => {
-  const { shoppingCart: { products } } = useContext(AppContext);
+  const { user, shoppingCart: { products } } = useContext(AppContext);
 
   const classes = useStyles();
 
