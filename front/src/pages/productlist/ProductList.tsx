@@ -9,6 +9,8 @@ import { CircularProgress, makeStyles, Theme, createStyles, Grid } from "@materi
 import { AddressRequestDialog } from "../../components/AddressRequestDialog";
 import { ProductFilter } from "../../components/ProductFilter";
 import { AppContext } from '../../app-components';
+import { useHistory } from 'react-router-dom'
+import { Redirect } from "react-router-dom";
 
 const apiClient = new ProductApiClient();
 
@@ -26,12 +28,14 @@ const ProductList: FunctionComponent = () => {
   const { user: { isLoading: isLoadingUserData, user, userAddress, updateUserAddress } } = useContext(AppContext);
   const [productList, setProducts] = useState([] as Product[]);
   const [productFilterFields, setProductFilterFields] = useState({} as ProductFilterFields);
+  const [redirectToProductPage, setRedirectToProductPage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const query = useQuery();
 
   const [openDialog, setOpenDialog] = useState(false);
 
   const classes = useStyles();
+  const history = useHistory();
 
   const categoryAsStr = query.get('category')
   const category = categoryAsStr ? parseInt(categoryAsStr, 10) : null;
@@ -63,9 +67,58 @@ const ProductList: FunctionComponent = () => {
     getProducts();
   }, [category, name, isLoadingUserData, user, userAddress, order]);
 
+  const onChangeProductFilterFields = (productFilterFields: ProductFilterFields): void => {
+    setProductFilterFields(productFilterFields);
+  }
+
+  const onClickAplyFilter = (productFilterFields: ProductFilterFields): void => {
+    doRedirectToProductPage(productFilterFields);
+  }
+
+  const doRedirectToProductPage = (productFilterFields: ProductFilterFields) => {
+    let path: string = "" + history.location.search;
+
+    if(productFilterFields.minPrice) {
+      const regex = /(minPrice=)[^\&]+/;
+      path = regex.test(path) ? 
+          path.replace(regex, '$1' + productFilterFields.minPrice) :
+          `${path}&minPrice=${productFilterFields.minPrice}`;
+    }
+  
+    if(productFilterFields.maxPrice) {
+      const regex = /(maxPrice=)[^\&]+/;
+      path = regex.test(path) ? 
+          path.replace(regex, '$1' + productFilterFields.maxPrice) :
+          `${path}&maxPrice=${productFilterFields.maxPrice}`;
+    }
+    
+    if(productFilterFields.rating) {
+      const regex = /(rating=)[^\&]+/;
+      path = regex.test(path) ? 
+          path.replace(regex, '$1' + productFilterFields.rating) :
+          `${path}&rating=${productFilterFields.rating}`;
+    }
+    
+    if(productFilterFields.distance) {
+      const regex = /(distance=)[^\&]+/;
+      path = regex.test(path) ? 
+          path.replace(regex, '$1' + productFilterFields.distance) :
+          `${path}&distance=${productFilterFields.distance}`;
+    }
+
+    setRedirectToProductPage(
+      path
+    );
+  }
+
   return (
     <div>
-      <ProductFilter productFilterFields={productFilterFields}/>
+      {redirectToProductPage && <Redirect push to={`/product-list${redirectToProductPage}`} /> }
+      <ProductFilter 
+        productFilterFields={productFilterFields}
+        onChangeProductFilterFields={onChangeProductFilterFields}
+        onClickAplyFilter={onClickAplyFilter}
+      />
       <div className={classes.filterAndOrderBar}>
         <OrderItems />
       </div>

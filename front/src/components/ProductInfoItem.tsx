@@ -1,12 +1,12 @@
 import React from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import StarsIcon from '@material-ui/icons/Stars';
 import { Product } from '../models/product/Product';
+import { Grid } from '@material-ui/core';
+import { Rating } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -70,13 +70,13 @@ export const ProductInfoItem: React.FunctionComponent<ProductInfoItemProps> = ({
           </Grid>
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <StarsIcon fontSize="small" color="primary" />
-              <StarsIcon fontSize="small" color="primary" />
-              <StarsIcon fontSize="small" color="primary" />
-              <StarsIcon fontSize="small" color="primary" />
-              <StarsIcon fontSize="small" color="primary" />
+              <Rating
+                value={product.rating}
+                precision={0.5}
+                disabled={true}
+              />
               <Typography variant="caption" display="block" gutterBottom>
-                {product.shopName}
+                {product.shopname}
               </Typography>
             </Grid>
           </Grid>

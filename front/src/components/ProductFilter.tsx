@@ -11,6 +11,8 @@ import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import { ProductFilterFields } from '../models/product/ProductFilterFields';
+import TextField from '@material-ui/core/TextField';
+import Grid, { GridSpacing } from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,11 +52,22 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export interface ProductFilterProps {
-    productFilterFields: ProductFilterFields
+    productFilterFields: ProductFilterFields,
+    onChangeProductFilterFields: (productFilterFields: ProductFilterFields) => void;
+    onClickAplyFilter: (productFilterFields: ProductFilterFields) => void;
 };
 
-export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFilterFields }) => {
+export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFilterFields, onChangeProductFilterFields, onClickAplyFilter }) => {
   const classes = useStyles();
+
+  const onChangeProductFilterFieldsAction = (event): void => {
+    productFilterFields[event.target.name] = event.target.value && event.target.value != "" ? event.target.value : undefined;
+    onChangeProductFilterFields(productFilterFields);
+  }
+
+  const onClickAplyFilterAction = (event): void => {
+    onClickAplyFilter(productFilterFields);
+  }
 
   return (
     <div className={classes.root}>
@@ -72,25 +85,54 @@ export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFi
           </div>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>
-          <div className={classes.column} />
-          <div className={classes.column}>
-            <Chip label="Barbados" onDelete={() => {}} />
-          </div>
-          <div className={clsx(classes.column, classes.helper)}>
-            <Typography variant="caption">
-              Select your destination of choice
-              <br />
-              <a href="#secondary-heading-and-columns" className={classes.link}>
-                Learn more
-              </a>
-            </Typography>
-          </div>
+            <Grid container className={classes.root} spacing={2}>
+                <Grid item md={4} xs={12}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <TextField
+                                id="minPrice"
+                                name="minPrice"
+                                label="Preu mínim"
+                                type="number"
+                                onChange={onChangeProductFilterFieldsAction}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                id="maxPrice"
+                                name="maxPrice"
+                                label="Preu máxim"
+                                type="number"
+                                onChange={onChangeProductFilterFieldsAction}
+                            />
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item md={4} xs={12}>
+                    <TextField
+                        id="rating"
+                        name="rating"
+                        label="Valoració"
+                        type="number"
+                        onChange={onChangeProductFilterFieldsAction}
+                    />
+                </Grid>
+                <Grid item md={4} xs={12}>
+                    <TextField
+                        id="distance"
+                        name="distance"
+                        label="Distància"
+                        type="number"
+                        onChange={onChangeProductFilterFieldsAction}
+                    />
+                </Grid>
+            </Grid>
         </ExpansionPanelDetails>
         <Divider />
         <ExpansionPanelActions>
-          <Button size="small">Cancel</Button>
-          <Button size="small" color="primary">
-            Save
+          <Button size="small">Cancelar</Button>
+          <Button size="small" color="primary" onClick={onClickAplyFilterAction}>
+            Aplicar
           </Button>
         </ExpansionPanelActions>
       </ExpansionPanel>
