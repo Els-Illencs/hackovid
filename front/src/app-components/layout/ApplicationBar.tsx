@@ -9,12 +9,9 @@ import { IconButton } from '@material-ui/core';
 import * as Logo from "./logo.png";
 import { ShoppingCartNumberOfItems } from './ShoppingCartNumberOfItems';
 import { Link } from 'react-router-dom';
-import Paper from '@material-ui/core/Paper';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
 import { AppContext } from '..';
 import { common } from '@material-ui/core/colors';
-import { useHistory } from "react-router-dom";
+import SearchBar from './SearchBar';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,19 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
       position: "absolute",
       bottom: "30px",
       right: "7px",
-    },
-    searchBarWrapper: {
-      display: 'flex',
-      alignItems: 'center',
-      margin: '0 24px 10px 24px'
-    },
-    searchBarInput: {
-      flex: 1,
-      margin: '0 10px',
-    },
-    searchBarIconButton: {
-      padding: '0 10px',
-    },
+    }
   }),
 );
 
@@ -60,7 +45,6 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
   /* Since the AppBar is 'fixed', we need to get its height dinamically and set a div with that value,
   so the AppBar is not put on top of the main page */
   const { shoppingCart: { products } } = useContext(AppContext);
-  const history:any = useHistory();
 
   const classes = useStyles();
   const [height, setHeight] = useState(0);
@@ -73,17 +57,6 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
     setHeight(appBarRef.current.offsetHeight);
   }, [appBarRef]);
 
-  const redirectToProductPage = (e: any) => {
-    e.preventDefault();
-
-    history.push({
-      pathname: '/product-list',
-      state: { name:  e.target.querySelector('input').value }
-    });  
-
-    history.go(0);
-  };
-  
 
   return (
     <>
@@ -99,7 +72,7 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
             </Link>
           </Typography>
           <div className={classes.shoppingCart}>
-            <IconButton component={Link} to="/shopping-cart" edge="start" style={{color: common.white}} aria-label="menu">
+            <IconButton component={Link} to="/shopping-cart" edge="start" style={{ color: common.white }} aria-label="menu">
               <ShoppingCartIcon />
             </IconButton>
             <div className={classes.shoppingCartItems}>
@@ -107,17 +80,7 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
             </div>
           </div>
         </Toolbar>
-        <form onSubmit={redirectToProductPage}>
-          <Paper className={classes.searchBarWrapper}>
-              <InputBase
-                className={classes.searchBarInput}
-                placeholder="Què estàs cercant?"
-              />
-              <IconButton className={classes.searchBarIconButton} type="submit" aria-label="search"> 
-                <SearchIcon/>
-              </IconButton>
-          </Paper>
-        </form>
+        <SearchBar />
       </AppBar>
     </>
   );
