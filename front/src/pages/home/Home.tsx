@@ -46,9 +46,8 @@ const Section: FC<{title: string}> = ({title, children}) => (<>
     {children}
 </>);
 
-const SectionDivider: FC<{margin?: number}> = ({margin}) => (
-    <Divider style={{ margin: `${margin || 20}px 0` }} />
-);
+const SmallDivider: FC = () => (<Divider style={{ margin: '20px 0' }} />);
+const LargeDivider: FC = () => (<Divider style={{ margin: '50px 0' }} />);
 
 const Home: FC = () => {
     const classes = useStyles();
@@ -72,14 +71,14 @@ const Home: FC = () => {
                 </Grid>
             </Section>
 
-            <SectionDivider />
+            <SmallDivider />
 
             <Section title="Les nostres categories">
                 <CustomGridList list={categories} />
             </Section>
 
             <span  id="home-more-info" />
-            <SectionDivider margin={50} />
+            <LargeDivider />
 
             <Section title="El comerç local et necessita!">
                 <IconElement 
@@ -96,7 +95,7 @@ const Home: FC = () => {
                     secondary="Invertir en el comerç local ens beneficia a tots: consumidors, productors locals..." />
             </Section>
 
-            <SectionDivider />
+            <SmallDivider />
 
             <Section title="Estalvia temps fent la compra al teu barri amb totes les comoditats">
                 <IconElement 
@@ -117,7 +116,42 @@ const Home: FC = () => {
                     secondary="Coneix l'estat de la compra, evita anar a buscar-la fins que estigui preparada" />
             </Section>
 
-            <SectionDivider />
+            <LargeDivider />
+
+            <Section title="Tens un comerç? Uneix-te a la nostra xarxa!">
+                <IconElement 
+                    icon={<LocationOnIcon className={classes.largeIcon} />}
+                    primary="Augmenta les teves vendes" 
+                    secondary="Descripció" />
+                <IconElement 
+                    icon={<LocationOnIcon className={classes.largeIcon} />}
+                    primary="Motiu 2" 
+                    secondary="Descripció" />
+                <IconElement 
+                    icon={<LocationOnIcon className={classes.largeIcon} />}
+                    primary="Motiu 3" 
+                    secondary="Descripció" />
+
+            </Section>
+
+            <SmallDivider />
+
+            <Section title="Col·labora amb els comerços del teu barri entregant les comandes">
+                <IconElement 
+                    icon={<LocationOnIcon className={classes.largeIcon} />}
+                    primary="Escull el que t'interessa" 
+                    secondary="Descripció" />
+                <IconElement 
+                    icon={<LocationOnIcon className={classes.largeIcon} />}
+                    primary="Motiu 2" 
+                    secondary="Descripció" />
+                <IconElement 
+                    icon={<LocationOnIcon className={classes.largeIcon} />}
+                    primary="Motiu 3" 
+                    secondary="Descripció" />
+            </Section>
+
+            <LargeDivider />
 
             <Section title="Salvem entre tots el comerç local sense sacrificar l'ús de les darreres tecnologies" />
         </div>
