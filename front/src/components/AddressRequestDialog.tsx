@@ -63,21 +63,19 @@ const DialogActions = withStyles((theme: Theme) => ({
 }))(MuiDialogActions);
 
 export interface AddressRequestDialogProps {
-  view: boolean;
+  open: boolean;
+  onClose: () => void
 };
 
-export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogProps> = ({ view }) => {
-  const [open, setOpen] = React.useState(view);
+export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogProps> = ({ open, onClose }) => {
   const [address, setAddress] = React.useState("");
 
   const apiClient: UserApiClient = new UserApiClient();
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  
   const handleClose = () => {
-    setOpen(false);
     setAddressInLocalStorage();
+    onClose();
   };
 
   const setAddressInLocalStorage = () => {

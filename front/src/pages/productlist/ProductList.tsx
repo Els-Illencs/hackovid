@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const ProductList: FunctionComponent = () => {
   const [productList, setProducts] = useState([] as Product[]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isAddressStoredInLocalStorage, setIsAddressStoredInLocalStorage] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const location: any = useLocation();
 
   const classes = useStyles();
@@ -39,14 +39,14 @@ const ProductList: FunctionComponent = () => {
         setProducts(await apiClient.getProducts());
       }
       setIsLoading(false);
-      checkIsAddressStoredInLocalStorage();
     }
+    checkIsAddressStoredInLocalStorage();
     getProducts();
   }, []);
 
   const checkIsAddressStoredInLocalStorage = (): void => {
     userApiClient.getStoredUserAddress().then(userAddress => {
-      setIsAddressStoredInLocalStorage(userAddress.address == "");
+      setOpenDialog(userAddress.address == "" ? true : false);
     })
   }
 
@@ -67,7 +67,7 @@ const ProductList: FunctionComponent = () => {
         productList.map((product: Product) => (
           <ProductItem key={String(product.id)} product={product} />
         ))}
-        <AddressRequestDialog view={isAddressStoredInLocalStorage}/>
+        <AddressRequestDialog open={openDialog} onClose={() => setOpenDialog(false)}/>
     </div>
   );
 }
