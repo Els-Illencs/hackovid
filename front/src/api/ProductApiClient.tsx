@@ -3,20 +3,21 @@ import { Product } from "../models/product/Product";
 
 
 export class ProductApiClient {
-    async getProducts(order: string | null) {
-        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?order=${order}`);
+    async getProducts(order: string | null, userAddress) {
+        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?order=${order}&lat=${userAddress.latitude}&lng=${userAddress.longitude}`);
 
         return res.data as Product[];
     }
 
-    async getProductsBycategory(categoryId: number, order: string | null) {
-        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?categoryId=${categoryId}&order=${order}`);
+    async getProductsBycategory(categoryId: number, order: string | null, userAddress) {
+        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?categoryId=${categoryId}&order=${order}&lat=${userAddress.latitude}&lng=${userAddress.longitude}`);
 
         return res.data as Product[];
     }
     
-    async getProductsByName(name: string, order:string | null) {
-        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?name=${name}&order=${order}`);
+    async getProductsByName(name: string, order:string | null, userAddress) {
+        console.log("UserAddress", userAddress);
+        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?name=${name}&order=${order}&lat=${userAddress.latitude}&lng=${userAddress.longitude}`);
 
         return res.data as Product[];
     }
