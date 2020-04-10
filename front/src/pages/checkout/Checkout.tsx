@@ -1,10 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { KeyboardArrowRight } from '@material-ui/icons';
 import { Card, makeStyles, Theme, createStyles, Button, Grid, Typography, IconButton } from "@material-ui/core";
 import { AppContext } from '../../app-components';
 import { ProductInfoItem } from "../../components/ProductInfoItem";
 import { useHistory } from "react-router-dom";
 import { saveLoginRedirect } from "../../services/LoginService";
+import { PaymentMethodType, PaymentMethod } from "./PaymentMethod";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,28 +43,31 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Checkout: React.FunctionComponent = () => {
-  const { user: { user, userAddress }, shoppingCart: { products } } = useContext(AppContext);
+  const { user: { user, userAddress, isLoading }, shoppingCart: { products } } = useContext(AppContext);
   const history = useHistory();
+  const [isSelectingPaymentMethod, setIsSelectingPaymentMethod] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType | undefined>();
 
   const classes = useStyles();
 
   useEffect(() => {
-    if (!user) {
+    console.log(isLoading, user);
+    if (!isLoading && !user) {
       saveLoginRedirect('/checkout');
       history.push("/login");
     }
-  }, []);
+  }, [isLoading]);
 
   const totalPriceProducts: number = products.reduce((priceSum, { price, quantity }) => priceSum + price * quantity, 0);
   const shippingPrice = 10;
   const totalPrice: number = totalPriceProducts + shippingPrice;
 
-  const isBuyButtonDisabled = true; // TODO add logic
+  const isBuyButtonDisabled = !paymentMethod;
 
-  const address = userAddress? userAddress.address : user?.address;
+  const address = userAddress ? userAddress.address : user?.address;
 
   return (
-    <>{String(user !== undefined)}{user && <div>
+    <>{user && <div>
       <Button className={classes.button} variant="contained" size="large" color="primary" disabled={isBuyButtonDisabled}>
         Comprar ara
       </Button>
@@ -107,11 +111,13 @@ export const Checkout: React.FunctionComponent = () => {
           <Grid item xs={11}>
             <h4>Informació de pagament</h4>
             <Typography component="p" className={classes.marginBottom}>
-              Mastercard que acaba en XXXX
+              {!paymentMethod ?
+                "Seleccioni una forma de pagament *" : paymentMethod === PaymentMethodType.CARD ? 'Targeta' : 'Efectiu'
+              }
             </Typography>
           </Grid>
           <Grid item xs={1} className={classes.arrowButton}>
-            <IconButton onClick={() => { }} edge="start" color="inherit" aria-label="menu">
+            <IconButton onClick={() => setIsSelectingPaymentMethod(true)} edge="start" color="inherit" aria-label="menu">
               <KeyboardArrowRight />
             </IconButton>
           </Grid>
@@ -124,6 +130,7 @@ export const Checkout: React.FunctionComponent = () => {
         Comprar ara
       </Button>
     </div>}
+      {isSelectingPaymentMethod && <PaymentMethod onClose={() => setIsSelectingPaymentMethod(false)} onSavePaymentMethod={(option) => setPaymentMethod(option)} />}
     </>
   );
 }

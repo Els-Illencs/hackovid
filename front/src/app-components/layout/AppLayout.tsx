@@ -76,13 +76,11 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
 
   useEffect(() => {
     const getShoppingCartProducts = async () => {
-      setIsLoadingUser(true);
       setShoppingCartProducts(await shoppingCartApiClient.getItems());
-      setIsLoadingUser(false);
     }
     getShoppingCartProducts();
   }, []);
-
+  
   useEffect(() => {
     const getUserAddressFromLocalStorage = async () => {
       setIsLoadingUserAddress(true);
@@ -91,10 +89,12 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     }
     getUserAddressFromLocalStorage();
   }, []);
-
+  
   useEffect(() => {
     const getUserFromLocalStorage = async () => {
+      setIsLoadingUser(true);
       setUser(await userApiClient.getUser());
+      setIsLoadingUser(false);
     }
     getUserFromLocalStorage();
   }, []);

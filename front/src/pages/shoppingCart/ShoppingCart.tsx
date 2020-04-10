@@ -36,7 +36,7 @@ export const ShoppingCart: React.FunctionComponent = () => {
           <>
             <h4>Resum de la cistella</h4>
             <CardContent>
-              Subtotal ({products.length}) productes: {totalPrice} €
+              Subtotal ({products.length}) productes: {totalPrice.toFixed(2)} €
             </CardContent>
             <CardActionArea>
               <Link to="/checkout">
