@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Product } from "../../models/product/Product";
-import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
+import React, { useContext } from "react";
 import { Card, makeStyles, Theme, createStyles, CardActionArea, Button, CardContent } from "@material-ui/core";
 import { ProductShoppingCartItem } from "./ProductShoppingCartItem";
 import { AppContext } from '../../app-components';

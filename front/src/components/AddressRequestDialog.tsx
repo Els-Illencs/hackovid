@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import 'react-google-places-autocomplete/dist/index.min.css';
 import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
-import { UserApiClient } from '../api/UserApiClient';
 import { UserAddress } from '../models/user/UserAddress';
 import { AppContext } from '../app-components';
 
@@ -115,7 +114,7 @@ export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogP
         />
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary" disabled={address == ""}>
+          <Button autoFocus onClick={handleClose} color="primary" disabled={address === ""}>
             Guardar direcció
           </Button>
         </DialogActions>

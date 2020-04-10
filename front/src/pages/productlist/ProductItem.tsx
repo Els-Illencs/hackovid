@@ -6,7 +6,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Product, ProductShoppingCart } from '../../models/product/Product';
 import { ProductInfoItem } from '../../components/ProductInfoItem';
-import { ShoppingCartApiClient } from '../../api/ShoppingCartApiClient';
 import { AppContext } from '../../app-components';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -20,8 +19,6 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   }),
 );
-
-const shoppingCartApiClient = new ShoppingCartApiClient();
 
 export interface ProductItemProps {
   product: Product;

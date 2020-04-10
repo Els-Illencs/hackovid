@@ -29,7 +29,7 @@ const IconElement: FC<{icon: ReactNode, primary: string, secondary: string}> = (
         {icon}
         </Grid>
         <Grid item xs={12}>
-            <Typography align="center"><Box fontWeight="bold">{primary}</Box></Typography>
+            <Typography align="center"><Box component="span" fontWeight="bold">{primary}</Box></Typography>
         </Grid>
         <Grid item xs={12}>
             <Typography align="center">{secondary}</Typography>
@@ -47,22 +47,24 @@ const Home: FC = () => {
     return (
         <div>
             <Typography variant="h5" align="center">
-                <Box  fontWeight="bold">
+                <Box component="span" fontWeight="bold">
                     Ajuda al petit comerç desde la comoditat de la teva casa!
                 </Box>
             </Typography>
             <HomeCarousel />
 
             <Grid container justify="center">
-                <Button component={HashLink} to="/#home-more-info" smooth>
-                    SABER MÉS
-                </Button>
+                <HashLink to="/home#home-more-info" smooth>
+                    <Button>
+                        SABER MÉS
+                    </Button>
+                </HashLink>
             </Grid>
 
             <Divider style={{ margin: '20px 0' }} />
 
             <Typography variant="h5" align="center">
-                <Box  fontWeight="bold">
+                <Box component="span" fontWeight="bold">
                     Les nostres categories
                 </Box>
             </Typography>
@@ -72,7 +74,7 @@ const Home: FC = () => {
             <Divider style={{ margin: '50px 0' }} />
             
             <Typography  variant="h5" align="center">
-                <Box  fontWeight="bold">
+                <Box component="span" fontWeight="bold">
                     El comerç local et necessita!
                 </Box>
             </Typography>
@@ -92,7 +94,7 @@ const Home: FC = () => {
             <Divider style={{ margin: '20px 0' }} />
 
             <Typography variant="h5" align="center">
-                <Box  fontWeight="bold">
+                <Box component="span" fontWeight="bold">
                     Estalvia temps fent la compra al teu barri amb totes les comoditats
                 </Box>
             </Typography>
@@ -117,7 +119,7 @@ const Home: FC = () => {
             <Divider style={{ margin: '20px 0' }} />
 
             <Typography variant="h5" align="center">
-                <Box  fontWeight="bold">
+                <Box component="span" fontWeight="bold">
                 Salvem entre tots el comerç local sense sacrificar l'ús de les darreres tecnologies 
                 </Box>
             </Typography>

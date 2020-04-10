@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 const shoppingCartApiClient = new ShoppingCartApiClient();
 const userApiClient: UserApiClient = new UserApiClient();
 
-const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
+const AppLayout: FC<AppLayoutProps> = (props) => {
   const matchPageWithAppBar = useRouteMatch(
     props.pages.filter(p => !p.fullScreen).map(p => p.path));
   const classes = useStyles(props);
