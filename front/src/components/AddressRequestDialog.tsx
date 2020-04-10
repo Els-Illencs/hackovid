@@ -5,8 +5,6 @@ import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import 'react-google-places-autocomplete/dist/index.min.css';
@@ -19,12 +17,6 @@ const styles = (theme: Theme) =>
     root: {
       margin: 0,
       padding: theme.spacing(2),
-    },
-    closeButton: {
-      position: 'absolute',
-      right: theme.spacing(1),
-      top: theme.spacing(1),
-      color: theme.palette.grey[500],
     },
   });
 
@@ -39,11 +31,6 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
   return (
     <MuiDialogTitle disableTypography className={classes.root} {...other}>
       <Typography variant="h6">{children}</Typography>
-      {onClose ? (
-        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-          <CloseIcon />
-        </IconButton>
-      ) : null}
     </MuiDialogTitle>
   );
 });
@@ -79,11 +66,21 @@ export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogP
   };
 
   const setAddressInLocalStorage = () => {
-    //setAddress(address);
+    geocodeByAddress(address)
+    .then(results => getLatLng(results[0]))
+    .then(({ lat, lng }) => {
+      saveUserAddressobject(address, Number(lat), Number(lng))
+    })
+    .catch(() => {
+      saveUserAddressobject(address, undefined, undefined)
+    });
+  };
+
+  const saveUserAddressobject = (address: string, latitude?:number, longitude?:number): void => {
     const userAddress: UserAddress = {
-      address: "Carrer blanquerna",
-      latitude: Number(1),
-      longitude: Number(1)
+      address: address,
+      latitude: latitude,
+      longitude: longitude
     };
     apiClient.saveUserAddress(userAddress);
   };
@@ -96,6 +93,9 @@ export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogP
         </DialogTitle>
         <DialogContent dividers>
         <GooglePlacesAutocomplete
+            onSelect={(({ description }) => (
+              setAddress(description)
+            )) as any}
             autocompletionRequest={{
                 componentRestrictions: {
                   country: ['es'],
@@ -113,7 +113,7 @@ export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogP
         />
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
+          <Button autoFocus onClick={handleClose} color="primary" disabled={address == ""}>
             Guardar direcció
           </Button>
         </DialogActions>

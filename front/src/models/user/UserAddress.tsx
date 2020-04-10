@@ -1,5 +1,5 @@
 export interface UserAddress {
     address: string,
-    latitude: number,
-    longitude: number
+    latitude?: number,
+    longitude?: number
 }
