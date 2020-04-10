@@ -17,11 +17,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const ProductList: FunctionComponent = () => {
-  const { user: { isLoading: isLoadingUserData, user, userAddress } } = useContext(AppContext);
+  const { user: { isLoading: isLoadingUserData, user, userAddress, updateUserAddress } } = useContext(AppContext);
   const [productList, setProducts] = useState([] as Product[]);
   const [isLoading, setIsLoading] = useState(false);
   const query = useQuery();
-  const { address, requestAddressComponent } = useAddress();
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   const classes = useStyles();
 
@@ -30,7 +31,14 @@ const ProductList: FunctionComponent = () => {
   const name = query.get('name');
 
   useEffect(() => {
-    if (!address) {
+    if (!isLoadingUserData) {
+      setOpenDialog(user === undefined && userAddress !== undefined && userAddress.address === '');
+    }
+  }, [isLoadingUserData, user, userAddress]);
+
+  useEffect(() => {
+    const isUserAddressMissing = user === undefined && userAddress !== undefined && userAddress.address === '';
+    if (openDialog || isLoadingUserData || isUserAddressMissing) {
       return;
     }
 
@@ -46,8 +54,9 @@ const ProductList: FunctionComponent = () => {
       setIsLoading(false);
     }
     getProducts();
-  }, [address, category, name]);
+  }, [category, name, isLoadingUserData, user, userAddress]);
 
+  console.log("ere", user, isLoadingUserData, userAddress);
   return (
     <div>
       {isLoading || isLoadingUserData ?
@@ -66,7 +75,7 @@ const ProductList: FunctionComponent = () => {
           {productList.map((product: Product) => (
             <ProductItem key={String(product.id)} product={product} />
           ))}
-          {requestAddressComponent}
+          {openDialog && <AddressRequestDialog open={openDialog} onClose={() => setOpenDialog(false)} onSelectAddress={updateUserAddress} />}
         </>
       }
     </div>
@@ -77,24 +86,4 @@ export default ProductList;
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
-}
-
-function useAddress() {
-  const context = useContext(AppContext);
-  const userAddress = context.user.userAddress?.address || undefined;
-  const logedUserAddress = context.user.user?.address || undefined;
-  const [address, setAddress] = useState(userAddress || logedUserAddress);
-  const [openDialog, setOpenDialog] = useState(!address || address === "");
-
-  useEffect(() => {
-    const userAddress = context.user.userAddress?.address || undefined;
-    const logedUserAddress = context.user.user?.address || undefined;
-    setAddress(userAddress || logedUserAddress);
-    setOpenDialog(!address || address === "");
-  }, [context, openDialog]);
-
-  return {
-    address,
-    requestAddressComponent: (<AddressRequestDialog open={openDialog} onClose={() => setOpenDialog(false)} onSelectAddress={context.user.updateUserAddress} />)
-  };
 }
