@@ -77,11 +77,15 @@ function useQuery() {
 
 function useAddress() {
   const context = useContext(AppContext);
-  const [address, setAddress] = useState(context.user.userAddress?.address || undefined);
+  const userAddress = context.user.userAddress?.address || undefined;
+  const logedUserAddress = context.user.user?.address || undefined;
+  const [address, setAddress] = useState(userAddress || logedUserAddress);
   const [openDialog, setOpenDialog] = useState(!address);
 
   useEffect(() => {
-    setAddress(context.user.userAddress?.address || undefined);
+    const userAddress = context.user.userAddress?.address || undefined;
+    const logedUserAddress = context.user.user?.address || undefined;
+    setAddress(userAddress || logedUserAddress);
   }, [context, openDialog]);
 
   return {
