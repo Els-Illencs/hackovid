@@ -60,7 +60,6 @@ const ProductList: FunctionComponent = () => {
     getProducts();
   }, [category, name, isLoadingUserData, user, userAddress, order]);
 
-  console.log("ere", user, isLoadingUserData, userAddress);
   return (
     <div>
       <div className={classes.filterAndOrderBar}>

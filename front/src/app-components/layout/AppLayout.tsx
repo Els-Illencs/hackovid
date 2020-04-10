@@ -149,7 +149,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
   }
 
   const saveLocationAndHideDrawer = () => {
-    saveLoginRedirect(history.location.pathname);
+    saveLoginRedirect(`${history.location.pathname}${history.location.search}`);
     setDrawerOpen(false)
   }
 
