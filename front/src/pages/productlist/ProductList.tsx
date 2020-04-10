@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect, FunctionComponent } from "react
 import { ProductApiClient } from '../../api/ProductApiClient';
 import { Product } from "../../models/product/Product";
 import { ProductItem } from "./ProductItem";
+import { OrderItems } from "./OrderItems";
 import { useLocation } from "react-router-dom";
 import { CircularProgress, makeStyles, Theme, createStyles, Grid } from "@material-ui/core";
 import { AddressRequestDialog } from "../../components/AddressRequestDialog";
@@ -12,7 +13,10 @@ const apiClient = new ProductApiClient();
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     loading: {
-    }
+    },
+    filterAndOrderBar: {
+      paddingBottom: "1rem"
+    },
   }),
 );
 
@@ -27,6 +31,9 @@ const ProductList: FunctionComponent = () => {
   const categoryAsStr = query.get('category')
   const category = categoryAsStr ? parseInt(categoryAsStr, 10) : null;
   const name = query.get('name');
+  const order = query.get('order');
+
+  console.log("order", order);
 
   useEffect(() => {
     if (!address) {
@@ -45,10 +52,13 @@ const ProductList: FunctionComponent = () => {
       setIsLoading(false);
     }
     getProducts();
-  }, [address, category, name]);
+  }, [address, category, name, order]);
 
   return (
     <div>
+      <div className={classes.filterAndOrderBar}>
+        <OrderItems />
+      </div>
       {isLoading ?
         <Grid
           container
@@ -61,9 +71,12 @@ const ProductList: FunctionComponent = () => {
           <CircularProgress className={classes.loading} color="primary" />
         </Grid>
         :
-        productList.map((product: Product) => (
-          <ProductItem key={String(product.id)} product={product} />
-        ))}
+        productList.length > 0 ?
+          productList.map((product: Product) => (
+            <ProductItem key={String(product.id)} product={product} />
+          )) :
+          "No hem trobat resultats amb aquests criteris de cerca."
+        }
       {requestAddressComponent}
     </div>
   );
