@@ -87,12 +87,13 @@ export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogP
 
   return (
     <div>
-      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+      <Dialog aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           Indiquens a on vius
         </DialogTitle>
         <DialogContent dividers>
         <GooglePlacesAutocomplete
+            placeholder={'ex. Carrer Blanquerna 53, Palma'}
             onSelect={(({ description }) => (
               setAddress(description)
             )) as any}

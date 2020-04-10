@@ -1,14 +1,13 @@
-import React, { useState, useEffect, FunctionComponent } from "react";
+import React, { useContext, useState, useEffect, FunctionComponent } from "react";
 import { ProductApiClient } from '../../api/ProductApiClient';
 import { Product } from "../../models/product/Product";
 import { ProductItem } from "./ProductItem";
 import { useLocation } from "react-router-dom";
 import { CircularProgress, makeStyles, Theme, createStyles, Grid } from "@material-ui/core";
 import { AddressRequestDialog } from "../../components/AddressRequestDialog";
-import { UserApiClient } from "../../api/UserApiClient";
+import { AppContext } from '../../app-components';
 
 const apiClient = new ProductApiClient();
-const userApiClient= new UserApiClient();
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,6 +21,7 @@ const ProductList: FunctionComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const location: any = useLocation();
+  const { user } = useContext(AppContext);
 
   const classes = useStyles();
 
@@ -45,9 +45,8 @@ const ProductList: FunctionComponent = () => {
   }, []);
 
   const checkIsAddressStoredInLocalStorage = (): void => {
-    userApiClient.getStoredUserAddress().then(userAddress => {
-      setOpenDialog(userAddress.address == "" ? true : false);
-    })
+    const value = user.userAddress == undefined || user.userAddress.address == undefined ||  user.userAddress.address == "" ? true : false;
+    setOpenDialog(value);
   }
 
   return (
