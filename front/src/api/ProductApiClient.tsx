@@ -3,20 +3,20 @@ import { Product } from "../models/product/Product";
 
 
 export class ProductApiClient {
-    async getProducts() {
-        const res = await Axios.get(process.env.REACT_APP_API_URL + 'products');
+    async getProducts(order: string | null) {
+        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?order=${order}`);
 
         return res.data as Product[];
     }
 
-    async getProductsBycategory(categoryId: number) {
-        const res = await Axios.get(process.env.REACT_APP_API_URL + 'products?categoryId=' + categoryId);
+    async getProductsBycategory(categoryId: number, order: string | null) {
+        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?categoryId=${categoryId}&order=${order}`);
 
         return res.data as Product[];
     }
     
-    async getProductsByName(name: string) {
-        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?name=${name}`);
+    async getProductsByName(name: string, order:string | null) {
+        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?name=${name}&order=${order}`);
 
         return res.data as Product[];
     }
