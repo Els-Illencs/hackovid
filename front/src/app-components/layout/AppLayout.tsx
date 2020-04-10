@@ -1,7 +1,7 @@
-import React, { FC, ReactNode, useState, useEffect, useContext } from "react";
+import React, { FC, ReactNode, useState, useEffect } from "react";
 import { ApplicationBar } from "./ApplicationBar";
 import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
-import { makeStyles, Drawer, List, ListItem, ListItemText } from "@material-ui/core";
+import { makeStyles, Drawer, List, ListItem, ListItemText, Grid, Typography } from "@material-ui/core";
 import { AppContext } from "../context/AppContext";
 import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
 import { ProductShoppingCart } from "../../models/product/Product";
@@ -30,6 +30,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 16,
     marginLeft: 16,
     marginBottom: 12,
+    width: 30
+  },
+  userName: {
+    fontSize: 20,
+    marginTop: 19,
+    marginLeft: 16,
+    fontStyle: "italic"
   }
 }))
 
@@ -37,9 +44,10 @@ const shoppingCartApiClient = new ShoppingCartApiClient();
 
 const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
   const matchPageWithAppBar = useRouteMatch(
-    props.pages.filter(p => !p.fullScreen).map(p=> p.path));
+    props.pages.filter(p => !p.fullScreen).map(p => p.path));
   const classes = useStyles(props);
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const styles = useStyles(props);
+  const [drawerOpen, setDrawerOpen] = useState(true);
   const [user, setUser] = useState<User | undefined>(mockUser); // TODO add logic to get the real data of the user
   const [shoppingCartProducts, setShoppingCartProducts] = useState<ProductShoppingCart[]>([]);
 
@@ -105,8 +113,18 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     {matchPageWithAppBar && <ApplicationBar onMenuButtonClick={openDrawer} />}
     <main className={classes.content}>
       <Drawer anchor="left" open={drawerOpen} onClose={closeDrawer}>
-        <div style={{minWidth: 260 }}>
-          <AccountCircle className={classes.account} />
+        <div style={{ minWidth: 260 }}>
+          <Grid container spacing={1}>
+            <Grid item xs={2}>
+              <AccountCircle fontSize="large" className={styles.account} />
+            </Grid>
+            <Grid item xs={10}>
+              {user && <Typography className={styles.userName} variant="body1" color="textSecondary">
+                Hola {user.name}
+              </Typography>
+              }
+            </Grid>
+          </Grid>
           <List>
             {props.pages.filter(p => !!p.menuItem).map((p) => (
               <ListItem button component={Link} to={p.path} onClick={closeDrawer} key={p.path}>
