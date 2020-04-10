@@ -9,7 +9,7 @@ import Container from '@material-ui/core/Container';
 import { useHistory } from "react-router-dom";
 import { LoginApiClient } from '../../api/LoginApiClient';
 import { AppContext } from '../../app-components';
-import { getLoginRedirect } from '../../services/LoginService';
+import { getLoginRedirect, clearLoginRedirect } from '../../services/LoginService';
 
 const loginApiClient = new LoginApiClient();
 
@@ -56,6 +56,7 @@ const Login: FunctionComponent = () => {
         phone: "666333999666",
       });
       const redirect = await getLoginRedirect();
+      clearLoginRedirect();
       if (redirect !== undefined) {
         history.push(redirect);
       } else {
