@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -11,6 +11,7 @@ import 'react-google-places-autocomplete/dist/index.min.css';
 import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
 import { UserApiClient } from '../api/UserApiClient';
 import { UserAddress } from '../models/user/UserAddress';
+import { AppContext } from '../app-components';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -56,9 +57,7 @@ export interface AddressRequestDialogProps {
 
 export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogProps> = ({ open, onClose }) => {
   const [address, setAddress] = React.useState("");
-
-  const apiClient: UserApiClient = new UserApiClient();
-
+  const { user } = useContext(AppContext);
   
   const handleClose = () => {
     setAddressInLocalStorage();
@@ -70,6 +69,7 @@ export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogP
     .then(results => getLatLng(results[0]))
     .then(({ lat, lng }) => {
       saveUserAddressobject(address, Number(lat), Number(lng))
+
     })
     .catch(() => {
       saveUserAddressobject(address, undefined, undefined)
@@ -82,7 +82,7 @@ export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogP
       latitude: latitude,
       longitude: longitude
     };
-    apiClient.saveUserAddress(userAddress);
+    user.updateUserAddress(userAddress);
   };
 
   return (
@@ -107,7 +107,8 @@ export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogP
                 display: 'block',
                 width: '100%',
                 border: 'none',
-                borderBottom: '1px solid #757575'
+                borderBottom: '1px solid #757575',
+                outline:'none'
             }}
             suggestionsClassNames={{container: '', suggestion: '', suggestionActive: '' }}
         />

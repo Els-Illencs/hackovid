@@ -8,6 +8,8 @@ import { ProductShoppingCart } from "../../models/product/Product";
 import { User } from "../../models/user/User";
 import { AccountCircle } from '@material-ui/icons';
 import { common } from '@material-ui/core/colors';
+import { UserAddress } from "../../models/user/UserAddress";
+import { UserApiClient } from "../../api/UserApiClient";
 
 type Page = {
   path: string
@@ -47,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
   }))
 
 const shoppingCartApiClient = new ShoppingCartApiClient();
+const userApiClient: UserApiClient = new UserApiClient();
 
 const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
   const matchPageWithAppBar = useRouteMatch(
@@ -56,6 +59,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [user, setUser] = useState<User | undefined>(mockUser); // TODO add logic to get the real data of the user
   const [shoppingCartProducts, setShoppingCartProducts] = useState<ProductShoppingCart[]>([]);
+  const [userAddress, setUserAddress] = useState<UserAddress | undefined>(mockUser); 
 
   const openDrawer = () => setDrawerOpen(true);
   const closeDrawer = () => setDrawerOpen(false);
@@ -63,6 +67,11 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
   useEffect(() => {
     const getShoppingCartProducts = async () => setShoppingCartProducts(await shoppingCartApiClient.getItems());
     getShoppingCartProducts();
+  }, []);
+
+  useEffect(() => {
+    const getUserAddressFromLocalStorage = async () => setUserAddress(await userApiClient.getStoredUserAddress());
+    getUserAddressFromLocalStorage();
   }, []);
 
   // TODO move AppContext in a different file / component
@@ -104,10 +113,17 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     setShoppingCartProducts(nextShoppingCartProducts);
   }
 
+  const updateUserAddess = (userAddress: UserAddress | undefined) => {
+    userApiClient.saveUserAddress(userAddress);
+    setUserAddress(userAddress);
+  }
+
   return (<AppContext.Provider value={{
     user: {
       user,
       updateUser: (user: User | undefined) => setUser(user),
+      userAddress,
+      updateUserAddress: (userAddress: UserAddress | undefined) => updateUserAddess(userAddress),
     },
     shoppingCart: {
       products: shoppingCartProducts,
