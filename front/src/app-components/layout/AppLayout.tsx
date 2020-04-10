@@ -101,15 +101,24 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
 
   // TODO move AppContext in a different file / component
   const addProductToTheShoppingCart = (product: ProductShoppingCart) => {
-    const index = shoppingCartProducts.findIndex(({ id }) => id === product.id);
-    if (index !== -1) {
-      updateProduct(index, shoppingCartProducts[index].quantity + product.quantity);
-    } else {
-      const nextShoppingCartProducts = shoppingCartProducts.slice();
-      nextShoppingCartProducts.push(product);
-      shoppingCartApiClient.saveItems(nextShoppingCartProducts);
-      setShoppingCartProducts(nextShoppingCartProducts);
+    addProductsToTheShoppingCart([product]);
+  }  
+  
+  const addProductsToTheShoppingCart = (products: ProductShoppingCart[]) => {
+    const nextShoppingCartProducts = shoppingCartProducts.slice();
+
+    for (const product of products) {
+      const index = nextShoppingCartProducts.findIndex(({ id }) => id === product.id);
+
+      if (index !== -1) {
+        updateProduct(index, shoppingCartProducts[index].quantity + product.quantity);
+      } else {
+        nextShoppingCartProducts.push(product);
+      }
     }
+
+    shoppingCartApiClient.saveItems(nextShoppingCartProducts);
+    setShoppingCartProducts(nextShoppingCartProducts);
   }
 
   const deleteProductFromTheShoppingCart = (productId: number) => {
@@ -164,6 +173,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     shoppingCart: {
       products: shoppingCartProducts,
       addProduct: addProductToTheShoppingCart,
+      addProducts: addProductsToTheShoppingCart,
       updateProduct: updateProductFromTheShoppingCart,
       deleteProduct: deleteProductFromTheShoppingCart,
     }

@@ -7,6 +7,7 @@ import { ShoppingCart } from './pages/shoppingCart/ShoppingCart';
 import ProductList from './pages/productlist/ProductList';
 import { Checkout } from './pages/checkout/Checkout';
 import { Redirect, useLocation } from 'react-router-dom';
+import PackageDetail from './pages/packageDetail/PackageDetail';
 
 const theme = createMuiTheme({});
 
@@ -20,6 +21,7 @@ function App() {
             { path: "/home", content: (<Home />), menuItem: { label: "Inici" } },
             { path: "/shopping-cart", content: (<ShoppingCart />), menuItem: { label: "Cistella" } },
             { path: "/login", content: (<Login />), fullScreen: true },
+            { path: "/package-detail", content: (<PackageDetail />) },
             { path: "/product-list", content: (<ProductList />) },
             { path: "/checkout", content: (<Checkout />) }
           ]} />

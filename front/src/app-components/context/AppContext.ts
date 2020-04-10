@@ -14,6 +14,7 @@ type App = {
     shoppingCart: {
         products: ProductShoppingCart[];
         addProduct: (product: ProductShoppingCart) => void;
+        addProducts: (products: ProductShoppingCart[]) => void;
         updateProduct: (product: ProductShoppingCart) => void;
         deleteProduct: (productId: number) => void;
     }

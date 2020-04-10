@@ -31,7 +31,7 @@ const PackageList: FC<PackageListProps> = ({packages}) => {
         <SingleLineGridList cellHeight={180} spacing={4}>
             {packages.map(p =>
                 <GridListTile style={{ width: 180 }}>
-                <Link to={`/package-list?packageId=${p.id}`}>
+                <Link to={`/package-detail?packageId=${p.id}`}>
                     <img className={classes.image} src={p.image} alt={p.name} />
                     <GridListTileBar
                     className={classes.title}

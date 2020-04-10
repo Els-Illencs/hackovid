@@ -4,13 +4,13 @@ import { ProductFilterFields } from "../../models/product/ProductFilterFields";
 import { Product } from "../../models/product/Product";
 import { ProductItem } from "./ProductItem";
 import { OrderItems } from "./OrderItems";
-import { useLocation } from "react-router-dom";
 import { CircularProgress, makeStyles, Theme, createStyles, Grid } from "@material-ui/core";
 import { AddressRequestDialog } from "../../components/AddressRequestDialog";
 import { ProductFilter } from "../../components/ProductFilter";
 import { AppContext } from '../../app-components';
 import { useHistory } from 'react-router-dom'
 import { Redirect } from "react-router-dom";
+import useQuery from "../../hooks/useQuery";
 
 const apiClient = new ProductApiClient();
 
@@ -166,7 +166,3 @@ const ProductList: FunctionComponent = () => {
 }
 
 export default ProductList;
-
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
