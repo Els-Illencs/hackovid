@@ -135,7 +135,6 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
 
   const updateUser = (user: User | undefined) => {
     userApiClient.saveUser(user);
-    console.log("set user");
     setUser(user);
   }
 
