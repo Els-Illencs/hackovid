@@ -1,6 +1,6 @@
 import React, { FC, ReactNode, useState, useEffect } from "react";
 import { ApplicationBar } from "./ApplicationBar";
-import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
+import { Switch, Route, Link, useRouteMatch, useHistory } from "react-router-dom";
 import { makeStyles, Drawer, List, ListItem, ListItemText, Grid, Typography } from "@material-ui/core";
 import { AppContext } from "../context/AppContext";
 import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
@@ -10,6 +10,7 @@ import { AccountCircle } from '@material-ui/icons';
 import { common } from '@material-ui/core/colors';
 import { UserAddress } from "../../models/user/UserAddress";
 import { UserApiClient } from "../../api/UserApiClient";
+import { saveLoginRedirect } from "../../services/LoginService";
 
 type Page = {
   path: string
@@ -56,7 +57,9 @@ const useStyles = makeStyles((theme) => ({
 const shoppingCartApiClient = new ShoppingCartApiClient();
 const userApiClient: UserApiClient = new UserApiClient();
 
-const AppLayout: FC<AppLayoutProps> = (props) => {
+const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
+  const history = useHistory();
+
   const matchPageWithAppBar = useRouteMatch(
     props.pages.filter(p => !p.fullScreen).map(p => p.path));
   const classes = useStyles(props);
@@ -65,22 +68,34 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
   const [user, setUser] = useState<User | undefined>();
   const [shoppingCartProducts, setShoppingCartProducts] = useState<ProductShoppingCart[]>([]);
   const [userAddress, setUserAddress] = useState<UserAddress | undefined>();
+  const [isLoadingUserAddress, setIsLoadingUserAddress] = useState(true);
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
 
   const openDrawer = () => setDrawerOpen(true);
   const closeDrawer = () => setDrawerOpen(false);
 
   useEffect(() => {
-    const getShoppingCartProducts = async () => setShoppingCartProducts(await shoppingCartApiClient.getItems());
+    const getShoppingCartProducts = async () => {
+      setIsLoadingUser(true);
+      setShoppingCartProducts(await shoppingCartApiClient.getItems());
+      setIsLoadingUser(false);
+    }
     getShoppingCartProducts();
   }, []);
 
   useEffect(() => {
-    const getUserAddressFromLocalStorage = async () => setUserAddress(await userApiClient.getStoredUserAddress());
+    const getUserAddressFromLocalStorage = async () => {
+      setIsLoadingUserAddress(true);
+      setUserAddress(await userApiClient.getStoredUserAddress());
+      setIsLoadingUserAddress(false);
+    }
     getUserAddressFromLocalStorage();
   }, []);
 
   useEffect(() => {
-    const getUserFromLocalStorage = async () => setUser(await userApiClient.getUser());
+    const getUserFromLocalStorage = async () => {
+      setUser(await userApiClient.getUser());
+    }
     getUserFromLocalStorage();
   }, []);
 
@@ -133,8 +148,14 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
     setUser(user);
   }
 
+  const saveLocationAndHideDrawer = () => {
+    saveLoginRedirect(history.location.pathname);
+    setDrawerOpen(false)
+  }
+
   return (<AppContext.Provider value={{
     user: {
+      isLoading: isLoadingUser || isLoadingUserAddress,
       user,
       updateUser,
       userAddress,
@@ -154,14 +175,14 @@ const AppLayout: FC<AppLayoutProps> = (props) => {
           <Grid container spacing={1} className={classes.accountArea}>
             <>
               <Grid item xs={2}>
-                {!user ? <Link to="/login" onClick={() => setDrawerOpen(false)}>
+                {!user ? <Link to="/login" onClick={saveLocationAndHideDrawer}>
                   <AccountCircle fontSize="large" className={styles.account} />
                 </Link> : <AccountCircle fontSize="large" className={styles.account} />
                 }
               </Grid>
               <Grid item xs={10}>
                 <Typography className={styles.userName} variant="body1" color="textSecondary">
-                  {user ? `Hola ${user.name}` : <Link to="/login" onClick={() => setDrawerOpen(false)} className={styles.userNameLink}>Apply login</Link>}
+                  {user ? `Hola ${user.name}` : <Link to="/login" onClick={saveLocationAndHideDrawer} className={styles.userNameLink}>Apply login</Link>}
                 </Typography>
               </Grid>
             </>
