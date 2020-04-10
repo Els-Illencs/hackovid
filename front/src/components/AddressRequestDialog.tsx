@@ -62,8 +62,12 @@ const DialogActions = withStyles((theme: Theme) => ({
   },
 }))(MuiDialogActions);
 
-export default function StreetRequestDialog() {
-  const [open, setOpen] = React.useState(false);
+export interface AddressRequestDialogProps {
+  view: boolean;
+};
+
+export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogProps> = ({ view }) => {
+  const [open, setOpen] = React.useState(view);
   const [address, setAddress] = React.useState("");
 
   const apiClient: UserApiClient = new UserApiClient();
@@ -77,30 +81,17 @@ export default function StreetRequestDialog() {
   };
 
   const setAddressInLocalStorage = () => {
-    setAddress("Carrer Blanquerna 53");
-    geocodeByAddress(address)
-    .then(results => getLatLng(results[0]))
-    .then(({ lat, lng }) => {
-        const userAddress: UserAddress = {
-            address: address,
-            latitude: Number(lat),
-            longitude: Number(lng)
-        };
-        apiClient.saveUserAddress(userAddress);
-    });
+    setAddress(address);
+    const userAddress: UserAddress = {
+      address: "Carrer blanquerna",
+      latitude: Number(1),
+      longitude: Number(1)
   };
-
-  function setAddressDescription(prediction) {
-    if(prediction) {
-        setAddress(prediction.description);
-    }
-  }
+  apiClient.saveUserAddress(userAddress);
+  };
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open dialog
-      </Button>
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           Indiquens a on vius
@@ -120,6 +111,7 @@ export default function StreetRequestDialog() {
                 border: 'none',
                 borderBottom: '1px solid #757575'
             }}
+            suggestionsClassNames={{container: '', suggestion: '', suggestionActive: '' }}
         />
         </DialogContent>
         <DialogActions>
