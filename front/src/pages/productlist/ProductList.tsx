@@ -1,33 +1,62 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { useState, useEffect, FunctionComponent } from "react";
 import { ProductApiClient } from '../../api/ProductApiClient';
 import { Product } from "../../models/product/Product";
 import { ProductItem } from "./ProductItem";
 import { useLocation } from "react-router-dom";
+import { CircularProgress, makeStyles, Theme, createStyles, Grid } from "@material-ui/core";
 
 const apiClient = new ProductApiClient();
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    loading: {
+    }
+  }),
+);
 
-const ProductList: FC = () => {
+const ProductList: FunctionComponent = () => {
   const [productList, setProducts] = useState([] as Product[]);
-  const location:any = useLocation();
+  const [isLoading, setIsLoading] = useState(false);
+  const location: any = useLocation();
+
+  const classes = useStyles();
 
   const category = location?.state?.category;
   const name = location?.state?.name;
 
   useEffect(() => {
-    if (category) {
-      apiClient.getProductsBycategory(category).then(setProducts);;
-    } else if (name) {
-      apiClient.getProductsByName(name).then(setProducts);
-    } else {
-      apiClient.getProducts().then(setProducts);
+    const getProducts = async () => {
+      setIsLoading(true);
+      if (category) {
+        setProducts(await apiClient.getProductsBycategory(category));
+      } else if (name) {
+        setProducts(await apiClient.getProductsByName(name));
+      } else {
+        setProducts(await apiClient.getProducts());
+      }
+      setIsLoading(false);
     }
+    getProducts();
   }, []);
+
+  // TODO add no results found
 
   return (
     <div>
-        {productList.map((product: Product) => (
-            <ProductItem key={String(product.id)} product={product}/>
+      {isLoading ?
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+          style={{ minHeight: '100vh' }}
+        >
+          <CircularProgress className={classes.loading} color="primary" />
+        </Grid>
+        :
+        productList.map((product: Product) => (
+          <ProductItem key={String(product.id)} product={product} />
         ))}
     </div>
   );

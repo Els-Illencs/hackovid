@@ -47,7 +47,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     props.pages.filter(p => !p.fullScreen).map(p => p.path));
   const classes = useStyles(props);
   const styles = useStyles(props);
-  const [drawerOpen, setDrawerOpen] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [user, setUser] = useState<User | undefined>(mockUser); // TODO add logic to get the real data of the user
   const [shoppingCartProducts, setShoppingCartProducts] = useState<ProductShoppingCart[]>([]);
 
