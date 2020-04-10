@@ -23,7 +23,7 @@ export const OrderItems: FunctionComponent = () => {
   return (<>
     {redirectToProductPage && <Redirect push to={`/product-list${redirectToProductPage}`} /> }
     <div>
-      <FormControl >
+      <FormControl variant="outlined">
         <InputLabel htmlFor="orderSelect">Ordenar</InputLabel>
         <Select
           native

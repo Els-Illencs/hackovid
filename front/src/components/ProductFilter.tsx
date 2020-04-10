@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import { ProductFilterFields } from '../models/product/ProductFilterFields';
 import TextField from '@material-ui/core/TextField';
-import Grid, { GridSpacing } from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 import Rating from '@material-ui/lab/Rating';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -79,7 +79,7 @@ export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFi
 
   return (
     <div className={classes.root}>
-      <ExpansionPanel defaultExpanded>
+      <ExpansionPanel>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1c-content"

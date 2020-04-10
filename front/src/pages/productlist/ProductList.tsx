@@ -129,15 +129,21 @@ const ProductList: FunctionComponent = () => {
 
   return (
     <div>
+      <Grid container>
+      <Grid item md={3} xs={12}>
+      <div className={classes.filterAndOrderBar}>
+        <OrderItems />
+      </div>
+      </Grid>
+      <Grid item md={9} xs={12}>
       {redirectToProductPage && <Redirect push to={`/product-list${redirectToProductPage}`} /> }
       <ProductFilter 
         productFilterFields={productFilterFields}
         onChangeProductFilterFields={onChangeProductFilterFields}
         onClickAplyFilter={onClickAplyFilter}
       />
-      <div className={classes.filterAndOrderBar}>
-        <OrderItems />
-      </div>
+      </Grid>
+      </Grid>
       {isLoading || isLoadingUserData ?
         <Grid
           container
