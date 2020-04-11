@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { KeyboardArrowRight } from '@material-ui/icons';
-import { Card, makeStyles, Theme, createStyles, Button, Grid, Typography, IconButton } from "@material-ui/core";
+import { Card, makeStyles, Theme, createStyles, Button, Grid, Typography, Select, Switch, Tabs, Tab, Input, InputLabel } from "@material-ui/core";
 import { AppContext } from '../../app-components';
 import { ProductInfoItem } from "../../components/ProductInfoItem";
 import { useHistory } from "react-router-dom";
 import { saveLoginRedirect } from "../../services/LoginService";
-import { PaymentMethodType, PaymentMethod } from "./PaymentMethod";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,15 +36,29 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     marginBottom: {
       marginBottom: 16
-    }
+    }, tabs: {
+      width: "100%"
+    },
+    deliverTabs: {
+      marginBottom: 24
+    },
+    selectWidth: {
+      minWidth: "120px !important",
+      marginBottom: 16
+    },
   }),
 );
+
+enum PaymentMethod {
+  SHOP = "SHOP",
+  ONLINE = "ONLINE",
+}
 
 export const Checkout: React.FunctionComponent = () => {
   const { user: { user, userAddress, isLoading }, shoppingCart: { products } } = useContext(AppContext);
   const history = useHistory();
-  const [isSelectingPaymentMethod, setIsSelectingPaymentMethod] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType | undefined>();
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | undefined>();
+  const [selectedDeliverTab, setSelectedDeliverTab] = useState(0);
 
   const classes = useStyles();
 
@@ -61,75 +73,135 @@ export const Checkout: React.FunctionComponent = () => {
   const shippingPrice = 10;
   const totalPrice: number = totalPriceProducts + shippingPrice;
 
-  const isBuyButtonDisabled = !paymentMethod;
+  const isBuyButtonDisabled = selectedDeliverTab === 0 && paymentMethod === undefined;
 
   const address = userAddress ? userAddress.address : user?.address;
 
+  const switchDeliver = (value: any) => {
+    if (value !== selectedDeliverTab) {
+      setSelectedDeliverTab(+value);
+    }
+  }
+
   return (
     <>{user && <div>
+      <Grid component="label" container alignItems="center" spacing={0} className={classes.deliverTabs}>
+        <Grid xs={12} item><h4>Mètode d'entrega</h4></Grid>
+        <Tabs
+          className={classes.tabs}
+          value={selectedDeliverTab}
+          onChange={(_, value) => switchDeliver(value)}
+          indicatorColor="primary"
+          textColor="primary"
+          variant="fullWidth"
+          aria-label="full width tabs example"
+        >
+          <Tab label="Recollida a tenda" />
+          <Tab label="Enviament a casa" />
+        </Tabs>
+      </Grid>
+
+      {
+        selectedDeliverTab === 1 ?
+          <>
+            <Card className={classes.header}>
+              <Grid container spacing={1}>
+                <Grid item xs={11}>
+                  <h4>Informació de pagament</h4>
+                  <Typography component="p" className={classes.marginBottom}>
+                    Online targeta
+                </Typography>
+                </Grid>
+              </Grid>
+            </Card>
+
+            <Card className={classes.header}>
+              <Grid container spacing={1} >
+                <Grid item xs={11}>
+                  <h4>Direcció d'enviament</h4>
+                  <Typography component="p">
+                    {user.name} {user.surname}
+                  </Typography>
+                  <Typography component="p">
+                    {user.phone}
+                  </Typography>
+                  <Typography component="p" className={classes.marginBottom}>
+                    {address}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Card>
+
+            <Card className={classes.header}>
+              <h4>Resum</h4>
+              <div className={classes.marginBottom}>
+                <div>
+                  Productes: {totalPriceProducts.toFixed(2)} €
+              </div>
+                <div>
+                  Enviament: {shippingPrice.toFixed(2)} €
+              </div>
+                <div className={classes.totalPrice}>
+                  Enviament: {totalPrice.toFixed(2)} €
+              </div>
+              </div>
+            </Card>
+          </>
+          : <>
+            <Card className={classes.header}>
+              <Grid component="label" container alignItems="center" spacing={0}>
+                <Grid xs={12} item><h4>Mètode de pagament</h4></Grid>
+                <Select
+                  native
+                  className={classes.selectWidth}
+                  value={paymentMethod}
+                  onChange={(event) => {
+                    setPaymentMethod(PaymentMethod[String(event.target.value)])
+                  }}
+                >
+                  <option value={''}>-</option>
+                  <option value={PaymentMethod.ONLINE}>Online</option>
+                  <option value={PaymentMethod.SHOP}>Tenda</option>
+                </Select>
+              </Grid>
+            </Card>
+
+            <Card className={classes.header}>
+              <Grid container spacing={1} >
+                <Grid item xs={11}>
+                  <h4>Dades del client</h4>
+                  <Typography component="p">
+                    {user.name} {user.surname}
+                  </Typography>
+                  <Typography component="p" className={classes.marginBottom}>
+                    Telèfon: {user.phone}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Card>
+
+            <Card className={classes.header}>
+              <h4>Resum</h4>
+              <div className={classes.marginBottom}>
+                <div className={classes.totalPrice}>
+                  Total: {totalPriceProducts.toFixed(2)} €
+              </div>
+              </div>
+            </Card>
+          </>
+      }
       <Button className={classes.button} variant="contained" size="large" color="primary" disabled={isBuyButtonDisabled}>
         Comprar ara
       </Button>
-
-      <Card className={classes.header}>
-        <h4>Resum</h4>
-        <div className={classes.marginBottom}>
-          <div>
-            Productes: {totalPriceProducts} €
-          </div>
-          <div>
-            Enviament: {shippingPrice} €
-          </div>
-          <div className={classes.totalPrice}>
-            Enviament: {totalPrice} €
-          </div>
-        </div>
-      </Card>
-
-      <Card className={classes.header}>
-        <h4>Data d'entrega</h4>
-        <div className={classes.marginBottom}>15 abr 2020</div>
-      </Card>
-
-      <Card className={classes.header}>
-        <Grid container spacing={1} >
-          <Grid item xs={11}>
-            <h4>Direcció d'enviament</h4>
-            <Typography component="p">
-              {user!.name} {user!.surname}
-            </Typography>
-            <Typography component="p" className={classes.marginBottom}>
-              {address}
-            </Typography>
-          </Grid>
-        </Grid>
-      </Card>
-
-      <Card className={classes.header}>
-        <Grid container spacing={1}>
-          <Grid item xs={11}>
-            <h4>Informació de pagament</h4>
-            <Typography component="p" className={classes.marginBottom}>
-              {!paymentMethod ?
-                "Seleccioni una forma de pagament *" : paymentMethod === PaymentMethodType.CARD ? 'Targeta' : 'Efectiu'
-              }
-            </Typography>
-          </Grid>
-          <Grid item xs={1} className={classes.arrowButton}>
-            <IconButton onClick={() => setIsSelectingPaymentMethod(true)} edge="start" color="inherit" aria-label="menu">
-              <KeyboardArrowRight />
-            </IconButton>
-          </Grid>
-        </Grid>
-      </Card>
 
       {products.map((productTmp) => <ProductInfoItem key={String(productTmp.id)} product={productTmp} />)}
 
-      <Button className={classes.button} variant="contained" size="large" color="primary" disabled={isBuyButtonDisabled}>
-        Comprar ara
+      {
+        products.length > 2 && <Button className={classes.button} variant="contained" size="large" color="primary" disabled={isBuyButtonDisabled}>
+          Comprar ara
       </Button>
-    </div>}
-      {isSelectingPaymentMethod && <PaymentMethod onClose={() => setIsSelectingPaymentMethod(false)} onSavePaymentMethod={(option) => setPaymentMethod(option)} />}
+      }
+    </div >}
     </>
   );
 }
