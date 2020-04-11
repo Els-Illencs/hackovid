@@ -87,7 +87,7 @@ export const Checkout: React.FunctionComponent = () => {
   useEffect(() => {
     if (user) {
 
-      setAddress(userAddress ? userAddress.address! : user.address!);
+      setAddress(userAddress ? userAddress.address! : user.address.address!);
       setNameAndSurname(`${user.name} ${user.surname}`);
       setPhone(user.phone);
     }
