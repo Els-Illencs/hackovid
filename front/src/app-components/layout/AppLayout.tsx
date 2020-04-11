@@ -219,13 +219,4 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
   </AppContext.Provider >);
 };
 
-const mockUser: User = {
-  id: 1,
-  name: "Name",
-  surname: "Surname",
-  email: "example@example.com",
-  address: "Avinguda segona, 24A, 3B",
-  phone: "666333999666",
-}
-
 export default AppLayout;
