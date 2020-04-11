@@ -39,6 +39,9 @@ const useStyles = makeStyles(() =>
     quantity: {
       width: "100%"
     },
+    card: {
+      paddingBottom: "16px !important"
+    },
   }),
 );
 
@@ -64,7 +67,7 @@ export const ProductShoppingCartItem: React.FunctionComponent<ProductShoppingCar
 
   return (
     <ProductInfoItem product={product} >
-      <CardContent>
+      <CardContent className={classes.card}>
         <div className={classes.mainContent}>
           <Grid container spacing={1}>
             <Grid item xs={6} md={3}>

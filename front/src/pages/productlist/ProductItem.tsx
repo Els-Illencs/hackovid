@@ -16,6 +16,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     quantity: {
       width: "100%"
+    },
+    card: {
+      paddingBottom: "16px !important"
+    },
+    addButton: {
+      width: "100%"
     }
   }),
 );
@@ -40,7 +46,7 @@ export const ProductItem: React.FunctionComponent<ProductItemProps> = ({ product
 
   return (
     <ProductInfoItem product={product} >
-      <CardContent>
+      <CardContent className={classes.card}>
         <div className={classes.mainContent}>
           <Grid container spacing={1}>
             <Grid item xs={6} md={3}>
@@ -50,7 +56,7 @@ export const ProductItem: React.FunctionComponent<ProductItemProps> = ({ product
               />
             </Grid>
             <Grid item xs={6} md={3}>
-              <Button onClick={addProductToShoppingCart} variant="contained" size="large" color="primary" disabled={quantity === "" || +quantity === 0}>
+              <Button className={classes.addButton} onClick={addProductToShoppingCart} variant="contained" size="large" color="primary" disabled={quantity === "" || +quantity === 0}>
                 Afegir
                 </Button>
             </Grid>
