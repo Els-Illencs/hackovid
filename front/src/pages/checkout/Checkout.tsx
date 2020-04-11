@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { KeyboardArrowRight } from '@material-ui/icons';
-import { Card, makeStyles, Theme, createStyles, Button, Grid, Typography, IconButton, Switch, Tabs, Tab } from "@material-ui/core";
+import { Card, makeStyles, Theme, createStyles, Button, Grid, Typography, Select, Switch, Tabs, Tab, Input, InputLabel } from "@material-ui/core";
 import { AppContext } from '../../app-components';
 import { ProductInfoItem } from "../../components/ProductInfoItem";
 import { useHistory } from "react-router-dom";
@@ -39,7 +38,14 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: 16
     }, tabs: {
       width: "100%"
-    }
+    },
+    deliverTabs: {
+      marginBottom: 24
+    },
+    selectWidth: {
+      minWidth: "120px !important",
+      marginBottom: 16
+    },
   }),
 );
 
@@ -51,7 +57,7 @@ enum PaymentMethod {
 export const Checkout: React.FunctionComponent = () => {
   const { user: { user, userAddress, isLoading }, shoppingCart: { products } } = useContext(AppContext);
   const history = useHistory();
-  const [paymentMethod, setPaymentMethod] = useState(PaymentMethod.ONLINE);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | undefined>();
   const [selectedDeliverTab, setSelectedDeliverTab] = useState(0);
 
   const classes = useStyles();
@@ -67,7 +73,7 @@ export const Checkout: React.FunctionComponent = () => {
   const shippingPrice = 10;
   const totalPrice: number = totalPriceProducts + shippingPrice;
 
-  const isBuyButtonDisabled = false;
+  const isBuyButtonDisabled = selectedDeliverTab === 0 && paymentMethod === undefined;
 
   const address = userAddress ? userAddress.address : user?.address;
 
@@ -77,27 +83,23 @@ export const Checkout: React.FunctionComponent = () => {
     }
   }
 
-  const switchDeliverPayment = () => setPaymentMethod(paymentMethod === PaymentMethod.ONLINE ? PaymentMethod.SHOP : PaymentMethod.ONLINE);
-
   return (
     <>{user && <div>
-      <Card className={classes.header}>
-        <Grid component="label" container alignItems="center" spacing={0}>
-          <Grid xs={12} item><h4>Mètode d'entrega</h4></Grid>
-          <Tabs
-            className={classes.tabs}
-            value={selectedDeliverTab}
-            onChange={(_, value) => switchDeliver(value)}
-            indicatorColor="primary"
-            textColor="primary"
-            variant="fullWidth"
-            aria-label="full width tabs example"
-          >
-            <Tab label="Recollida a tenda" />
-            <Tab label="Enviament a casa" />
-          </Tabs>
-        </Grid>
-      </Card>
+      <Grid component="label" container alignItems="center" spacing={0} className={classes.deliverTabs}>
+        <Grid xs={12} item><h4>Mètode d'entrega</h4></Grid>
+        <Tabs
+          className={classes.tabs}
+          value={selectedDeliverTab}
+          onChange={(_, value) => switchDeliver(value)}
+          indicatorColor="primary"
+          textColor="primary"
+          variant="fullWidth"
+          aria-label="full width tabs example"
+        >
+          <Tab label="Recollida a tenda" />
+          <Tab label="Enviament a casa" />
+        </Tabs>
+      </Grid>
 
       {
         selectedDeliverTab === 1 ?
@@ -119,6 +121,9 @@ export const Checkout: React.FunctionComponent = () => {
                   <h4>Direcció d'enviament</h4>
                   <Typography component="p">
                     {user.name} {user.surname}
+                  </Typography>
+                  <Typography component="p">
+                    {user.phone}
                   </Typography>
                   <Typography component="p" className={classes.marginBottom}>
                     {address}
@@ -146,11 +151,18 @@ export const Checkout: React.FunctionComponent = () => {
             <Card className={classes.header}>
               <Grid component="label" container alignItems="center" spacing={0}>
                 <Grid xs={12} item><h4>Mètode de pagament</h4></Grid>
-                <Grid item>Tenda</Grid>
-                <Grid item>
-                  <Switch checked={paymentMethod === PaymentMethod.SHOP} onChange={switchDeliverPayment} />
-                </Grid>
-                <Grid item>Online</Grid>
+                <Select
+                  native
+                  className={classes.selectWidth}
+                  value={paymentMethod}
+                  onChange={(event) => {
+                    setPaymentMethod(PaymentMethod[String(event.target.value)])
+                  }}
+                >
+                  <option value={''}>-</option>
+                  <option value={PaymentMethod.ONLINE}>Online</option>
+                  <option value={PaymentMethod.SHOP}>Tenda</option>
+                </Select>
               </Grid>
             </Card>
 
