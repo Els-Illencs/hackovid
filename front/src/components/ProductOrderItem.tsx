@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -12,6 +12,10 @@ import { OrderTracking } from './OrderTracking';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import PaymentIcon from '@material-ui/icons/Payment';
+import { ProductInfoItem } from './ProductInfoItem';
+import { ProductApiClient } from '../api/ProductApiClient';
+import { UserAddress } from '../models/user/UserAddress';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,7 +28,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     detailButton: {
         margin: 'auto',
-        width: '50%'
+        width: '50%',
+        textDecoration: 'none',
+        textAlign: 'center'
     },
     wrapIcon: {
         verticalAlign: 'middle',
@@ -37,15 +43,17 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+const apiClient = new ProductApiClient();
+
 const PICK_UP_ORDER: number = 0;
 const DELIVER_ORDER: number = 1;
 
 export interface ProductOrderItemProps {
     order: Order;
-    products?: Product[];
+    showDetailButton?: boolean
 };
 
-export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = ({ order, products }) => {
+export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = ({ order, showDetailButton }) => {
 
     const classes = useStyles();
 
@@ -128,7 +136,11 @@ export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = 
                 }
             </CardContent>
             <CardActions>
-                <Button size="small" className={classes.detailButton}>Detallar</Button>
+                {showDetailButton == undefined || showDetailButton == true &&
+                <Link to={`/order/${order.id}`} className={classes.detailButton}>
+                    <Button size="small">Detallar</Button> 
+                </Link>   
+                }            
             </CardActions>
         </Card>
       );

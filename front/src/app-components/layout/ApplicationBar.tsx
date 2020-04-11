@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton } from '@material-ui/core';
-import * as Logo from "./logo.png";
 import { ShoppingCartNumberOfItems } from './ShoppingCartNumberOfItems';
 import { Link } from 'react-router-dom';
 import { AppContext } from '..';
@@ -68,7 +67,7 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             <Link to="/">
-              <img className={classes.logo} src={Logo.default} alt="" />
+              <img className={classes.logo} src="/logo-comacasa.png" alt="" />
             </Link>
           </Typography>
           <div className={classes.shoppingCart}>
