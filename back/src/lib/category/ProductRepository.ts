@@ -31,8 +31,8 @@ export class ProductRepository {
                 INNER JOIN shops ON products.shop_id = shops.id
                 INNER JOIN product_type ON products.product_type_id = product_type.id
                 LEFT JOIN product_review ON product_review.product_id = products.id
-            GROUP BY products.id, shops.name, product_type.id, shops.lat, shops.lng ${orderQuery}
-            ${filterQuery}
+            GROUP BY products.id, shops.name, product_type.id, shops.lat, shops.lng 
+            ${filterQuery} ${orderQuery}
         `);
 
         res.rows = this.filterByDistance(res.rows, distance, lat, lng);
@@ -50,8 +50,8 @@ export class ProductRepository {
                 INNER JOIN shops ON products.shop_id = shops.id 
                 INNER JOIN product_type ON products.product_type_id = product_type.id
                 LEFT JOIN product_review ON product_review.product_id = products.id
-            GROUP BY products.id, shops.name, product_type.id, shops.lat, shops.lng ${orderQuery}
-            HAVING products.category_id = ${categoryId} ${filterQuery}
+            GROUP BY products.id, shops.name, product_type.id, shops.lat, shops.lng 
+            HAVING products.category_id = ${categoryId} ${filterQuery} ${orderQuery}
         `);
 
         res.rows = this.filterByDistance(res.rows, distance, lat, lng);
