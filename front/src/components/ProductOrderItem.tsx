@@ -18,29 +18,29 @@ import { UserAddress } from '../models/user/UserAddress';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-        width: '100%',
-        marginTop: theme.spacing(4)
-    },
-    title: {
-        fontSize: 14
-    },
-    detailButton: {
-        margin: 'auto',
-        width: '50%',
-        textDecoration: 'none',
-        textAlign: 'center'
-    },
-    wrapIcon: {
-        verticalAlign: 'middle',
-        display: 'inline-flex',
-        textAlign: 'center'
-    },
-    alignToCenter: {
-        textAlign: 'center'
-    }
-  }),
+    createStyles({
+        root: {
+            width: '100%',
+            marginTop: theme.spacing(4)
+        },
+        title: {
+            fontSize: 14
+        },
+        detailButton: {
+            margin: 'auto',
+            width: '50%',
+            textDecoration: 'none',
+            textAlign: 'center'
+        },
+        wrapIcon: {
+            verticalAlign: 'middle',
+            display: 'inline-flex',
+            textAlign: 'center'
+        },
+        alignToCenter: {
+            textAlign: 'center'
+        }
+    }),
 );
 
 const apiClient = new ProductApiClient();
@@ -58,9 +58,9 @@ export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = 
     const classes = useStyles();
 
     const getMaxStep = (): number => {
-        if(order.orderType == PICK_UP_ORDER) {
+        if (order.ordertype == PICK_UP_ORDER) {
             return 4;
-        } else if(order.orderType == DELIVER_ORDER) {
+        } else if (order.ordertype == DELIVER_ORDER) {
             return 5;
         } else {
             return -1;
@@ -75,31 +75,31 @@ export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = 
                 <Grid container spacing={2}>
                     <Grid item xs={9}>
                         <Typography variant="h5" component="h2">
-                        Comanda #{order.id}
+                            Comanda #{order.id}
                         </Typography>
                         <Typography className={classes.title} gutterBottom>
-                        {order.createdAt}
+                            {order.createdat}
                         </Typography>
                     </Grid>
                     <Grid item xs={3}>
                         <Grid container justify="flex-end">
-                        {order.tracking < maxStep &&
-                        <Typography className={classes.title} color="secondary" gutterBottom>
-                        En curs
+                            {order.trackingstage < maxStep &&
+                                <Typography className={classes.title} color="secondary" gutterBottom>
+                                    En curs
                         </Typography>
-                        }
-                        {order.tracking >= maxStep &&
-                        <Button variant="contained" color="secondary">
-                            Repetir
+                            }
+                            {order.trackingstage >= maxStep &&
+                                <Button variant="contained" color="secondary">
+                                    Repetir
                         </Button>
-                        }
+                            }
                         </Grid>
                     </Grid>
                 </Grid>
                 <Grid container>
-                    <OrderTracking orderType={order.orderType} trackingStep={order.tracking} />
+                    <OrderTracking orderType={order.ordertype} trackingStep={order.trackingstage} />
                 </Grid>
-                {order.orderType == PICK_UP_ORDER &&
+                {order.ordertype == PICK_UP_ORDER &&
                     <Grid container justify="center" className={classes.alignToCenter}>
                         <Grid item xs={6}>
                             <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
@@ -107,12 +107,12 @@ export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = 
                             </Typography>
                         </Grid>
                         <Grid item xs={6}>
-                            {order.paied == true &&
+                            {order.ispaid == true &&
                                 <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
                                     <PaymentIcon fontSize="small" /> Pagat
                                 </Typography>
                             }
-                            {order.paied == false &&
+                            {order.ispaid == false &&
                                 <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
                                     <PaymentIcon fontSize="small" /> No pagat (pagar al comerç)
                                 </Typography>
@@ -120,28 +120,28 @@ export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = 
                         </Grid>
                     </Grid>
                 }
-                {order.orderType == DELIVER_ORDER &&
+                {order.ordertype == DELIVER_ORDER &&
                     <Grid container justify="center" className={classes.alignToCenter}>
-                    <Grid item xs={6}>
-                        <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
-                            <LocalShippingIcon fontSize="small" /> A domicili
+                        <Grid item xs={6}>
+                            <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
+                                <LocalShippingIcon fontSize="small" /> A domicili
                         </Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
-                            <PaymentIcon fontSize="small" /> Pagat
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
+                                <PaymentIcon fontSize="small" /> Pagat
                         </Typography>
-                    </Grid>
+                        </Grid>
                     </Grid>
                 }
             </CardContent>
             <CardActions>
                 {showDetailButton == undefined || showDetailButton == true &&
-                <Link to={`/order/${order.id}`} className={classes.detailButton}>
-                    <Button size="small">Detallar</Button> 
-                </Link>   
-                }            
+                    <Link to={`/order/${order.id}`} className={classes.detailButton}>
+                        <Button size="small">Detallar</Button>
+                    </Link>
+                }
             </CardActions>
         </Card>
-      );
+    );
 }

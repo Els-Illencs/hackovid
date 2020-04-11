@@ -68,3 +68,16 @@ INSERT INTO PRODUCTS (name, image, description, price, active, shop_id, category
 ('Pebrot vermell', 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRgsguF6H223p5AelsYDoWk4oS4dHJHEGJQZDwiKn5uVja8OM8K&usqp=CAU', 'Pebrot vermell dolç', 3.45, true, 8, 2, 2, to_tsvector('Pebrot vermell. Pebrot vermell dolç. Verdura. Pebre. Pimiento rojo')),
 ('Pernil', 'https://upload.wikimedia.org/wikipedia/commons/e/e8/Jam%C3%B3n_de_Guijuelo_004.JPG', 'Pernil salat de pata negre, al pes', 28.3, true, 3, 2, 2, to_tsvector('Pernil. Pernil salat de pata negre, al pes. Embutit. Jamón')),
 ('Olives', 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSc_WvllDAlwTZyHiFHyDf7x3pEHMDd1iRyVTkim-5WuMYpy96z&usqp=CAU', 'Mescla d''olives verdes i negres de mallorca', 8.5, true, 2, 2, 2, to_tsvector('Olives. Mescla d''olives verdes i negres de mallorca. Aceitunas. Oliva'));
+
+INSERT INTO orders (user_id, tracking_stage, order_type, rating, is_paid) VALUES 
+(1, 4, 1, 4, true),
+(1, 4, 2, 1, true);
+
+INSERT INTO order_products (order_id, product_id, quantity) VALUES 
+(2, 16, 4),
+(2, 14, 3),
+(2, 25, 1),
+(2, 36, 2),
+(2, 18, 8),
+(2, 3, 1),
+(2, 30, 1);

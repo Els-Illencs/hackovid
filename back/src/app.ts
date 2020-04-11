@@ -7,6 +7,7 @@ import home from './routes/home';
 import categories from './routes/categories';
 import products from './routes/products';
 import packages from './routes/packages';
+import orders from './routes/orders';
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.use('/', home);
 app.use('/categories', categories);
 app.use('/products', products);
 app.use('/packages', packages);
+app.use('/orders', orders);
 
 export default app;

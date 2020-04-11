@@ -6,4 +6,7 @@ CREATE TABLE users (
     password text NOT NULL,
     address text NOT NULL,
     phone varchar(30) NOT NULL
-)
+);
+
+INSERT INTO users (name, surname, email, password, address, phone) VALUES 
+    ('Admin', 'SurnameAdmin', 'admin@comacasa.com', '', 'Carrer de Blanquerna, Palma, Spain', '666666666');

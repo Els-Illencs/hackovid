@@ -74,7 +74,7 @@ const Home: FC = () => {
 
     return (
         <div>
-            <Section title={<span><b>Comacasa</b>, les coses petites són les més grans.<br />Aquí tens el perquè de confiar als nostres comerços la millor compra:</span>}>
+            <Section title={<span><b>Comacasa</b>, les coses petites són les més grans; aquí el perquè de confiar-nos la millor compra:</span>}>
                 <HomeCarousel />
                 <CallToActionButton elementToScrollId="home-more-info">SABER MÉS</CallToActionButton>
             </Section>
@@ -127,7 +127,7 @@ const Home: FC = () => {
                 <IconElement 
                     iconSrc="/icons/search.png"
                     primary="Seguiment de la comanda" 
-                    secondary="Coneix lꞌestat de la teva compra! Si vas a buscar-la, evita fer-ho fins que estigui preparada; si te la duim, assabenta't de per ón anem amb el servei intel·ligent de tracking." />
+                    secondary="Coneix lꞌestat de la teva compra! Si vas a buscar-la, evita fer-ho fins que estigui preparada; si te la duim, assabenta't de per on anem amb el servei intel·ligent de tracking." />
             </Section>
 
             <LargeDivider />
@@ -159,7 +159,7 @@ const Home: FC = () => {
                 <IconElement 
                     iconSrc="/icons/woman-old.png"
                     primary="Ajuda qui no pot anar a comprar" 
-                    secondary="Per gent gran i amb discapacitat, anar a una botiga pot significar esport de risc. Ajudal's a ells com ells tꞌajudaríen!" />
+                    secondary="Per gent gran i amb discapacitat, anar a una botiga pot significar esport de risc. Ajuda'ls a ells com ells tꞌajudarien!" />
                 <IconElement 
                     iconSrc="/icons/man-happy.png"
                     primary="Treballa al temps que fas xarxa" 
@@ -176,7 +176,7 @@ const Home: FC = () => {
                     No dubtis en contactar amb nosaltres si ens necessites!
                 </Typography>
                 <Typography variant="subtitle1" align="center">
-                    Som aquí, a prop teu. igual que na Maria quan t'atèn a la fruiteria.
+                    Som aquí, a prop teu. Igual que na Maria quan t'atèn a la fruiteria.
                 </Typography>
                 <ContactUsForm />
             </Section>
