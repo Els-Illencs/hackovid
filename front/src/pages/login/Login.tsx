@@ -10,6 +10,8 @@ import { useHistory } from "react-router-dom";
 import { LoginApiClient } from '../../api/LoginApiClient';
 import { AppContext } from '../../app-components';
 import { getLoginRedirect, clearLoginRedirect } from '../../services/LoginService';
+import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
+import { UserAddress } from '../../models/user/UserAddress';
 
 const loginApiClient = new LoginApiClient();
 
@@ -55,12 +57,26 @@ const Login: FunctionComponent = () => {
       await loginApiClient.login(email, password);
     } catch (e) {
       // TODO provisional until backend is done
+      const address: UserAddress = {
+        address: "Carrer de Blanquerna, Palma, Spain",
+        latitude: undefined,
+        longitude: undefined,
+      }
+      try {
+        const results = await geocodeByAddress(address.address);
+        if (results.length > 0) {
+          const { lat, lng } = await getLatLng(results[0]);
+          address.latitude = Number(lat);
+          address.longitude = Number(lng);
+        }
+      } catch (ex) { }
+
       updateUser({
         id: 1,
         name: "Name",
         surname: "Surname",
         email: "example@example.com",
-        address: "Avinguda segona, 24A, 3B",
+        address,
         phone: "666333999666",
       });
       const redirect = await getLoginRedirect();

@@ -40,9 +40,7 @@ const IconElement: FC<{icon: ReactNode, primary: string, secondary: string}> = (
 
 const Section: FC<{title: ReactNode}> = ({title, children}) => (<>
     <Typography variant="h6" align="center">
-        {/* <Box component="span" fontWeight="bold"> */}
-            {title}
-        {/* </Box> */}
+        {title}
     </Typography>
     <div style={{ marginTop: 15 }}>
         {children}
@@ -51,7 +49,7 @@ const Section: FC<{title: ReactNode}> = ({title, children}) => (<>
 
 const CallToActionButton: FC<{elementToScrollId: string}> = ({elementToScrollId, children}) => (
     <Grid container justify="center" style={{ marginTop: 15 }}>
-        <HashLink to={`/home#${elementToScrollId}`} smooth>
+        <HashLink to={`/home#${elementToScrollId}`} smooth style={{ textDecoration: 'none' }}>
             <Button>{children}</Button>
         </HashLink>
     </Grid>
