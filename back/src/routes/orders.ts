@@ -7,21 +7,20 @@ const router = express.Router();
 
 const MAX_DISTANCE_FILTER_FIELD: number = 20;
 
-router.get('/', async function (req, res, next) {
-    const userId = Number(req.query.userId);
-
+router.get('/users/:user', async function (req, res, next) {
+    const userId = Number(req.params.user);
 
     res.send(await orderRepository.getByUser(userId));
 })
 
-router.get('', async function (req, res, next) {
-    const orderId = Number(req.query.orderId);
+router.get('/:order', async function (req, res, next) {
+    const orderId = Number(req.params.order);
 
     res.send(await orderRepository.getOrderDetail(orderId));
 })
 
-router.get('/', async function (req, res, next) {
-    const orderId = Number(req.query.orderId);
+router.get('/:order/products', async function (req, res, next) {
+    const orderId = Number(req.params.order);
 
     res.send(await orderRepository.getProductsByOrder(orderId));
 })

@@ -46,11 +46,11 @@ export class OrderRepository {
         const res = await pool.query<Order>(`
             SELECT id, user_id as userId, user_id as userId, created_at as createdAt, updated_at as updatedAt, tracking_stage as trackingStage, order_type as orderType, rating as rating, is_paid as isPaid
             FROM orders 
-            WHERE order_id = ${orderId}
+            WHERE id = ${orderId}
             LIMIT 1
         `);
 
-        return res.rows;
+        return res.rows[0];
     }
 
     async getProductsByOrder(orderId: number) {

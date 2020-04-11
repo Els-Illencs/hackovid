@@ -13,44 +13,51 @@ import { Order } from '../../models/order/Order';
 import { AppContext } from '../../app-components';
 import { ProductOrderApiClient } from '../../api/ProductOrderApiClient';
 import { ProductOrderItem } from '../../components/ProductOrderItem';
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-        width: '100%',
-        marginTop: theme.spacing(4)
-    },
-    title: {
-        fontSize: 14
-    },
-    detailButton: {
-        margin: 'auto',
-        width: '50%'
-    },
-    wrapIcon: {
-        verticalAlign: 'middle',
-        display: 'inline-flex',
-        textAlign: 'center'
-    },
-    alignToCenter: {
-        textAlign: 'center'
-    }
-  }),
+    createStyles({
+        root: {
+            width: '100%',
+            marginTop: theme.spacing(4)
+        },
+        title: {
+            fontSize: 14
+        },
+        detailButton: {
+            margin: 'auto',
+            width: '50%'
+        },
+        wrapIcon: {
+            verticalAlign: 'middle',
+            display: 'inline-flex',
+            textAlign: 'center'
+        },
+        alignToCenter: {
+            textAlign: 'center'
+        }
+    }),
 );
 
 const apiClient = new ProductApiClient();
 const productOrderApiClient = new ProductOrderApiClient();
 
 export const ProductOrderDetail: React.FunctionComponent = () => {
-
     const classes = useStyles();
-    const { user: { isLoading, user } } = useContext(AppContext);
+    const { user: { isLoading: isLoadingUserData, user } } = useContext(AppContext);
     const [products, setProducts] = useState([] as Product[]);
     const [order, setOrder] = useState({} as Order);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const history = useHistory();
+
 
     useEffect(() => {
         const getOrder = async () => {
-            setOrder(await productOrderApiClient.getOrder(0, user!.id));
+            setIsLoading(true);
+            const orderId = history.location.pathname.split("order/")[1];
+            setOrder(await productOrderApiClient.getOrder(Number(orderId)));
+            setIsLoading(false);
         }
         if (user) {
             getOrder();
@@ -66,9 +73,11 @@ export const ProductOrderDetail: React.FunctionComponent = () => {
     }, [order]);
 
     return (
-        <Grid container>
-            <ProductOrderItem order={order} showDetailButton={false} />
-            {products.map((productTmp) => <ProductInfoItem key={String(productTmp.id)} product={productTmp} />)}
-        </Grid>
+        <>
+            {!isLoading && <Grid container>
+                <ProductOrderItem order={order} showDetailButton={false} />
+                {products.map((productTmp) => <ProductInfoItem key={String(productTmp.id)} product={productTmp} />)}
+            </Grid>}
+        </>
     );
 }

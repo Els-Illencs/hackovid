@@ -72,8 +72,8 @@ INSERT INTO PRODUCTS (name, image, description, price, active, shop_id, category
 ('Llom de porc', 'https://upload.wikimedia.org/wikipedia/commons/6/6c/Panceta_fresca-Cerdo.jpg', 'Llom de porc al pes', 9.3, true, 3, 4, 2, to_tsvector('Llom de porc. Llom de porc al pes. Carn. Lomo de cerdo'));
 
 INSERT INTO orders (user_id, tracking_stage, order_type, rating, is_paid) VALUES 
-(1, 4, 1, 4, true),
-(1, 4, 2, 1, true);
+(1, 2, 1, 4, true),
+(1, 3, 2, 1, true);
 
 INSERT INTO order_products (order_id, product_id, quantity) VALUES 
 (2, 16, 4),
