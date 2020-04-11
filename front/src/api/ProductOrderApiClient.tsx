@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { Order } from "../models/order/Order";
+import { Order, OrderProducts } from "../models/order/Order";
 
 
 export class ProductOrderApiClient {
@@ -13,5 +13,11 @@ export class ProductOrderApiClient {
         const res = await Axios.get(`${process.env.REACT_APP_API_URL}orders/${orderId}`);
 
         return res.data as Order;
+    }
+
+    async getProductsByOrderId(orderId: number) {
+        const res = await Axios.get(`${process.env.REACT_APP_API_URL}orders/${orderId}/products`);
+
+        return res.data as OrderProducts[];
     }
 }
