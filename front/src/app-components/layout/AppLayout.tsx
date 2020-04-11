@@ -19,7 +19,8 @@ type Page = {
   menuItem?: {
     label: string,
     right?: ReactNode
-  }
+  },
+  needsToBeLogged?: boolean;
 };
 
 type AppLayoutProps = {
@@ -77,7 +78,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     }
     getShoppingCartProducts();
   }, []);
-  
+
   useEffect(() => {
     const getUserAddressFromLocalStorage = async () => {
       setIsLoadingUserAddress(true);
@@ -86,7 +87,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     }
     getUserAddressFromLocalStorage();
   }, []);
-  
+
   useEffect(() => {
     const getUserFromLocalStorage = async () => {
       setIsLoadingUser(true);
@@ -99,8 +100,8 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
   // TODO move AppContext in a different file / component
   const addProductToTheShoppingCart = (product: ProductShoppingCart) => {
     addProductsToTheShoppingCart([product]);
-  }  
-  
+  }
+
   const addProductsToTheShoppingCart = (products: ProductShoppingCart[]) => {
     const nextShoppingCartProducts = shoppingCartProducts.slice();
 
@@ -195,7 +196,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
             </>
           </Grid>
           <List>
-            {props.pages.filter(p => !!p.menuItem).map((p) => (
+            {props.pages.filter(p => !!p.menuItem).filter(p => !p.needsToBeLogged || (p.needsToBeLogged && user !== undefined)).map((p) => (
               <ListItem button component={Link} to={p.path} onClick={closeDrawer} key={p.path}>
                 <ListItemText primary={p.menuItem!.label} />
                 {p.menuItem!.right}
