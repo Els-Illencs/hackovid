@@ -4,7 +4,7 @@ import { Order } from "../models/order/Order";
 
 export class ProductOrderApiClient {
     async getAllOrders(userId: number) {
-        const res = await Axios.get(`${process.env.REACT_APP_API_URL}orders?userId=${1}`);
+        const res = await Axios.get(`${process.env.REACT_APP_API_URL}orders?userId=${userId}`);
 
         return res.data as Order[];
     }
