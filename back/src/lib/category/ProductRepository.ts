@@ -15,7 +15,8 @@ export type Product = {
     avg_rating: number,
     count_rating: number,
     shop_lat: number,
-    shop_lng: number
+    shop_lng: number,
+    quantity?: number
 }
 export class ProductRepository {
     async get(order:string|null, minPrice:number|null, maxPrice:number|null, rating:number|null, distance:number|null, lat: number | null, lng: number | null) {

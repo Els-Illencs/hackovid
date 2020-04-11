@@ -6,6 +6,9 @@ import { Typography, Button, makeStyles, createStyles } from "@material-ui/core"
 import { ProductPackageItem } from "./ProductPackageItem";
 import { AppContext } from "../../app-components";
 import { AddressRequestDialog } from "../../components/AddressRequestDialog";
+import { PackageApiClient } from '../../api/PackageApiClient';
+
+const packageApiClient = new PackageApiClient();
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -23,7 +26,9 @@ const PackageDetail: FC = () => {
     const [products, setProducts] = useState<ProductShoppingCart[] | null>(null);
     const [openDialog, setOpenDialog] = useState(false);
 
-    const packageId = query.get('packageId');
+    const packageAsStr = query.get('packageId');
+    const packageId = packageAsStr ? parseInt(packageAsStr, 10) : null;
+    const packageName = query.get('packageName');
 
     useEffect(() => {
         if (!isLoadingUserData) {
@@ -37,20 +42,17 @@ const PackageDetail: FC = () => {
             return;
         }
 
-        setProdPackage({
-            id: 1,
-            name: 'Fruites i verdures de temporada',
-            image: ''
-        });
-        const products = [
-            {"id":10,"name":"Tarònja de Soller","image":"https://cdn.pixabay.com/photo/2017/02/26/12/27/oranges-2100108_960_720.jpg","description":"Tarònges de Soller al pes. ¡Que en son de bones!","price":2.99,"active":true,"categoryid":1,"shopid":2,"shopname":"El rei de la fruita","avg_rating":0, "count_rating":0, "product_type_id": 1},
-            {"id":8,"name":"Plàtan de Canàries","image":"https://cdn.pixabay.com/photo/2018/09/24/20/12/bananas-3700718_960_720.jpg","description":"Plàtans de canàries al pes","price":2.89,"active":true,"categoryid":1,"shopid":2,"shopname":"El rei de la fruita","avg_rating":0, "count_rating":0, "product_type_id": 1},
-            {"id":4,"name":"Pera Rocha","image":"https://cdn.pixabay.com/photo/2016/07/22/09/59/fruit-1534494_960_720.jpg","description":"Peres del tipus Rocha al pes","price":1.89,"active":true,"categoryid":1,"shopid":2,"shopname":"El rei de la fruita","avg_rating":0, "count_rating":0, "product_type_id": 1},
-            {"id":12,"name":"Síndria de Mallorca","image":"https://p0.piqsels.com/preview/393/901/113/watermelon-slice-isolated-white-thumbnail.jpg","description":"Síndries de Km0 cultivada a Mallorca","price":4.89,"active":true,"categoryid":1,"shopid":2,"shopname":"El rei de la fruita","avg_rating":0, "count_rating":0, "product_type_id": 1}
-        ];
+        if (packageId && packageName) {
+            setProdPackage({
+                id: packageId,
+                name: packageName,
+                image: ''
+            });
+           
+            packageApiClient.getPackageItem(packageId).then(setProducts);
+        }
 
-        setProducts(products.map(p => ({ quantity: 1, ...p })));
-    }, [packageId, isLoadingUserData, user, userAddress]);
+    }, [packageId, packageName, isLoadingUserData, user, userAddress]);
 
     const changeQuantity = (newQuantity: number, originalProduct: ProductShoppingCart, productIndex: number) => {
         const newProducts = products!.map((p, i) =>
