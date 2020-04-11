@@ -34,6 +34,7 @@ export class ProductRepository {
             GROUP BY products.id, shops.name, product_type.id, shops.lat, shops.lng ${orderQuery}
         `);
 
+        res.rows = this.filterByDistance(res.rows, distance, lat, lng);
         return this.orderByDistance(res.rows, order, lat, lng);
     }
 
@@ -52,6 +53,7 @@ export class ProductRepository {
             GROUP BY products.id, shops.name, product_type.id, shops.lat, shops.lng ${orderQuery}
         `);
 
+        res.rows = this.filterByDistance(res.rows, distance, lat, lng);
         return this.orderByDistance(res.rows, order, lat, lng);
     }
     
@@ -76,6 +78,7 @@ export class ProductRepository {
             ${orderQuerySwitch}
         `);
 
+        res.rows = this.filterByDistance(res.rows, distance, lat, lng);
         return this.orderByDistance(res.rows, order, lat, lng);
     }
 
@@ -86,6 +89,13 @@ export class ProductRepository {
             });
         }
 
+        return elements;
+    }
+
+    filterByDistance(elements: Array<Product>, distance: number | null, userLat: number, userLng: number) {
+        if(elements && distance) {
+            return elements.filter(product => distance >= this.getDistance(userLat, userLng, product.shop_lat, product.shop_lng));
+        }
         return elements;
     }
 
