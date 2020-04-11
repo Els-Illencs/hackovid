@@ -65,7 +65,11 @@ export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFi
   const classes = useStyles();
 
   const onChangeProductFilterFieldsAction = (event): void => {
-    productFilterFields[event.target.name] = event.target.value && event.target.value != "" ? event.target.value : undefined;
+    if(event.target.name == "rating" && productFilterFields.rating == 1 && Number(event.target.value) == 1) {
+      productFilterFields[event.target.name] = undefined;
+    } else {
+      productFilterFields[event.target.name] = event.target.value && event.target.value != "" ? Number(event.target.value) : undefined;
+    }
     onChangeProductFilterFields(productFilterFields);
   }
 

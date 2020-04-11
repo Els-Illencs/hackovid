@@ -22,7 +22,7 @@ export class ProductRepository {
 
         const orderQuery = this.getOrderQuery(order);
         let filterQuery: string = this.getFilterQuery(minPrice, maxPrice, rating, distance);
-        filterQuery = filterQuery && filterQuery != '' ? 'WHERE ' + filterQuery : '';
+        filterQuery = filterQuery && filterQuery != '' ? 'HAVING ' + filterQuery : '';
 
         const res = await pool.query<Product>(`
             SELECT products.id, products.name, products.image, products.description, products.price, products.active, products.category_id as categoryId, products.shop_id as shopId, shops.name as shopName, shops.lat as shop_lat, shops.lng as shop_lng, product_type.id as product_type_id, product_type.name as product_type_name, Avg(COALESCE(product_review.rating, 0)) as avg_rating, count(product_review.rating) as count_rating
@@ -30,8 +30,8 @@ export class ProductRepository {
                 INNER JOIN shops ON products.shop_id = shops.id
                 INNER JOIN product_type ON products.product_type_id = product_type.id
                 LEFT JOIN product_review ON product_review.product_id = products.id
-            ${filterQuery}
             GROUP BY products.id, shops.name, product_type.id, shops.lat, shops.lng ${orderQuery}
+            ${filterQuery}
         `);
 
         res.rows = this.filterByDistance(res.rows, distance, lat, lng);
@@ -49,8 +49,8 @@ export class ProductRepository {
                 INNER JOIN shops ON products.shop_id = shops.id 
                 INNER JOIN product_type ON products.product_type_id = product_type.id
                 LEFT JOIN product_review ON product_review.product_id = products.id
-            WHERE products.category_id = ${categoryId} ${filterQuery}
             GROUP BY products.id, shops.name, product_type.id, shops.lat, shops.lng ${orderQuery}
+            HAVING products.category_id = ${categoryId} ${filterQuery}
         `);
 
         res.rows = this.filterByDistance(res.rows, distance, lat, lng);
@@ -62,7 +62,7 @@ export class ProductRepository {
         const orderQuery = this.getOrderQuery(order);
         const orderQuerySwitch = orderQuery ? orderQuery : "ORDER BY score DESC";
         let filterQuery: string = this.getFilterQuery(minPrice, maxPrice, rating, distance);
-        filterQuery = filterQuery && filterQuery != '' ? ' AND ' + filterQuery : '';
+        filterQuery = filterQuery && filterQuery != '' ? 'HAVING ' + filterQuery : '';
 
         const res = await pool.query<Product>(`
             SELECT id, name, image, description, price, active, categoryId, shopId, shopName, shop_lat, shop_lng, score, product_type_id, product_type_name, avg_rating, count_rating
@@ -73,8 +73,9 @@ export class ProductRepository {
                         INNER JOIN product_type ON products.product_type_id = product_type.id
                         LEFT JOIN product_review ON product_review.product_id = products.id
                     GROUP BY products.id, shops.name, product_type.id, products.name_tokens, shop_lat, shop_lng
+                    ${filterQuery}
                 ) S
-            WHERE score > 0 ${filterQuery}
+                WHERE score > 0
             ${orderQuerySwitch}
         `);
 
@@ -154,7 +155,7 @@ export class ProductRepository {
 
         if(rating && rating > 0) {
             query = query != '' ? query + separator : query;
-            query += 'avg_rating = ' + rating;
+            query += 'Avg(COALESCE(product_review.rating, 0)) >= ' + rating;
         }
 
         return query
