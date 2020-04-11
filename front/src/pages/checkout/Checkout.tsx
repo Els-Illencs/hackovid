@@ -169,6 +169,8 @@ export const Checkout: React.FunctionComponent = () => {
                       name="address"
                       label="Direcció*"
                       type="text"
+                      multiline
+                      rows="2"
                       onChange={(event) => setAddress(event.target.value)}
                       value={address}
                     />
@@ -219,7 +221,7 @@ export const Checkout: React.FunctionComponent = () => {
                     <TextField
                       id="nameSurname"
                       name="nameSurname"
-                      label="Nom i cognoms"
+                      label="Nom i cognoms*"
                       type="text"
                       onChange={(event) => setNameAndSurname(event.target.value)}
                       value={nameAndSurname}
@@ -229,7 +231,7 @@ export const Checkout: React.FunctionComponent = () => {
                     <TextField
                       id="phone"
                       name="phone"
-                      label="Telèfon"
+                      label="Telèfon*"
                       type="text"
                       onChange={(event) => setPhone(event.target.value)}
                       value={phone}
@@ -240,8 +242,10 @@ export const Checkout: React.FunctionComponent = () => {
                       className={classes.textField}
                       id="address"
                       name="address"
-                      label="Direcció"
+                      label="Direcció*"
                       type="text"
+                      multiline
+                      rows="2"
                       onChange={(event) => setAddress(event.target.value)}
                       value={address}
                     />
