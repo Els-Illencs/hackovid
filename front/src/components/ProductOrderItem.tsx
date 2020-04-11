@@ -16,7 +16,8 @@ import PaymentIcon from '@material-ui/icons/Payment';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-        width: '100%'
+        width: '100%',
+        marginTop: theme.spacing(4)
     },
     title: {
         fontSize: 14
