@@ -14,6 +14,7 @@ import { AppContext } from '../../app-components';
 import { ProductOrderApiClient } from '../../api/ProductOrderApiClient';
 import { ProductOrderItem } from '../../components/ProductOrderItem';
 import { useHistory } from "react-router-dom";
+import { MapComponent } from '../../components/MapComponent';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -73,7 +74,8 @@ export const ProductOrderDetail: React.FunctionComponent = () => {
 
     return (
         <>
-            {!isLoading && <Grid container>
+            {!isLoading && 
+            <Grid container>
                 <ProductOrderItem order={order} showDetailButton={false} />
                 {products.map((productTmp) => <ProductInfoItem key={String(productTmp.id)} product={productTmp} />)}
             </Grid>}

@@ -71,7 +71,6 @@ const ProductList: FunctionComponent = () => {
     const getProducts = async () => {
       setIsLoading(true);
       const address = user ? user?.address : userAddress;
-      console.log(user, userAddress, address);
       const products =
         category ? await apiClient.getProductsBycategory(category, order, productFilterFields, address) :
           name ? await apiClient.getProductsByName(name, order, productFilterFields, address) :
