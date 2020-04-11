@@ -38,11 +38,11 @@ const IconElement: FC<{icon: ReactNode, primary: string, secondary: string}> = (
         </Grid>
     </Grid>)
 
-const Section: FC<{title: string}> = ({title, children}) => (<>
-    <Typography variant="h5" align="center">
-        <Box component="span" fontWeight="bold">
+const Section: FC<{title: ReactNode}> = ({title, children}) => (<>
+    <Typography variant="h6" align="center">
+        {/* <Box component="span" fontWeight="bold"> */}
             {title}
-        </Box>
+        {/* </Box> */}
     </Typography>
     <div style={{ marginTop: 15 }}>
         {children}
@@ -52,7 +52,7 @@ const Section: FC<{title: string}> = ({title, children}) => (<>
 const CallToActionButton: FC<{elementToScrollId: string}> = ({elementToScrollId, children}) => (
     <Grid container justify="center" style={{ marginTop: 15 }}>
         <HashLink to={`/home#${elementToScrollId}`} smooth>
-            <Button variant="outlined">{children}</Button>
+            <Button>{children}</Button>
         </HashLink>
     </Grid>
 )
@@ -70,7 +70,7 @@ const Home: FC = () => {
 
     return (
         <div>
-            <Section title="Ajuda al petit comerç desde la comoditat de la teva casa!">
+            <Section title={<span><b>Comacasa</b>, les coses petites són les més grans.<br />Aquí tens el perquè de confiar als nostres comerços la millor compra:</span>}>
                 <HomeCarousel />
                 <CallToActionButton elementToScrollId="home-more-info">SABER MÉS</CallToActionButton>
             </Section>
@@ -88,7 +88,7 @@ const Home: FC = () => {
 
             <SmallDivider />
 
-            <Section title="Les nostres categories">
+            <Section title="Tenim de tot! Has vist quines categories més xules?">
                 <CustomGridList list={categories} />
             </Section>
 
@@ -172,13 +172,31 @@ const Home: FC = () => {
             <span id="home-contact-us" />
             <LargeDivider />
 
-            <Section title="Alguna pregunta?">
+            <Section title="CONTACTEM!">
+                <Typography variant="subtitle1" align="center">
+                    No dubtis en contactar amb nosaltres si ens necessites!
+                </Typography>
+                <Typography variant="subtitle1" align="center">
+                    Som aquí, a prop teu. igual que na Maria quan t'atèn a la fruiteria.
+                </Typography>
                 <ContactUsForm />
             </Section>
 
             <LargeDivider />
 
-            <Section title="Salvem entre tots el comerç local sense sacrificar l'ús de les darreres tecnologies" />
+            <Typography variant="subtitle1" align="center">
+                Salvar el petit comerç no significa renunciar a la transformació digital.
+            </Typography>
+            <Typography variant="subtitle1" align="center">
+                Salvem entre tots el comerç local amb la tecnologia i <b>Comacasa</b>!
+            </Typography>
+
+            <LargeDivider />
+
+            <Typography variant="subtitle1" align="center">
+                <b>Comacasa</b>, no s'hi està enlloc
+            </Typography>
+
         </div>
         
     );

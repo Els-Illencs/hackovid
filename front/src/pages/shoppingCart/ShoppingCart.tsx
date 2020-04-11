@@ -44,7 +44,7 @@ export const ShoppingCart: React.FunctionComponent = () => {
           <CardContent className={classes.summaryCard}>
             <Typography className={classes.summary} variant="h6" align="left">Cistella buida</Typography>
             <Link to="/home">
-              <Button className={classes.button} variant="outlined">
+              <Button className={classes.button}>
                 Comença a comprar
               </Button>
             </Link>
@@ -57,7 +57,7 @@ export const ShoppingCart: React.FunctionComponent = () => {
             </CardContent>
             <CardActionArea>
               <Link to="/checkout">
-                <Button className={classes.button} variant="contained" size="large" color="secondary" disabled={totalPrice === 0}>
+                <Button className={classes.button} size="large" color="secondary" disabled={totalPrice === 0}>
                   Tramitar comanda
                 </Button>
               </Link>

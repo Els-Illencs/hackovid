@@ -264,14 +264,14 @@ export const Checkout: React.FunctionComponent = () => {
             </Card>
           </>
       }
-      <Button className={classes.button} variant="contained" size="large" color="primary" disabled={isBuyButtonDisabled}>
+      <Button className={classes.button} size="large" color="primary" disabled={isBuyButtonDisabled}>
         Comprar ara
       </Button>
 
       {products.map((productTmp) => <ProductInfoItem key={String(productTmp.id)} product={productTmp} />)}
 
       {
-        products.length > 2 && <Button className={classes.button} variant="contained" size="large" color="primary" disabled={isBuyButtonDisabled}>
+        products.length > 2 && <Button className={classes.button} size="large" color="primary" disabled={isBuyButtonDisabled}>
           Comprar ara
       </Button>
       }

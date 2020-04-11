@@ -29,7 +29,7 @@ const IconElement: FC<{icon: ReactNode, text: string}> = ({icon, text}) => (
   </Grid>)
 
 
-const HomeCarousel: React.FunctionComponent = () => {
+const HomeCarousel: FC = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
 
@@ -39,13 +39,13 @@ const HomeCarousel: React.FunctionComponent = () => {
           <Grid item xs={6}>
             <IconElement 
               icon={<CreditCardIcon className={classes.largeIcon} />}
-              text="Pagament online"
+              text="Paga en línia rápid i segur!"
             />
           </Grid>
           <Grid item xs={6}>
             <IconElement 
               icon={<LocalShippingIcon className={classes.largeIcon} />}
-              text="T'ho portem a casa"
+              text="T'ho portem a casa!"
             />
           </Grid>
         </Grid>   
@@ -53,13 +53,13 @@ const HomeCarousel: React.FunctionComponent = () => {
           <Grid item xs={6}>
             <IconElement 
               icon={<StoreMallDirectoryIcon className={classes.largeIcon} />}
-              text="Comanda única"
+              text="Fés una sola comanda per distints comerços, t'ho unifiquem!"
             />
           </Grid>
           <Grid item xs={6}>
             <IconElement 
               icon={<PeopleIcon className={classes.largeIcon} />}
-              text="Col·labora"
+              text="Col·labora amb el petit comerç local!"
             />
           </Grid>
         </Grid>   

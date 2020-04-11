@@ -52,11 +52,11 @@ export const ProductItem: React.FunctionComponent<ProductItemProps> = ({ product
             <Grid item xs={6} md={3}>
               <TextField className={classes.quantity} id="outlined-basic" type="number" size="small" label="Quantitat"
                 InputProps={{ inputProps: { min: 0 } }}
-                variant="outlined" value={quantity} onChange={(event) => setQuantity(event.target.value)}
+                value={quantity} onChange={(event) => setQuantity(event.target.value)}
               />
             </Grid>
             <Grid item xs={6} md={3}>
-              <Button className={classes.addButton} onClick={addProductToShoppingCart} variant="contained" size="large" color="primary" disabled={quantity === "" || +quantity === 0}>
+              <Button className={classes.addButton} onClick={addProductToShoppingCart} size="large" color="primary" disabled={quantity === "" || +quantity === 0}>
                 Afegir
                 </Button>
             </Grid>

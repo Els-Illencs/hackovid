@@ -86,7 +86,6 @@ const Login: FunctionComponent = () => {
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
-            variant="outlined"
             margin="normal"
             required
             fullWidth
@@ -102,7 +101,6 @@ const Login: FunctionComponent = () => {
             El format del correu electronic no és vàlid
           </Typography>}
           <TextField
-            variant="outlined"
             margin="normal"
             required
             fullWidth
@@ -117,7 +115,6 @@ const Login: FunctionComponent = () => {
           <Button
             type="submit"
             fullWidth
-            variant="contained"
             color="primary"
             className={classes.submit}
             disabled={email === '' || password === ''}

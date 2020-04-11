@@ -5,10 +5,9 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             borderRadius: "50%",
-            backgroundColor: "red",
             width: "18px",
             height: "18px",
-            paddingLeft: "5px",
+            paddingLeft: "10px",
             lineHeight: "18px"
 
         },
