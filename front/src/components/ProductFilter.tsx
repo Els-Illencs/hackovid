@@ -138,7 +138,7 @@ export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFi
                             <option value="3">3 Km</option>
                             <option value="5">5 Km</option>
                             <option value="10">10 Km</option>
-                            <option value="20">20 Km</option>
+                            <option value="20" selected>20 Km</option>
                         </Select>
                     </FormControl>
                 </Grid>
