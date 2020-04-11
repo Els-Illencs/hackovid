@@ -9,27 +9,17 @@ import { ProductOrderApiClient } from '../../api/ProductOrderApiClient';
 import { ProductOrderItem } from '../../components/ProductOrderItem';
 import { useHistory } from "react-router-dom";
 import { Product } from '../../models/product/Product';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             width: '100%',
-            marginTop: theme.spacing(4)
         },
-        title: {
-            fontSize: 14
-        },
-        detailButton: {
-            margin: 'auto',
-            width: '50%'
-        },
-        wrapIcon: {
-            verticalAlign: 'middle',
-            display: 'inline-flex',
-            textAlign: 'center'
-        },
-        alignToCenter: {
-            textAlign: 'center'
+        quantity: {
+            paddingBottom: 16,
+            paddingTop: 8,
+            marginLeft: 16
         }
     }),
 );
@@ -67,9 +57,13 @@ export const ProductOrderDetail: React.FunctionComponent = () => {
 
     return (
         <>
-            {!isLoading && <Grid container>
+            {!isLoading && <Grid container className={classes.root}>
                 <ProductOrderItem order={order} showDetailButton={false} />
-                {products.map((productTmp) => <ProductInfoItem key={String(productTmp.id)} product={orderProduct2Product(productTmp)} />)}
+                {products.map((productTmp) => <ProductInfoItem key={String(productTmp.id)} product={orderProduct2Product(productTmp)} >
+                    <Typography component="p" className={classes.quantity} >
+                        Quantitat: {productTmp.quantity}
+                    </Typography>
+                </ProductInfoItem>)}
             </Grid>}
         </>
     );
