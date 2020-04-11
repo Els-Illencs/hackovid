@@ -8,6 +8,8 @@ INSERT INTO shops (name, lat, lng) VALUES
 ('Verdures d''aquí', 39.5848573, 2.6723381);
 
 DELETE FROM PRODUCTS;
+ALTER SEQUENCE products_id_seq RESTART WITH 3;
+
 
 INSERT INTO PRODUCTS (name, image, description, price, active, shop_id, category_id, product_type_id, name_tokens) VALUES
 ('Llimones', 'https://cdn.pixabay.com/photo/2017/02/05/12/31/lemons-2039830_960_720.jpg', 'Llimones de Mallorca al pes', 0.91, true, 2, 1, 2, to_tsvector('Llimones. Llimones de Mallorca al pes. Fruita. Fruta')),
@@ -17,7 +19,7 @@ INSERT INTO PRODUCTS (name, image, description, price, active, shop_id, category
 ('Poma Pink Lady', 'https://cdn.pixabay.com/photo/2016/11/29/03/23/apples-1867043_960_720.jpg', 'Pomes del tipus Pink Lady al pes', 2.69, true, 8, 1, 2, to_tsvector('Poma Pink Lady. Pomes del tipus Pink Lady al pes. Fruita. Fruta. Manzana')),
 ('Plàtan de Canàries', 'https://cdn.pixabay.com/photo/2018/09/24/20/12/bananas-3700718_960_720.jpg', 'Plàtans de canàries al pes', 2.89, true, 2, 1, 2, to_tsvector('Plàtan de canàries. Plàtans de canàries al pes. Fruita. Fruta')),
 ('Kiwi Zespri Green', 'https://cdn.pixabay.com/photo/2013/01/08/01/43/kiwi-74363_960_720.jpg', 'Kiwis del tipus Zespri Green', 4.13, true, 2, 1, 2, to_tsvector('Kiwi Zespri Green. Kiwid del tipus Zespri Green. Fruita. Fruta')),
-('Tarònja de Soller', 'https://cdn.pixabay.com/photo/2017/02/26/12/27/oranges-2100108_960_720.jpg', 'Tarònges de Soller al pes. ¡Que en son de bones!', 2.99, true, 2, 1, 2, to_tsvector('Tarònja de Soller. Tarònges de Soller al pes. Fruita. Fruta. Naranja')),
+('Tarònja de Soller', 'https://cdn.pixabay.com/photo/2017/02/26/12/27/oranges-2100108_960_720.jpg', 'Tarònges de Soller al pes. ¡Que en son de bones!', 2.99, true, 2, 1, 2, to_tsvector('Tarònja de Soller. Tarònges de Soller al pes. Fruita. Fruta. Naranja. Taronja. Taronges')),
 ('Meló pell de gripau', 'https://cdn.pixabay.com/photo/2014/03/01/16/03/background-277571_960_720.jpg', 'Melons del tipus pell de gripau', 4.65, true, 2, 1, 2, to_tsvector('Meló pell de gripau. Melons del tipus pell de gripau. Fruita. Fruta')),
 ('Síndria de Mallorca', 'https://p0.piqsels.com/preview/393/901/113/watermelon-slice-isolated-white-thumbnail.jpg', 'Síndries de Km0 cultivada a Mallorca', 4.89, true, 2, 1, 2, to_tsvector('Síndria de Mallorca. Síndries de Km0 cultivada a Mallorca. Fruita. Fruta. Sandia')),
 ('Pit de pollastre', 'https://cdn.pixabay.com/photo/2018/03/09/17/41/chicken-3212144_960_720.jpg', 'Pits de pollastre sencers', 6.89, true, 3, 4, 2, to_tsvector('Pit de pollastre. Pits de pollastre sencers. Carn. Carne. Pechuga de pollo')),

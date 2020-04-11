@@ -25,7 +25,7 @@ export class ProductRepository {
         filterQuery = filterQuery && filterQuery != '' ? 'WHERE ' + filterQuery : '';
 
         const res = await pool.query<Product>(`
-            SELECT products.id, products.name, products.image, products.description, products.price, products.active, products.category_id as categoryId, products.shop_id as shopId, shops.name as shopName, shops.lat as shop_lat, shops.lng as shop_lng, product_type.id as product_type_id, product_type.name as product_type_name, Avg(product_review.rating) as avg_rating, count(product_review.rating) as count_rating
+            SELECT products.id, products.name, products.image, products.description, products.price, products.active, products.category_id as categoryId, products.shop_id as shopId, shops.name as shopName, shops.lat as shop_lat, shops.lng as shop_lng, product_type.id as product_type_id, product_type.name as product_type_name, Avg(COALESCE(product_review.rating, 0)) as avg_rating, count(product_review.rating) as count_rating
             FROM products 
                 INNER JOIN shops ON products.shop_id = shops.id
                 INNER JOIN product_type ON products.product_type_id = product_type.id
@@ -43,7 +43,7 @@ export class ProductRepository {
         filterQuery = filterQuery && filterQuery != '' ? ' AND ' + filterQuery : '';
 
         const res = await pool.query<Product>(`
-            SELECT products.id, products.name, products.image, products.description, products.price, products.active, products.category_id as categoryId, products.shop_id as shopId, shops.name as shopName, shops.lat as shop_lat, shops.lng as shop_lng, product_type.id as product_type_id, product_type.name as product_type_name, Avg(product_review.rating) as avg_rating, count(product_review.rating) as count_rating
+            SELECT products.id, products.name, products.image, products.description, products.price, products.active, products.category_id as categoryId, products.shop_id as shopId, shops.name as shopName, shops.lat as shop_lat, shops.lng as shop_lng, product_type.id as product_type_id, product_type.name as product_type_name, Avg(COALESCE(product_review.rating, 0)) as avg_rating, count(product_review.rating) as count_rating
             FROM products 
                 INNER JOIN shops ON products.shop_id = shops.id 
                 INNER JOIN product_type ON products.product_type_id = product_type.id
@@ -65,7 +65,7 @@ export class ProductRepository {
         const res = await pool.query<Product>(`
             SELECT id, name, image, description, price, active, categoryId, shopId, shopName, shop_lat, shop_lng, score, product_type_id, product_type_name, avg_rating, count_rating
                 FROM (
-                    SELECT ts_rank_cd(name_tokens, to_tsquery('${searchName}')) AS score, products.id as id, products.name as name, image, description, price, active, category_id AS categoryId, shop_id AS shopId, shops.name as shopName, shops.lat as shop_lat, shops.lng as shop_lng, product_type.id as product_type_id, product_type.name as product_type_name, Avg(product_review.rating) as avg_rating, count(product_review.rating) as count_rating
+                    SELECT ts_rank_cd(name_tokens, to_tsquery('${searchName}')) AS score, products.id as id, products.name as name, image, description, price, active, category_id AS categoryId, shop_id AS shopId, shops.name as shopName, shops.lat as shop_lat, shops.lng as shop_lng, product_type.id as product_type_id, product_type.name as product_type_name, Avg(COALESCE(product_review.rating, 0)) as avg_rating, count(product_review.rating) as count_rating
                     FROM products 
                         INNER JOIN shops ON products.shop_id = shops.id
                         INNER JOIN product_type ON products.product_type_id = product_type.id
@@ -96,7 +96,7 @@ export class ProductRepository {
             case 'priceDesc':
               return 'ORDER BY price desc';
             case 'rating':
-              return "ORDER BY avg_rating";
+              return "ORDER BY avg_rating DESC";
             case 'distance':
               return "";
             default:
