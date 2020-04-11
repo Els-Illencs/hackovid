@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       width: '100%',
     },
+    step: {
+      paddingLeft: '0 !important' //Disculapu
+    }
   }),
 );
 
@@ -38,14 +41,12 @@ export const OrderTracking: React.FunctionComponent<OrderTrackingProps> = ({ ord
   const steps = getSteps(orderType);
 
   return (
-    <div className={classes.root}>
       <Stepper activeStep={trackingStep} alternativeLabel>
         {steps.map((label) => (
-          <Step key={label}>
+          <Step key={label} className={classes.step}>
             <StepLabel>{label}</StepLabel>
           </Step>
         ))}
       </Stepper>
-    </div>
   );
 }
