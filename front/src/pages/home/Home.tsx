@@ -52,7 +52,7 @@ const Section: FC<{title: string}> = ({title, children}) => (<>
 const CallToActionButton: FC<{elementToScrollId: string}> = ({elementToScrollId, children}) => (
     <Grid container justify="center" style={{ marginTop: 15 }}>
         <HashLink to={`/home#${elementToScrollId}`} smooth>
-            <Button variant="outlined">{children}</Button>
+            <Button>{children}</Button>
         </HashLink>
     </Grid>
 )

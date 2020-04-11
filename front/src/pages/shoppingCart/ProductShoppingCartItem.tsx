@@ -73,11 +73,11 @@ export const ProductShoppingCartItem: React.FunctionComponent<ProductShoppingCar
             <Grid item xs={6} md={3}>
               <TextField className={classes.quantity} id="outlined-basic" type="number" size="small"
                 InputProps={{ inputProps: { min: 0 } }}
-                label="Quantitat" variant="outlined" value={quantity} onChange={(event) => updateProduct(event.target.value)}
+                label="Quantitat" value={quantity} onChange={(event) => updateProduct(event.target.value)}
               />
             </Grid>
             <Grid item xs={6} md={3}>
-              <Button onClick={deleteProduct} variant="contained" size="medium" color="primary">
+              <Button onClick={deleteProduct} size="medium" color="primary">
                 Eliminar
               </Button>
             </Grid>

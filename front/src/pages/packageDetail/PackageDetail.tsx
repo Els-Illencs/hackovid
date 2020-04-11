@@ -89,7 +89,6 @@ const PackageDetail: FC = () => {
 
         <Button
             className={classes.button}
-            variant="contained"
             size="large"
             color="secondary"
             disabled={products.length === 0}

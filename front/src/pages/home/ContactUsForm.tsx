@@ -54,7 +54,6 @@ const ContactUsForm: FC = () => {
                 <Grid container justify="center" style={{ marginTop: 15 }}>
                     <Button 
                         type="submit"
-                        variant="outlined" 
                         disabled={!name || !email || !reason || !message}>
                         ENVIAR
                     </Button>

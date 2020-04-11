@@ -128,7 +128,7 @@ export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFi
                     />
                 </Grid>
                 <Grid item md={4} xs={12}>
-                    <FormControl variant="outlined">
+                    <FormControl>
                         <InputLabel htmlFor="distanceSelect">Distància</InputLabel>
                         <Select
                             native
