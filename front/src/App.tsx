@@ -17,16 +17,16 @@ function App() {
   return (<>
     <MuiThemeProvider theme={AppTheme}>
       <AppLayout
-          pages={[
-            { path: "/home", content: (<Home />), menuItem: { label: "Inici" } },
-            { path: "/shopping-cart", content: (<ShoppingCart />), menuItem: { label: "Cistella" } },
-            { path: "/login", content: (<Login />), fullScreen: true },
-            { path: "/package-detail", content: (<PackageDetail />) },
-            { path: "/product-list", content: (<ProductList />) },
-            { path: "/checkout", content: (<Checkout />) },
-            { path: "/order-list", content: (<ProductOrderList />), menuItem: { label: "Comandes" } },
-            { path: "/order/:id", content: (<ProductOrderDetail />) }
-          ]} />
+        pages={[
+          { path: "/home", content: (<Home />), menuItem: { label: "Inici" } },
+          { path: "/shopping-cart", content: (<ShoppingCart />), menuItem: { label: "Cistella" } },
+          { path: "/login", content: (<Login />), fullScreen: true },
+          { path: "/package-detail", content: (<PackageDetail />) },
+          { path: "/product-list", content: (<ProductList />) },
+          { path: "/checkout", content: (<Checkout />) },
+          { path: "/order-list", content: (<ProductOrderList />), menuItem: { label: "Comandes" }, needsToBeLogged: true },
+          { path: "/order/:id", content: (<ProductOrderDetail />) }
+        ]} />
     </MuiThemeProvider>
     {pathname === '/' && <Redirect to="/home" />}
   </>);
