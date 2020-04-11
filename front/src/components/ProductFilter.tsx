@@ -70,7 +70,7 @@ export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFi
     } else {
       productFilterFields[event.target.name] = event.target.value && event.target.value != "" ? Number(event.target.value) : undefined;
     }
-    onChangeProductFilterFields(productFilterFields);
+    onChangeProductFilterFields(Object.assign({}, productFilterFields));
   }
 
   const onClickAplyFilterAction = (event): void => {
@@ -122,8 +122,9 @@ export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFi
                     </Typography>
                     <Rating
                         name="rating"
-                        value={productFilterFields.rating}
-                        onChange={onChangeProductFilterFieldsAction}
+                        onChange={(event, newValue) => {
+                          onChangeProductFilterFieldsAction(event);
+                        }}
                     />
                 </Grid>
                 <Grid item md={4} xs={12}>

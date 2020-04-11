@@ -128,7 +128,7 @@ const ProductList: FunctionComponent = () => {
 
   return (
     <div>
-      <Grid container>
+      <Grid container spacing={3}>
       <Grid item md={9} xs={12}>
       {redirectToProductPage && <Redirect push to={`/product-list${redirectToProductPage}`} /> }
       <ProductFilter 
