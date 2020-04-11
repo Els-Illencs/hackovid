@@ -28,9 +28,9 @@ const PackageList: FC<PackageListProps> = ({packages}) => {
     const classes = useStyles();
 
     return (
-        <SingleLineGridList cellHeight={180} spacing={4}>
+        <SingleLineGridList cellHeight={180} cols={1.25} spacing={4}>
             {packages.map(p =>
-                <GridListTile style={{ width: 180 }}>
+                <GridListTile style={{ maxWidth: 270 }}>
                 <Link to={`/package-detail?packageId=${p.id}`}>
                     <img className={classes.image} src={p.image} alt={p.name} />
                     <GridListTileBar
