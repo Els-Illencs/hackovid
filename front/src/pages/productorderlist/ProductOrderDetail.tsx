@@ -13,7 +13,7 @@ import { Order } from '../../models/order/Order';
 import { AppContext } from '../../app-components';
 import { ProductOrderApiClient } from '../../api/ProductOrderApiClient';
 import { ProductOrderItem } from '../../components/ProductOrderItem';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -51,6 +51,8 @@ export const ProductOrderDetail: React.FunctionComponent = () => {
 
     const history = useHistory();
 
+
+    const history = useHistory();
 
     useEffect(() => {
         const getOrder = async () => {
