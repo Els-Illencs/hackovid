@@ -11,6 +11,8 @@ import { Product } from '../../models/product/Product';
 import { ProductInfoItem } from '../../components/ProductInfoItem';
 import { Order } from '../../models/order/Order';
 import { AppContext } from '../../app-components';
+import { ProductOrderApiClient } from '../../api/ProductOrderApiClient';
+import { ProductOrderItem } from '../../components/ProductOrderItem';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,8 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const apiClient = new ProductApiClient();
-
-
+const productOrderApiClient = new ProductOrderApiClient();
 
 export const ProductOrderDetail: React.FunctionComponent = () => {
 
@@ -48,16 +49,23 @@ export const ProductOrderDetail: React.FunctionComponent = () => {
     const [order, setOrder] = useState({} as Order);
 
     useEffect(() => {
+        const getOrder = async () => {
+            setOrder(await productOrderApiClient.getOrder(0, 0));
+        }
+        getOrder();
+    }, []);
+
+    useEffect(() => {
         const getProducts = async () => {
-            const products = await apiClient.getAllProducts();
+            const products = await apiClient.getProductsByOrderId(order.id);
             setProducts(products)
         }
         getProducts();
-    }, []);
+    }, [order]);
 
     return (
         <Grid container>
-            
+            <ProductOrderItem order={order} showDetailButton={false} />
             {products.map((productTmp) => <ProductInfoItem key={String(productTmp.id)} product={productTmp} />)}
         </Grid>
     );
