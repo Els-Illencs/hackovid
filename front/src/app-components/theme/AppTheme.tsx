@@ -21,14 +21,16 @@ export default createMuiTheme({
             containedPrimary: {
                 color: themeBrown
             }
+        },
+        MuiSvgIcon: {
+            colorPrimary: {
+                color: themeBrown
+            }
         }
     },
     props: {
         MuiTypography: {
             color: 'textPrimary'
-        },
-        MuiSvgIcon: {
-            htmlColor: themeBrown
         },
         MuiButton: {
             variant: "contained",

@@ -62,8 +62,8 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
       <div style={{ height }} />
       <AppBar position="fixed" ref={appBarRef} >
         <Toolbar>
-          <IconButton onClick={onMenuButtonClick} edge="start" color="inherit" aria-label="menu">
-            <MenuIcon />
+          <IconButton onClick={onMenuButtonClick} edge="start" aria-label="menu">
+            <MenuIcon color="primary" />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             <Link to="/">
@@ -71,8 +71,8 @@ export const ApplicationBar: React.FunctionComponent<ApplicationBarProps> = ({ o
             </Link>
           </Typography>
           <div className={classes.shoppingCart}>
-            <IconButton component={Link} to="/shopping-cart" edge="start" style={{ color: common.white }} aria-label="menu">
-              <ShoppingCartIcon />
+            <IconButton component={Link} to="/shopping-cart" edge="start" aria-label="menu">
+              <ShoppingCartIcon color="primary" />
             </IconButton>
             <div className={classes.shoppingCartItems}>
               <ShoppingCartNumberOfItems text={products.length} />

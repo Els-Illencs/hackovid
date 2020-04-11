@@ -4,6 +4,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { useHistory } from 'react-router-dom'
 import { Redirect } from "react-router-dom";
+import { MenuItem, Container } from "@material-ui/core";
 
 export const OrderItems: FunctionComponent = () => {
 
@@ -22,24 +23,23 @@ export const OrderItems: FunctionComponent = () => {
 
   return (<>
     {redirectToProductPage && <Redirect push to={`/product-list${redirectToProductPage}`} /> }
-    <div>
-      <FormControl>
+    <Container maxWidth="xs">
+      <FormControl fullWidth>
         <InputLabel htmlFor="orderSelect">Ordenar</InputLabel>
         <Select
-          native
           name="order"
           onChange={doRedirectToProductPage}
           inputProps={{
             id: 'orderSelect',
           }}
         >
-          <option value="relevance">Rellevància</option>
-          <option value="priceAsc">Preu (de menor a major)</option>
-          <option value="priceDesc">Preu (de major a menor)</option>
-          <option value="rating">Valoració</option>
-          <option value="distance">Distància</option>
+          <MenuItem value="relevance">Rellevància</MenuItem>
+          <MenuItem value="priceAsc">Preu (de menor a major)</MenuItem>
+          <MenuItem value="priceDesc">Preu (de major a menor)</MenuItem>
+          <MenuItem value="rating">Valoració</MenuItem>
+          <MenuItem value="distance">Distància</MenuItem>
         </Select>
       </FormControl>
-    </div>
+    </Container>
   </>);
 }
