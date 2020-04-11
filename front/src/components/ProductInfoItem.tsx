@@ -82,8 +82,8 @@ export const ProductInfoItem: React.FunctionComponent<ProductInfoItemProps> = ({
           </Grid>
           <Grid item xs={12}>
             <Typography component="h5" variant="h5">
-              {product.price} €/Kg
-                </Typography>
+              {product.price} {product.product_type_id === 1 ? "€/unitat" : "€/Kg"}
+            </Typography>
           </Grid>
         </CardContent>
         {children}

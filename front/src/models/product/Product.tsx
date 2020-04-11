@@ -8,7 +8,8 @@ export interface Product {
     categoryid: number,
     description: string,
     active: boolean,
-    price: number
+    price: number,
+    product_type_id: number;
 }
 
 export type ProductShoppingCart = {
