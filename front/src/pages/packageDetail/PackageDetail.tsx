@@ -92,7 +92,6 @@ const PackageDetail: FC = () => {
         <Button
             className={classes.button}
             size="large"
-            color="secondary"
             disabled={products.length === 0}
             style={{ margin: '15px 0' }}
             onClick={addProductsToShoppingCart}>AFEGEIX PRODUCTES A LA CISTELLA</Button>
