@@ -34,10 +34,10 @@ const PackageDetail: FC = () => {
             image: ''
         });
         const products = [
-            {"id":10,"name":"Tarònja de Soller","image":"https://cdn.pixabay.com/photo/2017/02/26/12/27/oranges-2100108_960_720.jpg","description":"Tarònges de Soller al pes. ¡Que en son de bones!","price":2.99,"active":true,"categoryid":1,"shopid":2,"shopname":"El rei de la fruita","rating":0},
-            {"id":8,"name":"Plàtan de Canàries","image":"https://cdn.pixabay.com/photo/2018/09/24/20/12/bananas-3700718_960_720.jpg","description":"Plàtans de canàries al pes","price":2.89,"active":true,"categoryid":1,"shopid":2,"shopname":"El rei de la fruita","rating":0},
-            {"id":4,"name":"Pera Rocha","image":"https://cdn.pixabay.com/photo/2016/07/22/09/59/fruit-1534494_960_720.jpg","description":"Peres del tipus Rocha al pes","price":1.89,"active":true,"categoryid":1,"shopid":2,"shopname":"El rei de la fruita","rating":0},
-            {"id":12,"name":"Síndria de Mallorca","image":"https://p0.piqsels.com/preview/393/901/113/watermelon-slice-isolated-white-thumbnail.jpg","description":"Síndries de Km0 cultivada a Mallorca","price":4.89,"active":true,"categoryid":1,"shopid":2,"shopname":"El rei de la fruita","rating":0}
+            {"id":10,"name":"Tarònja de Soller","image":"https://cdn.pixabay.com/photo/2017/02/26/12/27/oranges-2100108_960_720.jpg","description":"Tarònges de Soller al pes. ¡Que en son de bones!","price":2.99,"active":true,"categoryid":1,"shopid":2,"shopname":"El rei de la fruita","avg_rating":0, "count_rating":0},
+            {"id":8,"name":"Plàtan de Canàries","image":"https://cdn.pixabay.com/photo/2018/09/24/20/12/bananas-3700718_960_720.jpg","description":"Plàtans de canàries al pes","price":2.89,"active":true,"categoryid":1,"shopid":2,"shopname":"El rei de la fruita","avg_rating":0, "count_rating":0},
+            {"id":4,"name":"Pera Rocha","image":"https://cdn.pixabay.com/photo/2016/07/22/09/59/fruit-1534494_960_720.jpg","description":"Peres del tipus Rocha al pes","price":1.89,"active":true,"categoryid":1,"shopid":2,"shopname":"El rei de la fruita","avg_rating":0, "count_rating":0},
+            {"id":12,"name":"Síndria de Mallorca","image":"https://p0.piqsels.com/preview/393/901/113/watermelon-slice-isolated-white-thumbnail.jpg","description":"Síndries de Km0 cultivada a Mallorca","price":4.89,"active":true,"categoryid":1,"shopid":2,"shopname":"El rei de la fruita","avg_rating":0, "count_rating":0}
         ];
 
         setProducts(products.map(p => ({ quantity: 1, ...p })));  
