@@ -36,7 +36,6 @@ const ProductList: FunctionComponent = () => {
       rating: query.get('rating') ? Number(query.get('rating')) : undefined,
       distance: query.get('distance') ? Number(query.get('distance')) : MAX_DISTANCE_FILTER_FIELD
     };
-    console.log(productFilterFields);
     return productFilterFields;
   }
 

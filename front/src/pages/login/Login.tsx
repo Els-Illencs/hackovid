@@ -75,7 +75,6 @@ const Login: FunctionComponent = () => {
 
   const isEmailCorrect = () => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
 
-  console.log(isEmailCorrect());
   return (
     <Container maxWidth="xs">
       <div className={classes.paper}>

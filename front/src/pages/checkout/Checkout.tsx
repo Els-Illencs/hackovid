@@ -51,7 +51,6 @@ export const Checkout: React.FunctionComponent = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    console.log(isLoading, user);
     if (!isLoading && !user) {
       saveLoginRedirect('/checkout');
       history.push("/login");

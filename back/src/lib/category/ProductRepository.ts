@@ -92,9 +92,15 @@ export class ProductRepository {
         return elements;
     }
 
-    filterByDistance(elements: Array<Product>, distance: number | null, userLat: number, userLng: number) {
-        if(elements && distance) {
-            return elements.filter(product => distance >= this.getDistance(userLat, userLng, product.shop_lat, product.shop_lng));
+    filterByDistance(elements: Array<Product>, distance: number | null, userLat: number | null, userLng: number |null) {
+        if(elements && distance && userLat && userLng) {
+            let subElements: Array<Product> = [];
+            for (let product of elements) {
+                if(Number(this.getDistance(userLat, userLng, product.shop_lat, product.shop_lng)) <= Number(distance)) {
+                    subElements.push(product);
+                }
+            }
+            return subElements;
         }
         return elements;
     }
@@ -114,7 +120,7 @@ export class ProductRepository {
         }
     }
 
-    getDistance(lat1 : number, lng1: number, lat2: number, lng2: number) {
+    getDistance(lat1 : number, lng1: number, lat2: number, lng2: number): number {
         var earthRadius = 6371; // km
     
         var dLat = this.toRad(lat2 - lat1);
