@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Card, makeStyles, Theme, createStyles, Button, Grid, Typography, Select, Switch, Tabs, Tab, Input, InputLabel } from "@material-ui/core";
+import { Card, makeStyles, Theme, createStyles, Button, Grid, Typography, Select, Switch, Tabs, Tab, Input, InputLabel, ExpansionPanel, TextField } from "@material-ui/core";
 import { AppContext } from '../../app-components';
 import { ProductInfoItem } from "../../components/ProductInfoItem";
 import { useHistory } from "react-router-dom";
@@ -46,6 +46,18 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: "120px !important",
       marginBottom: 16
     },
+    column: {
+      flexBasis: '33.33%',
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+    },
+    textField: {
+      width: "100%",
+    },
+    clientInfo: {
+      marginBottom: 16
+    }
   }),
 );
 
@@ -59,6 +71,9 @@ export const Checkout: React.FunctionComponent = () => {
   const history = useHistory();
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | undefined>();
   const [selectedDeliverTab, setSelectedDeliverTab] = useState(0);
+  const [address, setAddress] = useState("");
+  const [nameAndSurname, setNameAndSurname] = useState("");
+  const [phone, setPhone] = useState("");
 
   const classes = useStyles();
 
@@ -69,13 +84,21 @@ export const Checkout: React.FunctionComponent = () => {
     }
   }, [isLoading]);
 
+  useEffect(() => {
+    if (user) {
+
+      setAddress(userAddress ? userAddress.address! : user.address!);
+      setNameAndSurname(`${user.name} ${user.surname}`);
+      setPhone(user.phone);
+    }
+  }, [user, userAddress]);
+
   const totalPriceProducts: number = products.reduce((priceSum, { price, quantity }) => priceSum + price * quantity, 0);
   const shippingPrice = 10;
   const totalPrice: number = totalPriceProducts + shippingPrice;
 
-  const isBuyButtonDisabled = selectedDeliverTab === 0 && paymentMethod === undefined;
+  const isBuyButtonDisabled = (selectedDeliverTab === 0 && paymentMethod === undefined) || address === "" || nameAndSurname === "" || phone === "";
 
-  const address = userAddress ? userAddress.address : user?.address;
 
   const switchDeliver = (value: any) => {
     if (value !== selectedDeliverTab) {
@@ -119,15 +142,39 @@ export const Checkout: React.FunctionComponent = () => {
               <Grid container spacing={1} >
                 <Grid item xs={11}>
                   <h4>Direcció d'enviament</h4>
-                  <Typography component="p">
-                    {user.name} {user.surname}
-                  </Typography>
-                  <Typography component="p">
-                    {user.phone}
-                  </Typography>
-                  <Typography component="p" className={classes.marginBottom}>
-                    {address}
-                  </Typography>
+                  <Grid item xs={12} className={classes.clientInfo}>
+                    <TextField
+                      id="nameSurname"
+                      name="nameSurname"
+                      label="Nom i cognoms*"
+                      type="text"
+                      onChange={(event) => setNameAndSurname(event.target.value)}
+                      value={nameAndSurname}
+                    />
+                  </Grid>
+                  <Grid item xs={12} className={classes.clientInfo}>
+                    <TextField
+                      id="phone"
+                      name="phone"
+                      label="Telèfon*"
+                      type="text"
+                      onChange={(event) => setPhone(event.target.value)}
+                      value={phone}
+                    />
+                  </Grid>
+                  <Grid item xs={12} className={classes.clientInfo}>
+                    <TextField
+                      className={classes.textField}
+                      id="address"
+                      name="address"
+                      label="Direcció*"
+                      type="text"
+                      multiline
+                      rows="2"
+                      onChange={(event) => setAddress(event.target.value)}
+                      value={address}
+                    />
+                  </Grid>
                 </Grid>
               </Grid>
             </Card>
@@ -142,7 +189,7 @@ export const Checkout: React.FunctionComponent = () => {
                   Enviament: {shippingPrice.toFixed(2)} €
               </div>
                 <div className={classes.totalPrice}>
-                  Enviament: {totalPrice.toFixed(2)} €
+                  Total: {totalPrice.toFixed(2)} €
               </div>
               </div>
             </Card>
@@ -170,12 +217,39 @@ export const Checkout: React.FunctionComponent = () => {
               <Grid container spacing={1} >
                 <Grid item xs={11}>
                   <h4>Dades del client</h4>
-                  <Typography component="p">
-                    {user.name} {user.surname}
-                  </Typography>
-                  <Typography component="p" className={classes.marginBottom}>
-                    Telèfon: {user.phone}
-                  </Typography>
+                  <Grid item xs={12} className={classes.clientInfo}>
+                    <TextField
+                      id="nameSurname"
+                      name="nameSurname"
+                      label="Nom i cognoms*"
+                      type="text"
+                      onChange={(event) => setNameAndSurname(event.target.value)}
+                      value={nameAndSurname}
+                    />
+                  </Grid>
+                  <Grid item xs={12} className={classes.clientInfo}>
+                    <TextField
+                      id="phone"
+                      name="phone"
+                      label="Telèfon*"
+                      type="text"
+                      onChange={(event) => setPhone(event.target.value)}
+                      value={phone}
+                    />
+                  </Grid>
+                  <Grid item xs={12} className={classes.clientInfo}>
+                    <TextField
+                      className={classes.textField}
+                      id="address"
+                      name="address"
+                      label="Direcció*"
+                      type="text"
+                      multiline
+                      rows="2"
+                      onChange={(event) => setAddress(event.target.value)}
+                      value={address}
+                    />
+                  </Grid>
                 </Grid>
               </Grid>
             </Card>
