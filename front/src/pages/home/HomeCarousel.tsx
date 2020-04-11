@@ -1,9 +1,5 @@
 import React, { useState, FC, ReactNode } from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import CreditCardIcon from '@material-ui/icons/CreditCard';
-import LocalShippingIcon from '@material-ui/icons/LocalShipping';
-import PeopleIcon from '@material-ui/icons/People';
-import StoreMallDirectoryIcon from '@material-ui/icons/StoreMallDirectory';
 import { Typography, Grid } from '@material-ui/core';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
@@ -12,8 +8,8 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    largeIcon: {
-      fontSize: '4rem'
+    icon: {
+      height: '4rem'
     }
   }),
 );
@@ -38,13 +34,13 @@ const HomeCarousel: FC = () => {
         <Grid container>
           <Grid item xs={6}>
             <IconElement 
-              icon={<CreditCardIcon className={classes.largeIcon} />}
-              text="Paga en línia rápid i segur!"
+              icon={<img src="/icons/credit-card.png" className={classes.icon} />}
+              text="Pagament en línia rápid i segur!"
             />
           </Grid>
           <Grid item xs={6}>
             <IconElement 
-              icon={<LocalShippingIcon className={classes.largeIcon} />}
+              icon={<img src="/icons/box.png" className={classes.icon} />}
               text="T'ho portem a casa!"
             />
           </Grid>
@@ -52,13 +48,13 @@ const HomeCarousel: FC = () => {
         <Grid container>
           <Grid item xs={6}>
             <IconElement 
-              icon={<StoreMallDirectoryIcon className={classes.largeIcon} />}
+              icon={<img src="/icons/basket-3.png" className={classes.icon} />}
               text="Fés una sola comanda per distints comerços, t'ho unifiquem!"
             />
           </Grid>
           <Grid item xs={6}>
             <IconElement 
-              icon={<PeopleIcon className={classes.largeIcon} />}
+              icon={<img src="/icons/hands.png" className={classes.icon} />}
               text="Col·labora amb el petit comerç local!"
             />
           </Grid>
