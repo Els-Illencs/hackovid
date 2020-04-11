@@ -1,7 +1,7 @@
 import React, { FC, ReactNode, useState, useEffect } from "react";
 import { ApplicationBar } from "./ApplicationBar";
 import { Switch, Route, Link, useRouteMatch, useHistory } from "react-router-dom";
-import { makeStyles, Drawer, List, ListItem, ListItemText, Grid, Typography } from "@material-ui/core";
+import { makeStyles, Drawer, List, ListItem, ListItemText, Grid, Typography, Button } from "@material-ui/core";
 import { AppContext } from "../context/AppContext";
 import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
 import { ProductShoppingCart } from "../../models/product/Product";
@@ -38,18 +38,15 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 16,
     marginBottom: 12,
     width: 30,
-    color: common.white
   },
   userName: {
     fontSize: 20,
     marginTop: 19,
     marginLeft: 16,
     fontStyle: "italic",
-    color: common.white,
     textDecoration: "none"
   },
   userNameLink: {
-    color: common.white,
     textDecoration: "none"
   }
 }))
@@ -191,8 +188,8 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
                 }
               </Grid>
               <Grid item xs={10}>
-                <Typography className={styles.userName} variant="body1" color="textSecondary">
-                  {user ? `Hola ${user.name}` : <Link to="/login" onClick={saveLocationAndHideDrawer} className={styles.userNameLink}>Apply login</Link>}
+                <Typography className={styles.userName} variant="body1">
+                  {user ? `Hola ${user.name}` : <Button component={Link} to="/login" onClick={saveLocationAndHideDrawer} className={styles.userNameLink}>Apply login</Button>}
                 </Typography>
               </Grid>
             </>
