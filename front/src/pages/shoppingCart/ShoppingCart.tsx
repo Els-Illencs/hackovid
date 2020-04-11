@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Card, makeStyles, Theme, createStyles, CardActionArea, Button, CardContent } from "@material-ui/core";
+import { Card, makeStyles, Theme, createStyles, CardActionArea, Button, CardContent, Typography } from "@material-ui/core";
 import { ProductShoppingCartItem } from "./ProductShoppingCartItem";
 import { AppContext } from '../../app-components';
 import { Link } from 'react-router-dom';
@@ -14,11 +14,18 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: 16
     },
     button: {
-      width: "100%"
+      width: "100%",
+      marginTop: 32
     },
     subtotal: {
       paddingLeft: 0,
-      paddingTop: 0,
+      paddingTop: 8,
+    },
+    summary: {
+      paddingTop: 16,
+    },
+    summaryCard: {
+      padding: "0 !important",
     }
   }),
 );
@@ -34,12 +41,18 @@ export const ShoppingCart: React.FunctionComponent = () => {
     <div>
       <Card className={classes.header}>
         {products.length === 0 ?
-          <CardContent>
-            Cistella buida
-         </CardContent> :
+          <CardContent className={classes.summaryCard}>
+            <Typography className={classes.summary} variant="h6" align="left">Cistella buida</Typography>
+            <Link to="/home">
+              <Button className={classes.button} variant="outlined">
+                Comença a comprar
+              </Button>
+            </Link>
+          </CardContent> :
           <>
-            <h4>Resum de la cistella</h4>
-            <CardContent  className={classes.subtotal}>
+            <Typography className={classes.summary} variant="h6" align="left">Resum de la cistella</Typography>
+
+            <CardContent className={classes.subtotal}>
               Subtotal ({products.length}) productes: {totalPrice.toFixed(2)} €
             </CardContent>
             <CardActionArea>
