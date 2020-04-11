@@ -34,16 +34,16 @@ export class ProductApiClient {
                 path += 'minPrice=' + productFilterFields.minPrice;
             }
             if(productFilterFields.maxPrice && productFilterFields.maxPrice > 0) {
-                path = path && path != '' ? separator + path : path;
+                path = path != '' ? path + separator : path;
                 path += 'maxPrice=' + productFilterFields.maxPrice;
                 
             }
             if(productFilterFields.rating && productFilterFields.rating > 0) {
-                path = path && path != '' ? separator + path : path;
+                path = path != '' ? path + separator : path;
                 path += 'rating=' + productFilterFields.rating;
             }
             if(productFilterFields.distance && productFilterFields.distance > 0) {
-                path = path && path != '' ? separator + path : path;
+                path = path != '' ? path + separator : path;
                 path += 'distance=' + productFilterFields.distance;
             }
             path = path && path != '' ? separator + path : path;

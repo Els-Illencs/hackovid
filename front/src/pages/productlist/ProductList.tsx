@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+const MAX_DISTANCE_FILTER_FIELD: number = 20;
+
 const ProductList: FunctionComponent = () => {
   const query = useQuery();
 
@@ -32,7 +34,7 @@ const ProductList: FunctionComponent = () => {
       minPrice: query.get('minPrice') ? Number(query.get('minPrice')) : undefined,
       maxPrice: query.get('maxPrice')? Number(query.get('maxPrice')) : undefined,
       rating: query.get('rating') ? Number(query.get('rating')) : undefined,
-      distance: query.get('distance') ? Number(query.get('distance')) : 1
+      distance: query.get('distance') ? Number(query.get('distance')) : MAX_DISTANCE_FILTER_FIELD
     };
     console.log(productFilterFields);
     return productFilterFields;
@@ -81,7 +83,7 @@ const ProductList: FunctionComponent = () => {
   }, [category, name, isLoadingUserData, user, userAddress, order, productFilterFields]);
 
   const onChangeProductFilterFields = (productFilterFields: ProductFilterFields): void => {
-    setProductFilterFields(productFilterFields);
+    //setProductFilterFields(Object.assign({}, productFilterFields));
   }
 
   const onClickAplyFilter = (productFilterFields: ProductFilterFields): void => {
@@ -89,6 +91,7 @@ const ProductList: FunctionComponent = () => {
   }
 
   const doRedirectToProductPage = (productFilterFields: ProductFilterFields) => {
+    setProductFilterFields(Object.assign({}, productFilterFields));
     let path: string = "" + history.location.search;
 
     if(productFilterFields.minPrice) {
@@ -119,7 +122,6 @@ const ProductList: FunctionComponent = () => {
           `${path}&distance=${productFilterFields.distance}`;
     }
 
-    setProductFilterFields({} as ProductFilterFields);
     setRedirectToProductPage(
       path
     );
