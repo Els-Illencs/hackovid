@@ -51,9 +51,6 @@ export const ProductOrderDetail: React.FunctionComponent = () => {
 
     const history = useHistory();
 
-
-    const history = useHistory();
-
     useEffect(() => {
         const getOrder = async () => {
             setIsLoading(true);
