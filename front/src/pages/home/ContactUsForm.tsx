@@ -1,7 +1,18 @@
 import React, { FC, useState, FormEvent } from "react";
-import { Container, TextField, FormControl, InputLabel, Select, MenuItem, Button, Grid, Snackbar } from "@material-ui/core";
+import { Container, TextField, FormControl, InputLabel, Select, MenuItem, Button, Grid, Snackbar, makeStyles, Theme, createStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      '& .MuiFormControl-root': {
+        marginBottom: theme.spacing(1)
+      },
+    },
+  }),
+);
 
 const ContactUsForm: FC = () => {
+    const classes = useStyles();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [reason, setReason] = useState('');
@@ -17,7 +28,7 @@ const ContactUsForm: FC = () => {
     }
 
     return (
-        <Container maxWidth="xs">
+        <Container maxWidth="xs" className={classes.root}>
             <form noValidate autoComplete="off" onSubmit={onSubmit}>
                 <TextField 
                     label="Nom i cognoms" 
@@ -51,7 +62,7 @@ const ContactUsForm: FC = () => {
                     rows="6"
                     onChange={e => setMessage(e.target.value)} />
                 
-                <Grid container justify="center" style={{ marginTop: 15 }}>
+                <Grid container justify="center">
                     <Button 
                         type="submit"
                         disabled={!name || !email || !reason || !message}>
