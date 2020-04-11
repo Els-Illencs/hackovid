@@ -52,3 +52,17 @@ INSERT INTO PRODUCTS (name, image, description, price, active, shop_id, category
 ('Vi Acrollam', 'https://media.ideavinos.com/catalog/product/cache/3c80f1573f8d22e9902170fcf1d560af/v/i/vino-acrollam-blanc.jpg', 'Vi blanc Acrollam amb denominació mallorquina', 9.79, true, 6, 8, 1, to_tsvector('Vi Acrollam. Vi blanc Acrollam amb denominació mallorquina. Begudes. Vino blanco')),
 ('Cervasa Sullerica', 'https://birrapedia.com/img/modulos/cerveza/099/sullerica-blanca_15088406794846_t.jpg', 'Cervesa artesana Sullerica', 2.89, true, 6, 8, 1, to_tsvector('Cervesa Sullerica. Cervesa artesana Sullerica. Begudes. Cerveza')),
 ('Cervasa Sa roqueta', 'https://sgfm.elcorteingles.es/SGFM/dctm/MEDIA03/201903/06/00118603002876____2__325x325.jpg', 'Cervesa artasana Sa roqueta. Pilsner de la fàbrica Forastera', 2.35, true, 6, 8, 1, to_tsvector('Cervesa Sa roqueta. Cervesa artasana Sa roqueta. Pilsner de la fàbrica Forastera. Begudes. Cerveza'));
+
+
+INSERT INTO orders (user_id, tracking_stage, order_type, rating, is_paid) VALUES 
+(1, 4, 1, 4, true),
+(1, 4, 2, 1, true);
+
+INSERT INTO order_products (order_id, product_id, quantity) VALUES 
+(2, 16, 4),
+(2, 14, 3),
+(2, 25, 1),
+(2, 36, 2),
+(2, 18, 8),
+(2, 3, 1),
+(2, 30, 1);

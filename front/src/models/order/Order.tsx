@@ -1,11 +1,11 @@
 export interface Order {
     id: number,
     userid: number,
-    createdAt: string,
-    updatedAt: string,
-    tracking: number,
-    orderType: number,
-    paied: boolean
+    createdat: string,
+    updatedat: string,
+    trackingstage: number,
+    ordertype: number,
+    ispaid: boolean
 };
 
 /*export module OrderType {
