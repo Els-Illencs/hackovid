@@ -76,7 +76,7 @@ export const ProductPackageItem: FC<ProductPackageItemProps> = ({ product, onDel
               />
             </Grid>
             <Grid item xs={6} md={3}>
-              <Button onClick={deleteProduct} color="secondary" >
+              <Button onClick={deleteProduct} size="medium" color="secondary" >
                 Eliminar
               </Button>
             </Grid>
