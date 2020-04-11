@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     image: {
       marginTop: 16,
+      marginLeft: 16,
       display: 'flex',
       flexDirection: 'column'
     },
@@ -60,7 +61,7 @@ export const ProductInfoItem: React.FunctionComponent<ProductInfoItemProps> = ({
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <Grid container spacing={1}>
-            <Grid item xs={8}>
+            <Grid item xs={12}>
               <Typography component="p">
                 {product.name}
               </Typography>
@@ -90,8 +91,8 @@ export const ProductInfoItem: React.FunctionComponent<ProductInfoItemProps> = ({
           </Grid>
           <Grid item xs={12}>
             <Typography component="h5" variant="h5">
-              {product.price} €/Kg
-                </Typography>
+              {product.price} {product.product_type_id === 1 ? "€/unitat" : "€/Kg"}
+            </Typography>
           </Grid>
         </CardContent>
         {children}

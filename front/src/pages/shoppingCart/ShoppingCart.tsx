@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       width: "100%"
     },
+    subtotal: {
+      paddingLeft: 0,
+      paddingTop: 0,
+    }
   }),
 );
 
@@ -35,7 +39,7 @@ export const ShoppingCart: React.FunctionComponent = () => {
          </CardContent> :
           <>
             <h4>Resum de la cistella</h4>
-            <CardContent>
+            <CardContent  className={classes.subtotal}>
               Subtotal ({products.length}) productes: {totalPrice.toFixed(2)} €
             </CardContent>
             <CardActionArea>
