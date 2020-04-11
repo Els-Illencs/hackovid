@@ -30,9 +30,9 @@ const ProductList: FunctionComponent = () => {
   const query = useQuery();
 
   const retrieveProductFilterFieldsfromURL = (): ProductFilterFields => {
-    const productFilterFields: ProductFilterFields =  {
+    const productFilterFields: ProductFilterFields = {
       minPrice: query.get('minPrice') ? Number(query.get('minPrice')) : undefined,
-      maxPrice: query.get('maxPrice')? Number(query.get('maxPrice')) : undefined,
+      maxPrice: query.get('maxPrice') ? Number(query.get('maxPrice')) : undefined,
       rating: query.get('rating') ? Number(query.get('rating')) : undefined,
       distance: query.get('distance') ? Number(query.get('distance')) : MAX_DISTANCE_FILTER_FIELD
     };
@@ -41,7 +41,7 @@ const ProductList: FunctionComponent = () => {
 
   const { user: { isLoading: isLoadingUserData, user, userAddress, updateUserAddress } } = useContext(AppContext);
   const [productList, setProducts] = useState([] as Product[]);
-  
+
   const [productFilterFields, setProductFilterFields] = useState(retrieveProductFilterFieldsfromURL());
   const [redirectToProductPage, setRedirectToProductPage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -70,10 +70,12 @@ const ProductList: FunctionComponent = () => {
 
     const getProducts = async () => {
       setIsLoading(true);
+      const address = user ? user?.address : userAddress;
+      console.log(user, userAddress, address);
       const products =
-        category ? await apiClient.getProductsBycategory(category, order, productFilterFields, userAddress) :
-          name ? await apiClient.getProductsByName(name, order, productFilterFields, userAddress) :
-            await apiClient.getProducts(order, productFilterFields, userAddress);
+        category ? await apiClient.getProductsBycategory(category, order, productFilterFields, address) :
+          name ? await apiClient.getProductsByName(name, order, productFilterFields, address) :
+            await apiClient.getProducts(order, productFilterFields, address);
       setProducts(products)
 
       setIsLoading(false);
@@ -93,32 +95,32 @@ const ProductList: FunctionComponent = () => {
     setProductFilterFields(Object.assign({}, productFilterFields));
     let path: string = "" + history.location.search;
 
-    if(productFilterFields.minPrice) {
+    if (productFilterFields.minPrice) {
       const regex = /(minPrice=)[^\&]+/;
-      path = regex.test(path) ? 
-          path.replace(regex, '$1' + productFilterFields.minPrice) :
-          `${path}&minPrice=${productFilterFields.minPrice}`;
+      path = regex.test(path) ?
+        path.replace(regex, '$1' + productFilterFields.minPrice) :
+        `${path}&minPrice=${productFilterFields.minPrice}`;
     }
-  
-    if(productFilterFields.maxPrice) {
+
+    if (productFilterFields.maxPrice) {
       const regex = /(maxPrice=)[^\&]+/;
-      path = regex.test(path) ? 
-          path.replace(regex, '$1' + productFilterFields.maxPrice) :
-          `${path}&maxPrice=${productFilterFields.maxPrice}`;
+      path = regex.test(path) ?
+        path.replace(regex, '$1' + productFilterFields.maxPrice) :
+        `${path}&maxPrice=${productFilterFields.maxPrice}`;
     }
-    
-    if(productFilterFields.rating) {
+
+    if (productFilterFields.rating) {
       const regex = /(rating=)[^\&]+/;
-      path = regex.test(path) ? 
-          path.replace(regex, '$1' + productFilterFields.rating) :
-          `${path}&rating=${productFilterFields.rating}`;
+      path = regex.test(path) ?
+        path.replace(regex, '$1' + productFilterFields.rating) :
+        `${path}&rating=${productFilterFields.rating}`;
     }
-    
-    if(productFilterFields.distance) {
+
+    if (productFilterFields.distance) {
       const regex = /(distance=)[^\&]+/;
-      path = regex.test(path) ? 
-          path.replace(regex, '$1' + productFilterFields.distance) :
-          `${path}&distance=${productFilterFields.distance}`;
+      path = regex.test(path) ?
+        path.replace(regex, '$1' + productFilterFields.distance) :
+        `${path}&distance=${productFilterFields.distance}`;
     }
 
     setRedirectToProductPage(
@@ -129,19 +131,19 @@ const ProductList: FunctionComponent = () => {
   return (
     <div>
       <Grid container spacing={3}>
-      <Grid item md={9} xs={12}>
-      {redirectToProductPage && <Redirect push to={`/product-list${redirectToProductPage}`} /> }
-      <ProductFilter 
-        productFilterFields={productFilterFields}
-        onChangeProductFilterFields={onChangeProductFilterFields}
-        onClickAplyFilter={onClickAplyFilter}
-      />
-      </Grid>
-      <Grid item md={3} xs={12}>
-      <div className={classes.filterAndOrderBar}>
-        <OrderItems />
-      </div>
-      </Grid>
+        <Grid item md={9} xs={12}>
+          {redirectToProductPage && <Redirect push to={`/product-list${redirectToProductPage}`} />}
+          <ProductFilter
+            productFilterFields={productFilterFields}
+            onChangeProductFilterFields={onChangeProductFilterFields}
+            onClickAplyFilter={onClickAplyFilter}
+          />
+        </Grid>
+        <Grid item md={3} xs={12}>
+          <div className={classes.filterAndOrderBar}>
+            <OrderItems />
+          </div>
+        </Grid>
       </Grid>
       {isLoading || isLoadingUserData ?
         <Grid
