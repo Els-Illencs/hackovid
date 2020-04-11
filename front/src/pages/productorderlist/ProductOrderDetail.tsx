@@ -44,16 +44,18 @@ const productOrderApiClient = new ProductOrderApiClient();
 export const ProductOrderDetail: React.FunctionComponent = () => {
 
     const classes = useStyles();
-    const { user } = useContext(AppContext);
+    const { user: { isLoading, user } } = useContext(AppContext);
     const [products, setProducts] = useState([] as Product[]);
     const [order, setOrder] = useState({} as Order);
 
     useEffect(() => {
         const getOrder = async () => {
-            setOrder(await productOrderApiClient.getOrder(0, 0));
+            setOrder(await productOrderApiClient.getOrder(0, user!.id));
         }
-        getOrder();
-    }, []);
+        if (user) {
+            getOrder();
+        }
+    }, [user]);
 
     useEffect(() => {
         const getProducts = async () => {
