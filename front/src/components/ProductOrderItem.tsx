@@ -27,7 +27,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     wrapIcon: {
         verticalAlign: 'middle',
-        display: 'inline-flex'
+        display: 'inline-flex',
+        textAlign: 'center'
+    },
+    alignToCenter: {
+        textAlign: 'center'
     }
   }),
 );
@@ -87,13 +91,13 @@ export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = 
                     <OrderTracking orderType={order.orderType} trackingStep={order.tracking} />
                 </Grid>
                 {order.orderType == PICK_UP_ORDER &&
-                    <Grid container justify="center">
-                        <Grid item xs={12}>
+                    <Grid container justify="center" className={classes.alignToCenter}>
+                        <Grid item xs={6}>
                             <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
                                 <ShoppingBasketIcon fontSize="small" /> A recollir
                             </Typography>
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={6}>
                             {order.paied == true &&
                                 <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
                                     <PaymentIcon fontSize="small" /> Pagat
@@ -101,20 +105,20 @@ export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = 
                             }
                             {order.paied == false &&
                                 <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
-                                    <PaymentIcon fontSize="small" /> No pagat
+                                    <PaymentIcon fontSize="small" /> No pagat (pagar al comerç)
                                 </Typography>
                             }
                         </Grid>
                     </Grid>
                 }
                 {order.orderType == DELIVER_ORDER &&
-                    <Grid container justify="center">
-                    <Grid item xs={12}>
+                    <Grid container justify="center" className={classes.alignToCenter}>
+                    <Grid item xs={6}>
                         <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
                             <LocalShippingIcon fontSize="small" /> A domicili
                         </Typography>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
                         <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
                             <PaymentIcon fontSize="small" /> Pagat
                         </Typography>

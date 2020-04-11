@@ -8,6 +8,7 @@ import ProductList from './pages/productlist/ProductList';
 import { Checkout } from './pages/checkout/Checkout';
 import { Redirect, useLocation } from 'react-router-dom';
 import PackageDetail from './pages/packageDetail/PackageDetail';
+import { ProductOrderList } from './pages/productorderlist/ProductOrderList';
 
 function App() {
   const { pathname } = useLocation();
@@ -21,7 +22,8 @@ function App() {
             { path: "/login", content: (<Login />), fullScreen: true },
             { path: "/package-detail", content: (<PackageDetail />) },
             { path: "/product-list", content: (<ProductList />) },
-            { path: "/checkout", content: (<Checkout />) }
+            { path: "/checkout", content: (<Checkout />) },
+            { path: "/order-list", content: (<ProductOrderList />), menuItem: { label: "Comandes" } }
           ]} />
     </MuiThemeProvider>
     {pathname === '/' && <Redirect to="/home" />}

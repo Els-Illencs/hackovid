@@ -41,7 +41,7 @@ export const OrderTracking: React.FunctionComponent<OrderTrackingProps> = ({ ord
   const steps = getSteps(orderType);
 
   return (
-      <Stepper activeStep={trackingStep} alternativeLabel>
+      <Stepper activeStep={trackingStep} className={classes.root} alternativeLabel>
         {steps.map((label) => (
           <Step key={label} className={classes.step}>
             <StepLabel>{label}</StepLabel>
