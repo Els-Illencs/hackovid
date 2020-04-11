@@ -4,11 +4,13 @@ export interface Product {
     image: string,
     shopid: number,
     shopname: string,
-    rating: number,
+    avg_rating: number,
+    count_rating: number,
     categoryid: number,
     description: string,
     active: boolean,
-    price: number
+    price: number,
+    product_type_id: number
 }
 
 export type ProductShoppingCart = {

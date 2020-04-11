@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { Product } from '../models/product/Product';
 import { Grid } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     image: {
       marginTop: 16,
+      marginLeft: 16,
       display: 'flex',
       flexDirection: 'column'
     },
@@ -32,6 +34,10 @@ const useStyles = makeStyles((theme: Theme) =>
       width: 80,
       height: 80,
       display: 'flex',
+    },
+    rating: {
+      display: 'flex',
+      alignItems: 'center',
     }
   }),
 );
@@ -55,7 +61,7 @@ export const ProductInfoItem: React.FunctionComponent<ProductInfoItemProps> = ({
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <Grid container spacing={1}>
-            <Grid item xs={8}>
+            <Grid item xs={12}>
               <Typography component="p">
                 {product.name}
               </Typography>
@@ -70,11 +76,14 @@ export const ProductInfoItem: React.FunctionComponent<ProductInfoItemProps> = ({
           </Grid>
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <Rating
-                value={product.rating}
-                precision={0.5}
-                disabled={true}
-              />
+              <div className={classes.rating}>
+                <Rating
+                  value={product.avg_rating}
+                  precision={0.5}
+                  disabled={true}
+                /> 
+                <Box ml={1}>({product.count_rating})</Box>
+              </div>
               <Typography variant="caption" display="block" gutterBottom>
                 {product.shopname}
               </Typography>
@@ -82,8 +91,8 @@ export const ProductInfoItem: React.FunctionComponent<ProductInfoItemProps> = ({
           </Grid>
           <Grid item xs={12}>
             <Typography component="h5" variant="h5">
-              {product.price} €/Kg
-                </Typography>
+              {product.price} {product.product_type_id === 1 ? "€/unitat" : "€/Kg"}
+            </Typography>
           </Grid>
         </CardContent>
         {children}
