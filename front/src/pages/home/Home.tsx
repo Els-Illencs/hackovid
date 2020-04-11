@@ -8,39 +8,11 @@ import { PackageApiClient } from '../../api/PackageApiClient';
 import { Typography, Box, makeStyles, createStyles, Theme, Grid, Divider, Button } from "@material-ui/core";
 import { HashLink } from "react-router-hash-link";
 import ContactUsForm from "./ContactUsForm";
+import IconElement from "./IconElement";
 import PackageList from "./PackageList";
 
 const categoryApiClient = new CategoryApiClient();
 const packageApiClient = new PackageApiClient();
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    icon: {
-      height: '5rem'
-    },
-    iconElement: {
-        marginBottom: theme.spacing(2)
-    }
-  }),
-);
-
-const IconElement: FC<{iconSrc: string, primary: string, secondary: string}> = ({iconSrc, primary, secondary}) => {
-    const classes = useStyles();
-
-    return (
-        <Grid container justify="center" className={classes.iconElement}>
-            <Grid item>
-                <img src={iconSrc} className={classes.icon} />
-            </Grid>
-            <Grid item xs={12}>
-                <Typography align="center"><Box component="span" fontWeight="bold">{primary}</Box></Typography>
-            </Grid>
-            <Grid item xs={12}>
-                <Typography align="center">{secondary}</Typography>
-            </Grid>
-        </Grid>
-    )
-}
 
 const Section: FC<{title: ReactNode}> = ({title, children}) => (<>
     <Typography variant="h6" align="center">
@@ -63,7 +35,6 @@ const SmallDivider: FC = () => (<Divider style={{ margin: '20px 0' }} />);
 const LargeDivider: FC = () => (<Divider style={{ margin: '50px 0' }} />);
 
 const Home: FC = () => {
-    const classes = useStyles();
     const [categories, setCategories] = useState([] as Category[]);
     const [packages, setPackages] = useState([] as Package[]);
 
@@ -97,16 +68,16 @@ const Home: FC = () => {
             <Section title="Per què et necessita el comerç local?">
                 <IconElement 
                     iconSrc="/icons/buildings.png"
-                    primary="Acabar amb la dificultat per competir" 
-                    secondary="Les grans plataformes proporcionen una enorme quantitat de serveis. Però no juguen amb la qualitat local! Recolzem les petites botiques perquè, com tu, creiem amb elles." />
+                    headline="Acabar amb la dificultat per competir" 
+                    text="Les grans plataformes proporcionen una enorme quantitat de serveis. Però no juguen amb la qualitat local! Recolzem les petites botiques perquè, com tu, creiem amb elles." />
                 <IconElement 
                     iconSrc="/icons/earth-mask.png"
-                    primary="Acabar amb la crisis del confinament" 
-                    secondary="La situació actual de confinament provoca un impacte de difícil reparació. Si no tens presència a internet i et mous a domicili, no existeixes. Anem a fer que existeixin!" />
+                    headline="Acabar amb la crisis del confinament" 
+                    text="La situació actual de confinament provoca un impacte de difícil reparació. Si no tens presència a internet i et mous a domicili, no existeixes. Anem a fer que existeixin!" />
                 <IconElement 
                     iconSrc="/icons/pig.png"
-                    primary="Economia sostenible" 
-                    secondary="No oblidem que invertir en comerç local ens beneficia a tots: consumidors, productors locals... Si els ajudem a ells, ens ajudem a nosaltres mateixos!" />
+                    headline="Economia sostenible" 
+                    text="No oblidem que invertir en comerç local ens beneficia a tots: consumidors, productors locals... Si els ajudem a ells, ens ajudem a nosaltres mateixos!" />
             </Section>
 
             <SmallDivider />
@@ -114,20 +85,20 @@ const Home: FC = () => {
             <Section title="Estalvia temps fent la compra al teu barri amb totes les comoditats">
                 <IconElement 
                     iconSrc="/icons/hand-money.png"
-                    primary="Pagament en línia o a la tenda" 
-                    secondary="Pots escollir el mètode de pagament que més tꞌagradi. Tot i que, a dia dꞌavui, et recomanem el pagament segur en línea." />
+                    headline="Pagament en línia o a la tenda" 
+                    text="Pots escollir el mètode de pagament que més tꞌagradi. Tot i que, a dia dꞌavui, et recomanem el pagament segur en línea." />
                 <IconElement 
                     iconSrc="/icons/box.png"
-                    primary="Opció a domicili, t'ho portem a casa!" 
-                    secondary="No caldrà ni que surtis al carrer. Nosaltres anirem a les botigues i tꞌacostarem tot allò que necessitis." />
+                    headline="Opció a domicili, t'ho portem a casa!" 
+                    text="No caldrà ni que surtis al carrer. Nosaltres anirem a les botigues i tꞌacostarem tot allò que necessitis." />
                 <IconElement 
                     iconSrc="/icons/basket-3.png"
-                    primary="Comanda única" 
-                    secondary="Compra sense preocupar-te de quin comerç té el producte. Unificam , al nostre sistema, els productes sense discriminació. Pots fer una sola compra a diverses botigues!" />
+                    headline="Comanda única" 
+                    text="Compra sense preocupar-te de quin comerç té el producte. Unificam , al nostre sistema, els productes sense discriminació. Pots fer una sola compra a diverses botigues!" />
                 <IconElement 
                     iconSrc="/icons/search.png"
-                    primary="Seguiment de la comanda" 
-                    secondary="Coneix lꞌestat de la teva compra! Si vas a buscar-la, evita fer-ho fins que estigui preparada; si te la duim, assabenta't de per on anem amb el servei intel·ligent de tracking." />
+                    headline="Seguiment de la comanda" 
+                    text="Coneix lꞌestat de la teva compra! Si vas a buscar-la, evita fer-ho fins que estigui preparada; si te la duim, assabenta't de per on anem amb el servei intel·ligent de tracking." />
             </Section>
 
             <LargeDivider />
@@ -135,16 +106,16 @@ const Home: FC = () => {
             <Section title="Tens un comerç? No ho dubtis, uneix-te a la nostra xarxa!">
                 <IconElement 
                     iconSrc="/icons/arrow.png"
-                    primary="Augmenta les teves vendes" 
-                    secondary="La ciutadania opta pel format digital. Per què privar-la del producte de la terra? Ven també mitjançant Comacasa!" />
+                    headline="Augmenta les teves vendes" 
+                    text="La ciutadania opta pel format digital. Per què privar-la del producte de la terra? Ven també mitjançant Comacasa!" />
                 <IconElement 
                     iconSrc="/icons/people-network.png"
-                    primary="Amplia la teva xarxa logística" 
-                    secondary="No et preocupis! Si no tens capacitat de distribució, desde Comacasa ho farem per tu." />
+                    headline="Amplia la teva xarxa logística" 
+                    text="No et preocupis! Si no tens capacitat de distribució, desde Comacasa ho farem per tu." />
                 <IconElement 
                     iconSrc="/icons/sunglasses.png"
-                    primary="Guanya visibilitat" 
-                    secondary="Aprofita't de les nostres accions a les xarxes socials! Donarem visibilitat al teu comerç i els teus productes." />
+                    headline="Guanya visibilitat" 
+                    text="Aprofita't de les nostres accions a les xarxes socials! Donarem visibilitat al teu comerç i els teus productes." />
 
                 <CallToActionButton elementToScrollId="home-contact-us">CONTACTA AMB NOSALTRES</CallToActionButton>
             </Section>
@@ -154,16 +125,16 @@ const Home: FC = () => {
             <Section title="Tꞌagrada moure't? Col·labora amb els comerços i la gent del teu barri entregant les comandes!">
                 <IconElement 
                     iconSrc="/icons/arrow-multiple.png"
-                    primary="Escull el que t'interessi" 
-                    secondary="Posem a la teva disposició un sistema de preus fixos, a més de propines a triar per tu mateix." />
+                    headline="Escull el que t'interessi" 
+                    text="Posem a la teva disposició un sistema de preus fixos, a més de propines a triar per tu mateix." />
                 <IconElement 
                     iconSrc="/icons/woman-old.png"
-                    primary="Ajuda qui no pot anar a comprar" 
-                    secondary="Per gent gran i amb discapacitat, anar a una botiga pot significar esport de risc. Ajuda'ls a ells com ells tꞌajudarien!" />
+                    headline="Ajuda qui no pot anar a comprar" 
+                    text="Per gent gran i amb discapacitat, anar a una botiga pot significar esport de risc. Ajuda'ls a ells com ells tꞌajudarien!" />
                 <IconElement 
                     iconSrc="/icons/man-happy.png"
-                    primary="Treballa al temps que fas xarxa" 
-                    secondary="Treballa amb la satisfacció dꞌestar connectant a la gent!" />
+                    headline="Treballa al temps que fas xarxa" 
+                    text="Treballa amb la satisfacció dꞌestar connectant a la gent!" />
 
                 <CallToActionButton elementToScrollId="home-contact-us">CONTACTA AMB NOSALTRES</CallToActionButton>
             </Section>

@@ -13,6 +13,9 @@ export default createMuiTheme({
             primary: themeBrown
         }
     },
+    typography: {
+        fontSize: 13
+    },
     overrides: {
         MuiButton: {
             containedPrimary: {
