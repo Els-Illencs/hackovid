@@ -4,12 +4,6 @@ import { ProductFilterFields } from "../models/product/ProductFilterFields";
 
 
 export class ProductApiClient {
-    async getProductsByOrderId(orderId: number) {
-        const res = await Axios.get(`${process.env.REACT_APP_API_URL}products`);
-
-        return res.data as Product[];
-    }
-
     async getProducts(order: string | null, productFilterFields: ProductFilterFields | null, userAddress) {
         const filter: string = this.buildFilterParams(productFilterFields);
         const res = await Axios.get(`${process.env.REACT_APP_API_URL}products?order=${order}${filter}&lat=${userAddress.latitude}&lng=${userAddress.longitude}`);
