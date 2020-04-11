@@ -37,6 +37,9 @@ export default createMuiTheme({
         },
         MuiTextField: {
             variant: "outlined"
+        },
+        MuiPaper: {
+            elevation: 0
         }
     }
 });
