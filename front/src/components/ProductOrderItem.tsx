@@ -9,6 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import { Product } from '../models/product/Product';
 import Grid, { GridSpacing } from '@material-ui/core/Grid';
 import { OrderTracking } from './OrderTracking';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import PaymentIcon from '@material-ui/icons/Payment';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,6 +24,10 @@ const useStyles = makeStyles((theme: Theme) =>
     detailButton: {
         margin: 'auto',
         width: '50%'
+    },
+    wrapIcon: {
+        verticalAlign: 'middle',
+        display: 'inline-flex'
     }
   }),
 );
@@ -76,10 +83,47 @@ export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = 
                         </Grid>
                     </Grid>
                 </Grid>
-                <OrderTracking orderType={order.orderType} trackingStep={order.tracking} />
+                <Grid container>
+                    <OrderTracking orderType={order.orderType} trackingStep={order.tracking} />
+                </Grid>
+                {order.orderType == PICK_UP_ORDER &&
+                    <Grid container justify="center">
+                        <Grid item xs={12}>
+                            <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
+                                <ShoppingBasketIcon fontSize="small" /> A recollir
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            {order.paied == true &&
+                                <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
+                                    <PaymentIcon fontSize="small" /> Pagat
+                                </Typography>
+                            }
+                            {order.paied == false &&
+                                <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
+                                    <PaymentIcon fontSize="small" /> No pagat
+                                </Typography>
+                            }
+                        </Grid>
+                    </Grid>
+                }
+                {order.orderType == DELIVER_ORDER &&
+                    <Grid container justify="center">
+                    <Grid item xs={12}>
+                        <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
+                            <LocalShippingIcon fontSize="small" /> A domicili
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="caption" className={classes.wrapIcon} gutterBottom>
+                            <PaymentIcon fontSize="small" /> Pagat
+                        </Typography>
+                    </Grid>
+                    </Grid>
+                }
             </CardContent>
             <CardActions>
-                <Button size="small" className={classes.detailButton}>Detallar comanda</Button>
+                <Button size="small" className={classes.detailButton}>Detallar</Button>
             </CardActions>
         </Card>
       );

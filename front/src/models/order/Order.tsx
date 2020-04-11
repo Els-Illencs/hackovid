@@ -4,5 +4,6 @@ export interface Order {
     createdAt: string,
     updatedAt: string,
     tracking: number,
-    orderType: number
+    orderType: number,
+    paied: boolean
 }
