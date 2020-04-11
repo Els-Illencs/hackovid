@@ -65,13 +65,18 @@ export const ProductPackageItem: FC<ProductPackageItemProps> = ({ product, onDel
         <div className={classes.mainContent}>
           <Grid container spacing={1}>
             <Grid item xs={6} md={3}>
-              <TextField className={classes.quantity} id="outlined-basic" type="number" size="small"
+              <TextField 
+                className={classes.quantity} 
+                type="number" 
+                size="small"
                 InputProps={{ inputProps: { min: 0 } }}
-                label="Quantitat" value={product.quantity} onChange={changeQuantity}
+                label="Quantitat" 
+                value={product.quantity} 
+                onChange={changeQuantity}
               />
             </Grid>
             <Grid item xs={6} md={3}>
-              <Button onClick={deleteProduct} size="medium" color="primary">
+              <Button onClick={deleteProduct} size="medium" color="secondary" >
                 Eliminar
               </Button>
             </Grid>

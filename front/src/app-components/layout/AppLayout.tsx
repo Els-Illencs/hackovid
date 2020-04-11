@@ -1,7 +1,7 @@
 import React, { FC, ReactNode, useState, useEffect } from "react";
 import { ApplicationBar } from "./ApplicationBar";
 import { Switch, Route, Link, useRouteMatch, useHistory } from "react-router-dom";
-import { makeStyles, Drawer, List, ListItem, ListItemText, Grid, Typography } from "@material-ui/core";
+import { makeStyles, Drawer, List, ListItem, ListItemText, Grid, Typography, Button } from "@material-ui/core";
 import { AppContext } from "../context/AppContext";
 import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
 import { ProductShoppingCart } from "../../models/product/Product";
@@ -19,7 +19,8 @@ type Page = {
   menuItem?: {
     label: string,
     right?: ReactNode
-  }
+  },
+  needsToBeLogged?: boolean;
 };
 
 type AppLayoutProps = {
@@ -38,18 +39,15 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 16,
     marginBottom: 12,
     width: 30,
-    color: common.white
   },
   userName: {
     fontSize: 20,
     marginTop: 19,
     marginLeft: 16,
     fontStyle: "italic",
-    color: common.white,
     textDecoration: "none"
   },
   userNameLink: {
-    color: common.white,
     textDecoration: "none"
   }
 }))
@@ -80,7 +78,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     }
     getShoppingCartProducts();
   }, []);
-  
+
   useEffect(() => {
     const getUserAddressFromLocalStorage = async () => {
       setIsLoadingUserAddress(true);
@@ -89,7 +87,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     }
     getUserAddressFromLocalStorage();
   }, []);
-  
+
   useEffect(() => {
     const getUserFromLocalStorage = async () => {
       setIsLoadingUser(true);
@@ -102,8 +100,8 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
   // TODO move AppContext in a different file / component
   const addProductToTheShoppingCart = (product: ProductShoppingCart) => {
     addProductsToTheShoppingCart([product]);
-  }  
-  
+  }
+
   const addProductsToTheShoppingCart = (products: ProductShoppingCart[]) => {
     const nextShoppingCartProducts = shoppingCartProducts.slice();
 
@@ -191,14 +189,14 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
                 }
               </Grid>
               <Grid item xs={10}>
-                <Typography className={styles.userName} variant="body1" color="textSecondary">
-                  {user ? `Hola ${user.name}` : <Link to="/login" onClick={saveLocationAndHideDrawer} className={styles.userNameLink}>Apply login</Link>}
+                <Typography className={styles.userName} variant="body1">
+                  {user ? `Hola ${user.name}` : <Button component={Link} to="/login" onClick={saveLocationAndHideDrawer} className={styles.userNameLink}>Apply login</Button>}
                 </Typography>
               </Grid>
             </>
           </Grid>
           <List>
-            {props.pages.filter(p => !!p.menuItem).map((p) => (
+            {props.pages.filter(p => !!p.menuItem).filter(p => !p.needsToBeLogged || (p.needsToBeLogged && user !== undefined)).map((p) => (
               <ListItem button component={Link} to={p.path} onClick={closeDrawer} key={p.path}>
                 <ListItemText primary={p.menuItem!.label} />
                 {p.menuItem!.right}

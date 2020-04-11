@@ -17,6 +17,7 @@ import Rating from '@material-ui/lab/Rating';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { MenuItem } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -128,10 +129,9 @@ export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFi
                     />
                 </Grid>
                 <Grid item md={4} xs={12}>
-                    <FormControl>
+                    <FormControl fullWidth>
                         <InputLabel htmlFor="distanceSelect">Distància</InputLabel>
                         <Select
-                            native
                             name="distance"
                             label="Distància"
                             onChange={onChangeProductFilterFieldsAction}
@@ -139,11 +139,11 @@ export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFi
                                 id: 'distanceSelect',
                             }}
                         >
-                            <option value="1">1 Km</option>
-                            <option value="3">3 Km</option>
-                            <option value="5">5 Km</option>
-                            <option value="10">10 Km</option>
-                            <option value="20" selected>20 Km</option>
+                            <MenuItem value="1">1 Km</MenuItem>
+                            <MenuItem value="3">3 Km</MenuItem>
+                            <MenuItem value="5">5 Km</MenuItem>
+                            <MenuItem value="10">10 Km</MenuItem>
+                            <MenuItem value="20" selected>20 Km</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
