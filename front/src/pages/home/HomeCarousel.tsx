@@ -49,7 +49,7 @@ const HomeCarousel: FC = () => {
           <Grid item xs={6}>
             <IconElement 
               icon={<img src="/icons/basket-3.png" className={classes.icon} />}
-              text="Fés una sola comanda per distints comerços, t'ho unifiquem!"
+              text="Unifiquem en una sola comanda diferents comerços!"
             />
           </Grid>
           <Grid item xs={6}>
