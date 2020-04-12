@@ -157,9 +157,13 @@ const ProductList: FunctionComponent = () => {
         </Grid>
         :
         <>
-          {productList.map((product: Product) => (
-            <ProductItem key={String(product.id)} product={product} />
-          ))}
+          {
+            productList.length ?
+              productList.map((product: Product) => (
+                <ProductItem key={String(product.id)} product={product} />
+              )) : 
+              "No s'han trobat resultats amb aquests criteris de cerca"
+          }
           {openDialog && <AddressRequestDialog open={openDialog} onClose={() => setOpenDialog(false)} onSelectAddress={updateUserAddress} />}
         </>
       }
