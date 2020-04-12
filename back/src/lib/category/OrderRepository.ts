@@ -9,6 +9,7 @@ export type Order = {
     orderType: number,
     rating: number,
     isPaid: number,
+    price: number
 }
 
 export type OrderProducts = {
@@ -34,7 +35,7 @@ export type OrderProducts = {
 export class OrderRepository {
     async getByUser(userId: number) {
         const res = await pool.query<Order>(`
-            SELECT id, user_id as userId, created_at as createdAt, updated_at as updatedAt, tracking_stage as trackingStage, order_type as orderType, rating as rating, is_paid as isPaid
+            SELECT id, user_id as userId, price, created_at as createdAt, updated_at as updatedAt, tracking_stage as trackingStage, order_type as orderType, rating as rating, is_paid as isPaid
             FROM orders
             WHERE user_id = ${userId}
             ORDER BY tracking_stage, created_at DESC
@@ -45,8 +46,8 @@ export class OrderRepository {
 
     async createOrder(order: any, userId: number) {
         const res = await pool.query<Order>(`
-            INSERT INTO orders (user_id, tracking_stage, order_type, rating, is_paid) VALUES 
-            (${userId}, ${order.trackingStage ? order.trackingStage : 0}, ${order.type}, ${order.rating}, ${order.isPaid})
+            INSERT INTO orders (user_id, tracking_stage, order_type, rating, price, is_paid) VALUES 
+            (${userId}, ${order.trackingStage ? order.trackingStage : 0}, ${order.type}, ${order.rating}, ${order.price.toFixed(2)}, ${order.isPaid})
             RETURNING id;
         `);
 
@@ -62,7 +63,7 @@ export class OrderRepository {
 
     async getOrderDetail(orderId: number) {
         const res = await pool.query<Order>(`
-            SELECT id, user_id as userId, user_id as userId, created_at as createdAt, updated_at as updatedAt, tracking_stage as trackingStage, order_type as orderType, rating as rating, is_paid as isPaid
+            SELECT id, user_id as userId, price, user_id as userId, created_at as createdAt, updated_at as updatedAt, tracking_stage as trackingStage, order_type as orderType, rating as rating, is_paid as isPaid
             FROM orders 
             WHERE id = ${orderId}
             LIMIT 1

@@ -126,10 +126,11 @@ export const Checkout: React.FunctionComponent = () => {
       type: selectedDeliverTab,
       rating: 3,
       isPaid: paymentMethod === PaymentMethod.ONLINE,
-      products: products.map(({ id, quantity }) => {
+      products: products.map(({ id, quantity, price }) => {
         return {
           id,
-          quantity
+          quantity,
+          price
         }
       }),
     });

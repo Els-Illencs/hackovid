@@ -5,7 +5,8 @@ export interface Order {
     updatedat: string,
     trackingstage: number,
     ordertype: number,
-    ispaid: boolean
+    ispaid: boolean,
+    price: number,
 };
 
 export type OrderProducts = {
@@ -33,7 +34,8 @@ export interface CreateOrder {
     rating: number,
     products: {
         id: number,
-        quantity: number
+        quantity: number,
+        price: number,
     }[],
     isPaid: boolean,
 };

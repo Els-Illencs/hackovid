@@ -40,11 +40,13 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         alignToCenter: {
             textAlign: 'center'
-        }
+        },
+        bold: {
+            fontWeight: "bold",
+        },
     }),
 );
 
-const apiClient = new ProductApiClient();
 
 const PICK_UP_ORDER: number = 0;
 const DELIVER_ORDER: number = 1;
@@ -86,6 +88,9 @@ export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = 
                                 month: "long",
                                 day: "2-digit"
                             }).format(new Date(order.createdat))}
+                        </Typography>
+                        <Typography variant="body1" gutterBottom>
+                            <span className={classes.bold}>Preu total</span>: {order.price.toFixed(2)} €
                         </Typography>
                     </Grid>
                     <Grid item xs={3}>
