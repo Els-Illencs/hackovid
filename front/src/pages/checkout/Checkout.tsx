@@ -120,7 +120,7 @@ export const Checkout: React.FunctionComponent = () => {
     await productOrderApiClient.applyOrder(user!.id, {
       type: selectedDeliverTab,
       rating: 3,
-      isPaid: false,
+      isPaid: paymentMethod === PaymentMethod.ONLINE,
       products: products.map(({ id, quantity }) => {
         return {
           id,
