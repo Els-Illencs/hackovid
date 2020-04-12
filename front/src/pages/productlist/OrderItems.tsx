@@ -4,9 +4,19 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { useHistory } from 'react-router-dom'
 import { Redirect } from "react-router-dom";
-import { MenuItem, Container } from "@material-ui/core";
+import { MenuItem, Container, makeStyles, Theme, createStyles, } from "@material-ui/core";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    orderBar: {
+      paddingLeft: "0",
+      paddingRight: "0"
+    }
+  }),
+);
 
 export const OrderItems: FunctionComponent = () => {
+  const classes = useStyles();
 
   const [redirectToProductPage, setRedirectToProductPage] = useState<string | null>(null);
   const history = useHistory()
@@ -23,11 +33,12 @@ export const OrderItems: FunctionComponent = () => {
 
   return (<>
     {redirectToProductPage && <Redirect push to={`/product-list${redirectToProductPage}`} /> }
-    <Container maxWidth="xs">
+    <Container className={classes.orderBar} maxWidth="xs">
       <FormControl fullWidth>
         <InputLabel htmlFor="orderSelect">Ordenar</InputLabel>
         <Select
           name="order"
+          label="Ordenar"
           onChange={doRedirectToProductPage}
           inputProps={{
             id: 'orderSelect',

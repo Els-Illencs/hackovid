@@ -65,7 +65,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     summaryCard: {
       padding: "0 !important",
-    }
+    },
+    quantity: {
+      paddingBottom: 16,
+      paddingTop: 8,
+      marginLeft: 16
+  },
   }),
 );
 
@@ -313,7 +318,12 @@ export const Checkout: React.FunctionComponent = () => {
           Comprar ara
       </Button>
 
-        {products.map((productTmp) => <ProductInfoItem key={String(productTmp.id)} product={productTmp} />)}
+        {products.map((productTmp) => <ProductInfoItem key={String(productTmp.id)} product={productTmp} >
+          <Typography component="p" className={classes.quantity} >
+            Quantitat: {productTmp.quantity}
+          </Typography>
+        </ProductInfoItem>
+        )}
 
         {
           products.length > 2 && <Button onClick={buy} className={classes.button} size="large" color="primary" disabled={isBuyButtonDisabled}>
