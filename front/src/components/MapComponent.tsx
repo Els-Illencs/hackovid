@@ -11,6 +11,7 @@ const {
 const apiKey = "AIzaSyBZs5eJrEQV0QWA3_a8JgaRop3SnUZ3AVg";
 
 var googleWaypoints: any = [];
+let travelModeList: any;
 
 export const MapComponent = compose(
   withProps({
@@ -23,7 +24,7 @@ export const MapComponent = compose(
   withGoogleMap,
   lifecycle({
     componentDidMount() {
-      const travelModeList: any = {
+      travelModeList = {
         "DRIVING": google.maps.TravelMode.DRIVING,
         "WALKING": google.maps.TravelMode.WALKING,
         "BICYCLING": google.maps.TravelMode.BICYCLING,
@@ -56,22 +57,15 @@ export const MapComponent = compose(
         }
       });
     },
-    componentWillReceiveProps() {
-      const travelModeList: any = {
-        "DRIVING": google.maps.TravelMode.DRIVING,
-        "WALKING": google.maps.TravelMode.WALKING,
-        "BICYCLING": google.maps.TravelMode.BICYCLING,
-        "TRANSIT": google.maps.TravelMode.TRANSIT
-      };
-      
+    componentWillReceiveProps(nextProps) {
       const DirectionsService = new google.maps.DirectionsService();
 
       DirectionsService.route({
-        origin: new google.maps.LatLng(this.props.origin.latitude, this.props.origin.longitude),
-        destination: new google.maps.LatLng(this.props.destination.latitude, this.props.destination.longitude),
+        origin: new google.maps.LatLng(nextProps.origin.latitude, nextProps.origin.longitude),
+        destination: new google.maps.LatLng(nextProps.destination.latitude, nextProps.destination.longitude),
         waypoints: googleWaypoints,
         optimizeWaypoints: true,
-        travelMode: travelModeList[this.props.travelMode],
+        travelMode: travelModeList[nextProps.travelMode],
       }, (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
           this.setState({
