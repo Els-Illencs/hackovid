@@ -7,6 +7,8 @@ export interface Order {
     ordertype: number,
     ispaid: boolean,
     price: number,
+    address_lat: number,
+    address_lng: number,
 };
 
 export type OrderProducts = {
@@ -38,6 +40,8 @@ export interface CreateOrder {
         price: number,
     }[],
     isPaid: boolean,
+    address_lat: number,
+    address_lng: number,
 };
 
 /*export module OrderType {
