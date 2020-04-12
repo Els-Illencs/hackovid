@@ -37,7 +37,8 @@ const useStyles = makeStyles(() =>
       alignItems: 'center',
     },
     quantity: {
-      width: "100%"
+      width: 125,
+      marginRight: 16
     },
   }),
 );
@@ -54,7 +55,7 @@ export const ProductPackageItem: FC<ProductPackageItemProps> = ({ product, onDel
   const deleteProduct = () => onDeleteProduct(product);
 
   const changeQuantity = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const newQuantity = parseInt(event.target.value, 10);
+    const newQuantity = parseFloat(event.target.value);
 
     onChangeQuantity(newQuantity, product);
   }
@@ -64,11 +65,11 @@ export const ProductPackageItem: FC<ProductPackageItemProps> = ({ product, onDel
       <CardContent>
         <div className={classes.mainContent}>
           <Grid container spacing={1}>
-            <Grid item xs={7}>
+            <Grid item xs={12}>
             {product.product_type_id == 1 &&
               <TextField 
                 fullWidth
-                style={{ maxWidth: 160 }}
+                style={{ maxWidth: 108 }}
                 className={classes.quantity} 
                 type="number" 
                 size="small"
@@ -81,7 +82,7 @@ export const ProductPackageItem: FC<ProductPackageItemProps> = ({ product, onDel
               {product.product_type_id != 1 &&
               <TextField 
                 fullWidth
-                style={{ maxWidth: 160 }}
+                style={{ maxWidth: 108 }}
                 className={classes.quantity} 
                 type="number" 
                 size="small"
@@ -91,11 +92,9 @@ export const ProductPackageItem: FC<ProductPackageItemProps> = ({ product, onDel
                 onChange={changeQuantity}
               />
               }
-            </Grid>
-            <Grid item xs={5}>
               <Button
                 fullWidth
-                style={{ maxWidth: 115 }} 
+                style={{ maxWidth: 82 }} 
                 onClick={deleteProduct} 
                 size="medium" 
                 color="secondary" >

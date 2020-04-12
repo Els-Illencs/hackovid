@@ -27,12 +27,14 @@ export class ProductOrderApiClient {
             type: order.type,
             isPaid: order.isPaid,
             rating: order.rating,
-            products: order.products.map(({ id, quantity }) => {
+            products: order.products.map(({ id, quantity, price }) => {
                 return {
                     id,
-                    quantity
-                }}),
-            }
+                    quantity,
+                    price
+                }
+            }),
+        }
 
         const res = await Axios.post(`${process.env.REACT_APP_API_URL}orders/users/${userId}`, body);
 

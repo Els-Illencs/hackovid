@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
     details: {
       display: 'flex',
       flexDirection: 'column',
+      width: "100%",
     },
     content: {
       flex: '1 0 auto',

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -6,15 +6,11 @@ import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import { Order } from '../models/order/Order';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Product } from '../models/product/Product';
-import Grid, { GridSpacing } from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 import { OrderTracking } from './OrderTracking';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import PaymentIcon from '@material-ui/icons/Payment';
-import { ProductInfoItem } from './ProductInfoItem';
-import { ProductApiClient } from '../api/ProductApiClient';
-import { UserAddress } from '../models/user/UserAddress';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -40,11 +36,13 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         alignToCenter: {
             textAlign: 'center'
-        }
+        },
+        bold: {
+            fontWeight: "bold",
+        },
     }),
 );
 
-const apiClient = new ProductApiClient();
 
 const PICK_UP_ORDER: number = 0;
 const DELIVER_ORDER: number = 1;
@@ -86,6 +84,9 @@ export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = 
                                 month: "long",
                                 day: "2-digit"
                             }).format(new Date(order.createdat))}
+                        </Typography>
+                        <Typography variant="body1" gutterBottom>
+                            <span className={classes.bold}>Preu total</span>: {order.price.toFixed(2)} €
                         </Typography>
                     </Grid>
                     <Grid item xs={3}>
