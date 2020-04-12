@@ -11,7 +11,7 @@ import PackageDetail from './pages/packageDetail/PackageDetail';
 import { ProductOrderList } from './pages/productorderlist/ProductOrderList';
 import { ProductOrderDetail } from './pages/productorderlist/ProductOrderDetail';
 import SignUp from './pages/signUp/SignUp';
-import { MapRouteView } from './components/MapRouteView';
+import { MenuShowOption } from './app-components/layout/AppLayout';
 
 function App() {
   const { pathname } = useLocation();
@@ -20,16 +20,15 @@ function App() {
     <MuiThemeProvider theme={AppTheme}>
       <AppLayout
         pages={[
-          { path: "/register", content: (<SignUp />), menuItem: { label: "Registra't" }, fullScreen: true },
+          { path: "/register", content: (<SignUp />), menuItem: { label: "Registra't", show: MenuShowOption.OnlyWhenNotLogged }, fullScreen: true },
           { path: "/home", content: (<Home />), menuItem: { label: "Inici" } },
           { path: "/shopping-cart", content: (<ShoppingCart />), menuItem: { label: "Cistella" } },
           { path: "/login", content: (<Login />), fullScreen: true },
           { path: "/package-detail", content: (<PackageDetail />) },
           { path: "/product-list", content: (<ProductList />) },
           { path: "/checkout", content: (<Checkout />) },
-          { path: "/order-list", content: (<ProductOrderList />), menuItem: { label: "Comandes" }, needsToBeLogged: true },
-          { path: "/order/:id", content: (<ProductOrderDetail />) },
-          { path: "/map", content: (<MapRouteView />) }
+          { path: "/order-list", content: (<ProductOrderList />), menuItem: { label: "Comandes", show: MenuShowOption.OnlyWhenLogged }},
+          { path: "/order/:id", content: (<ProductOrderDetail />) }
         ]} />
     </MuiThemeProvider>
     {pathname === '/' && <Redirect to="/home" />}

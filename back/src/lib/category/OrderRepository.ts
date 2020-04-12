@@ -37,7 +37,7 @@ export class OrderRepository {
             SELECT id, user_id as userId, created_at as createdAt, updated_at as updatedAt, tracking_stage as trackingStage, order_type as orderType, rating as rating, is_paid as isPaid
             FROM orders
             WHERE user_id = ${userId}
-            ORDER BY order_type, created_at
+            ORDER BY tracking_stage, created_at DESC
         `);
 
         return res.rows;

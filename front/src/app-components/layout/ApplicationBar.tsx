@@ -9,7 +9,6 @@ import { IconButton } from '@material-ui/core';
 import { ShoppingCartNumberOfItems } from './ShoppingCartNumberOfItems';
 import { Link } from 'react-router-dom';
 import { AppContext } from '..';
-import { common } from '@material-ui/core/colors';
 import SearchBar from './SearchBar';
 
 
