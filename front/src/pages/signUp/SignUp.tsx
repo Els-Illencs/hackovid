@@ -103,7 +103,7 @@ const SignUp: FunctionComponent = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Crear compte
+          Registra't
         </Typography>
         <form className={classes.form} noValidate>
           <TextField

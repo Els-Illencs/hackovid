@@ -202,7 +202,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
               </Grid>
               <Grid item xs={10}>
                 <Typography className={styles.userName} variant="body1">
-                  {user ? `Hola ${user.name}` : <Button component={Link} to="/login" onClick={saveLocationAndHideDrawer} className={styles.userNameLink}>Login</Button>}
+                  {user ? `Hola ${user.name}` : <Button component={Link} to="/login" onClick={saveLocationAndHideDrawer} className={styles.userNameLink}>Entra</Button>}
                 </Typography>
               </Grid>
             </>
