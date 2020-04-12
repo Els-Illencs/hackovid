@@ -79,7 +79,11 @@ export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = 
                             Comanda #{order.id}
                         </Typography>
                         <Typography className={classes.title} gutterBottom>
-                            {order.createdat}
+                            {new Intl.DateTimeFormat("ca-ES", {
+                                year: "numeric",
+                                month: "long",
+                                day: "2-digit"
+                            }).format(new Date(order.createdat))}
                         </Typography>
                     </Grid>
                     <Grid item xs={3}>
