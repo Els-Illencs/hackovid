@@ -2,11 +2,7 @@ CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(id) NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    tracking_stage INTEGER NOT NULL,
-    order_type INTEGER NOT NULL,
-    rating INTEGER NOT NULL,
-    is_paid BOOLEAN NOT NULL
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE order_products (
