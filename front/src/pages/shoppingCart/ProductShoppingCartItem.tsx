@@ -78,7 +78,7 @@ export const ProductShoppingCartItem: React.FunctionComponent<ProductShoppingCar
                 className={classes.quantity} 
                 type="number" 
                 size="small"
-                InputProps={{ inputProps: { min: 0 } }}
+                InputProps={{ inputProps: { min: 0, step: 1 } }}
                 label="Quantitat" 
                 value={quantity} 
                 onChange={(event) => updateProduct(event.target.value)}

@@ -58,7 +58,7 @@ export const ProductItem: React.FunctionComponent<ProductItemProps> = ({ product
                 type="number" 
                 size="small" 
                 label="Quantitat"
-                InputProps={{  inputProps: { min: 0 } }}
+                InputProps={{  inputProps: { min: 0, step: 1 } }}
                 value={quantity} 
                 onChange={(event) => setQuantity(event.target.value)}
               />
