@@ -54,7 +54,7 @@ export const ProductPackageItem: FC<ProductPackageItemProps> = ({ product, onDel
   const deleteProduct = () => onDeleteProduct(product);
 
   const changeQuantity = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const newQuantity = parseInt(event.target.value, 10);
+    const newQuantity = parseFloat(event.target.value);
 
     onChangeQuantity(newQuantity, product);
   }
