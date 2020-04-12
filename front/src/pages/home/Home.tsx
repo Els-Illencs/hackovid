@@ -94,7 +94,7 @@ const Home: FC = () => {
                     <IconElement 
                         iconSrc="/icons/earth-mask.png"
                         headline="Acabar amb la crisi del confinament" 
-                        text="La situació actual de confinament porta un impacte de difícil reparació. Si un comerç no té presencia a internet, no existeix. Anem a fer que existeixin!" />
+                        text="La situació actual de confinament porta un impacte de difícil reparació. Si un comerç no té presència a internet, no existeix. Anem a fer que existeixin!" />
                     <IconElement 
                         iconSrc="/icons/pig.png"
                         headline="Economia sostenible" 
@@ -155,7 +155,7 @@ const Home: FC = () => {
                         text="Posem a la teva disposició un sistema de preus fixos, a més de propines a triar per tu mateix." />
                     <IconElement 
                         iconSrc="/icons/woman-old.png"
-                        headline="Ajuda qui no pot anar a comprar" 
+                        headline="Ajuda a qui no pot anar a comprar" 
                         text="Per gent gran i amb discapacitat, anar a una botiga pot significar esport de risc. Ajuda'ls a ells com ells tꞌajudarien!" />
                     <IconElement 
                         iconSrc="/icons/man-happy.png"
