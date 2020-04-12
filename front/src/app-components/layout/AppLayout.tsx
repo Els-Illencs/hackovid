@@ -1,7 +1,7 @@
 import React, { FC, ReactNode, useState, useEffect } from "react";
 import { ApplicationBar } from "./ApplicationBar";
 import { Switch, Route, Link, useRouteMatch, useHistory } from "react-router-dom";
-import { makeStyles, Drawer, List, ListItem, ListItemText, Grid, Typography, Button, Divider } from "@material-ui/core";
+import { makeStyles, Drawer, List, ListItem, ListItemText, Grid, Typography, Button, Divider, Container } from "@material-ui/core";
 import { AppContext } from "../context/AppContext";
 import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
 import { ProductShoppingCart } from "../../models/product/Product";
@@ -183,7 +183,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     }
   }}>
     {matchPageWithAppBar && <ApplicationBar onMenuButtonClick={openDrawer} />}
-    <main className={classes.content}>
+    <Container component="main" maxWidth="lg" className={classes.content}>
       <Drawer anchor="left" open={drawerOpen} onClose={closeDrawer}>
         <div style={{ minWidth: 260 }}>
           <Grid container spacing={1} className={classes.accountArea}>
@@ -222,7 +222,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
           </Route>
         )}
       </Switch>
-    </main>
+    </Container>
 
   </AppContext.Provider >);
 };
