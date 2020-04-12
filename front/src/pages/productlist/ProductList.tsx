@@ -16,8 +16,6 @@ const apiClient = new ProductApiClient();
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    loading: {
-    },
     filterAndOrderBar: {
       paddingBottom: "1rem"
     },
@@ -153,7 +151,7 @@ const ProductList: FunctionComponent = () => {
           justify="center"
           style={{ minHeight: '100vh' }}
         >
-          <CircularProgress className={classes.loading} color="primary" />
+          <CircularProgress color="primary" />
         </Grid>
         :
         <>
