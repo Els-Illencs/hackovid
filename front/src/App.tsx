@@ -11,7 +11,6 @@ import PackageDetail from './pages/packageDetail/PackageDetail';
 import { ProductOrderList } from './pages/productorderlist/ProductOrderList';
 import { ProductOrderDetail } from './pages/productorderlist/ProductOrderDetail';
 import SignUp from './pages/signUp/SignUp';
-import { MapRouteView } from './components/MapRouteView';
 
 function App() {
   const { pathname } = useLocation();
@@ -28,8 +27,7 @@ function App() {
           { path: "/product-list", content: (<ProductList />) },
           { path: "/checkout", content: (<Checkout />) },
           { path: "/order-list", content: (<ProductOrderList />), menuItem: { label: "Comandes" }, needsToBeLogged: true },
-          { path: "/order/:id", content: (<ProductOrderDetail />) },
-          { path: "/map", content: (<MapRouteView />) }
+          { path: "/order/:id", content: (<ProductOrderDetail />) }
         ]} />
     </MuiThemeProvider>
     {pathname === '/' && <Redirect to="/home" />}
