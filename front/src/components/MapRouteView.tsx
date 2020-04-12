@@ -6,8 +6,13 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import { Product } from '../models/product/Product';
 
-export const MapRouteView: React.FunctionComponent = () => {
+export interface MapRouteViewProps {
+    products: Product[];
+};
+
+export const MapRouteView: React.FunctionComponent<MapRouteViewProps> = ({ products }) => {
 
     const defaultTravelMode: string = "WALKING";
     const [travelMode, setTravelMode] = useState(defaultTravelMode);
@@ -25,7 +30,13 @@ export const MapRouteView: React.FunctionComponent = () => {
 
     const destinationPoint: any = originPoint;
 
-    const waypoints: any = [
+    let wayPointsShops = {};
+
+    for(let product of products) {
+        wayPointsShops[product.shopid] = {latitude: product.shop_lat, longitude: product.shop_lng};
+    }
+
+    /*const waypoints: any = [
         {
             latitude: 39.5787897,
             longitude: 2.6483132
@@ -34,7 +45,13 @@ export const MapRouteView: React.FunctionComponent = () => {
             latitude: 39.5794469,
             longitude: 2.6504737
         }
-    ];
+    ];*/
+
+    const waypoints: any = [];
+
+    for (let wayPointsShopItem of Object.values(wayPointsShops)) {
+        waypoints.push(wayPointsShopItem);
+    }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setTravelMode(event.target.value);

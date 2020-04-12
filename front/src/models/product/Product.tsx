@@ -10,7 +10,9 @@ export interface Product {
     description: string,
     active: boolean,
     price: number,
-    product_type_id: number
+    product_type_id: number,
+    shop_lat: number,
+    shop_lng: number
 }
 
 export type ProductShoppingCart = {

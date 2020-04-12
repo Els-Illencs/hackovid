@@ -88,7 +88,7 @@ export const ProductOrderDetail: React.FunctionComponent = () => {
                     <ExpansionPanelDetails>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <MapRouteView />
+                                <MapRouteView products={products} />
                             </Grid>
                         </Grid>
                     </ExpansionPanelDetails>
@@ -118,5 +118,7 @@ const orderProduct2Product = (product: OrderProducts): Product => {
         active: product.active,
         price: product.price,
         product_type_id: product.product_type_id,
+        shop_lat: product.shop_lat,
+        shop_lng: product.shop_lat
     }
 }
