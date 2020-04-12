@@ -9,4 +9,4 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (name, surname, email, password, address, phone) VALUES 
-    ('Admin', 'SurnameAdmin', 'admin@comacasa.com', '', 'Carrer de Blanquerna, Palma, Spain', '666666666');
+    ('Admin', 'SurnameAdmin', 'admin@comacasa.com', 'admin', 'Carrer de Blanquerna, Palma, Spain', '666666666');

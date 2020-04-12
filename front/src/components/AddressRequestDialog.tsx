@@ -119,6 +119,7 @@ export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogP
         </DialogTitle>
         <DialogContent dividers>
         <GooglePlacesAutocomplete
+            apiKey={'AIzaSyBZs5eJrEQV0QWA3_a8JgaRop3SnUZ3AVg'}
             placeholder={'ex. Carrer Blanquerna 53, Palma'}
             onSelect={(({ description }) => (
               setAddress(description)

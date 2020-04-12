@@ -11,7 +11,6 @@ import { LoginApiClient } from '../../api/LoginApiClient';
 import { AppContext } from '../../app-components';
 import { getLoginRedirect, clearLoginRedirect } from '../../services/LoginService';
 import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
-import { UserAddress } from '../../models/user/UserAddress';
 
 const loginApiClient = new LoginApiClient();
 
@@ -45,40 +44,31 @@ const Login: FunctionComponent = () => {
 
   const [email, setEmail] = useState("");
   const [isEmailValidated, setIsEmailValidated] = useState(false);
+  const [isUserIncorrect, setIsUserIncorrect] = useState(false);
   const [password, setPassword] = useState("");
 
   const applyLogin = async (event) => {
     event.preventDefault();
+    setIsUserIncorrect(false);
     if (!isEmailCorrect()) {
       setIsEmailValidated(true);
       return;
     }
     try {
-      await loginApiClient.login(email, password);
-    } catch (e) {
-      // TODO provisional until backend is done
-      const address: UserAddress = {
-        address: "Carrer de Blanquerna, Palma, Spain",
-        latitude: undefined,
-        longitude: undefined,
+      const user = await loginApiClient.login(email, password);
+      if (user.id === undefined) {
+        throw Error("User does not exist");
       }
       try {
-        const results = await geocodeByAddress(address.address);
+        const results = await geocodeByAddress(user.address.address);
         if (results.length > 0) {
           const { lat, lng } = await getLatLng(results[0]);
-          address.latitude = Number(lat);
-          address.longitude = Number(lng);
+          user.address.latitude = Number(lat);
+          user.address.longitude = Number(lng);
         }
       } catch (ex) { }
 
-      updateUser({
-        id: 1,
-        name: "Name",
-        surname: "Surname",
-        email: "example@example.com",
-        address,
-        phone: "666333999666",
-      });
+      updateUser(user);
       const redirect = await getLoginRedirect();
       clearLoginRedirect();
       if (redirect !== undefined) {
@@ -86,6 +76,8 @@ const Login: FunctionComponent = () => {
       } else {
         history.push('/');
       }
+    } catch (e) {
+      setIsUserIncorrect(true);
     }
   }
 
@@ -127,7 +119,10 @@ const Login: FunctionComponent = () => {
             autoComplete="current-password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-          />
+          />      
+        {isUserIncorrect && <Typography component="p" className={classes.emailError}>
+          El correu o la contrasenya és incorrecta.
+        </Typography>}
           <Button
             type="submit"
             fullWidth
