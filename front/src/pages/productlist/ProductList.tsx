@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme: Theme) =>
       textDecoration: "underline",
       cursor: "pointer",
       fontWeight: "bold"
+    },
+    orderBar: {
+      width: "100%"
     }
   }),
 );
