@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import { ProductApiClient } from '../../api/ProductApiClient';
 import { ProductInfoItem } from '../../components/ProductInfoItem';
 import { Order, OrderProducts } from '../../models/order/Order';
 import { AppContext } from '../../app-components';
@@ -25,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingBottom: 16,
             paddingTop: 8,
             marginLeft: 16
-        }, 
+        },
         expansionPanel: {
             marginBottom: "1em",
             width: "100%"
@@ -37,18 +36,16 @@ const productOrderApiClient = new ProductOrderApiClient();
 
 export const ProductOrderDetail: React.FunctionComponent = () => {
     const classes = useStyles();
-    const { user: { isLoading: isLoadingUserData, user } } = useContext(AppContext);
+    const history = useHistory();
+    const { user: { isLoading: isLoadingUserData, user }, shoppingCart: { addProducts } } = useContext(AppContext);
     const [products, setProducts] = useState([] as OrderProducts[]);
     const [order, setOrder] = useState<Order | undefined>();
     const [isLoading, setIsLoading] = useState(true);
-
-    const history = useHistory();
 
     useEffect(() => {
         const getOrder = async () => {
             setIsLoading(true);
             const orderId = history.location.pathname.split("order/")[1];
-            console.log("orderId", orderId);
             setOrder(await productOrderApiClient.getOrder(Number(orderId)));
             setIsLoading(false);
         }
@@ -56,11 +53,10 @@ export const ProductOrderDetail: React.FunctionComponent = () => {
             getOrder();
         }
     }, [user]);
-    
+
     useEffect(() => {
         const getProducts = async () => {
             if (order) {
-                console.log(order, order.id)
                 const products = await productOrderApiClient.getProductsByOrderId(order.id);
                 setProducts(products)
             }
@@ -68,22 +64,27 @@ export const ProductOrderDetail: React.FunctionComponent = () => {
         getProducts();
     }, [order]);
 
+    const clickRepeat = async () => {
+        await addProducts(products);
+        history.push("/shopping-cart");
+    }
+
     return (
         <>
             {!isLoading && order && <Grid container className={classes.root}>
-                <ProductOrderItem order={order} showDetailButton={false} />
-                
+                <ProductOrderItem order={order} showDetailButton={false} onClickRepeate={clickRepeat} />
+
                 <ExpansionPanel className={classes.expansionPanel}>
                     <ExpansionPanelSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1c-content"
-                    id="panel1c-header"
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1c-content"
+                        id="panel1c-header"
                     >
-                    <div >
-                        <Typography>Mostrar ruta més òptima per cercar la comanda</Typography>
-                    </div>
+                        <div >
+                            <Typography>Mostrar ruta més òptima per cercar la comanda</Typography>
+                        </div>
                     </ExpansionPanelSummary>
-                    
+
                     <ExpansionPanelDetails>
                         <Grid container spacing={2}>
                             <Grid item md={4} xs={12}>

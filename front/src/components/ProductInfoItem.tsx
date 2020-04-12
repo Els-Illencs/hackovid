@@ -92,7 +92,7 @@ export const ProductInfoItem: React.FunctionComponent<ProductInfoItemProps> = ({
           </Grid>
           <Grid item xs={12}>
             <Typography component="h5" variant="h5">
-              {product.price} {product.product_type_id === 1 ? "€/unitat" : "€/Kg"}
+              {product.price.toFixed(2)} {product.product_type_id === 1 ? "€/unitat" : "€/Kg"}
             </Typography>
           </Grid>
         </CardContent>

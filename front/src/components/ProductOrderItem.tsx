@@ -53,9 +53,10 @@ export interface ProductOrderItemProps {
     order: Order;
     showDetailButton?: boolean,
     hideRepeatButton?: boolean,
+    onClickRepeate?: () => void;
 };
 
-export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = ({ order, showDetailButton, hideRepeatButton = false }) => {
+export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = ({ order, showDetailButton, hideRepeatButton = false, onClickRepeate }) => {
 
     const classes = useStyles();
 
@@ -95,7 +96,11 @@ export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = 
                         </Typography>
                             }
                             {order.trackingstage >= maxStep && !hideRepeatButton &&
-                                <Button variant="contained" color="secondary">
+                                <Button variant="contained" color="secondary" onClick={() => {
+                                    if (onClickRepeate) {
+                                        onClickRepeate()
+                                    }
+                                }}>
                                     Repetir
                         </Button>
                             }
