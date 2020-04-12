@@ -24,7 +24,7 @@ const HomeCarousel: FC = () => {
       {splitInChunks(carouselElements, carouselElementsNum).map(elements => 
         <Grid container>
           {elements.map(e => 
-            <Grid item xs={6} sm={3}>
+            <Grid item container justify="center" xs={6} sm={3}>
               <div style={{maxWidth: 210}}>
                 <IconElement {...e} />
               </div>

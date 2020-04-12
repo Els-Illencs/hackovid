@@ -9,7 +9,6 @@ const {
 } = require("react-google-maps");
 
 const apiKey = "AIzaSyBZs5eJrEQV0QWA3_a8JgaRop3SnUZ3AVg";
-var google: any;
 
 export const MapComponent = compose(
   withProps({
@@ -22,12 +21,37 @@ export const MapComponent = compose(
   withGoogleMap,
   lifecycle({
     componentDidMount() {
+      
+      const defaultTravelMode = "WALKING";
+
+      const travelModeList: any = {
+        "DRIVING": google.maps.TravelMode.DRIVING,
+        "WALKING": google.maps.TravelMode.WALKING,
+        "BICYCLING": google.maps.TravelMode.BICYCLING,
+        "TRANSIT": google.maps.TravelMode.TRANSIT
+      };
+
+      const travelMode = travelModeList[this.props.travelMode ? this.props.travelMode : defaultTravelMode];
+
       const DirectionsService = new google.maps.DirectionsService();
+      
+      var googleWaypoints: any = [];
+
+      if(this.props.waypoints) {
+        for (let point of this.props.waypoints) {
+          googleWaypoints.push({
+            location: new google.maps.LatLng(point.latitude, point.longitude),
+            stopover: true
+          });
+        }
+      }
 
       DirectionsService.route({
-        origin: new google.maps.LatLng(41.8507300, -87.6512600),
-        destination: new google.maps.LatLng(41.8525800, -87.6514100),
-        travelMode: google.maps.TravelMode.DRIVING,
+        origin: new google.maps.LatLng(this.props.origin.latitude, this.props.origin.longitude),
+        destination: new google.maps.LatLng(this.props.destination.latitude, this.props.destination.longitude),
+        waypoints: googleWaypoints,
+        optimizeWaypoints: true,
+        travelMode: travelMode,
       }, (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
           this.setState({
@@ -41,8 +65,8 @@ export const MapComponent = compose(
   })
 )(props =>
   <GoogleMap
-    defaultZoom={7}
-    defaultCenter={new google.maps.LatLng(41.8507300, -87.6512600)}
+    defaultZoom={13}
+    defaultCenter={new google.maps.LatLng(props.origin.latitude, props.origin.longitude)}
   >
     {props.directions && <DirectionsRenderer directions={props.directions} />}
   </GoogleMap>
