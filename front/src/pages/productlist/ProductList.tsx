@@ -79,7 +79,7 @@ const ProductList: FunctionComponent = () => {
 
     const getProducts = async () => {
       setIsLoading(true);
-      const address = user ? user?.address : userAddress;
+      const address = userAddress && userAddress.address !== "" ? userAddress : user?.address;
       const products =
         category ? await apiClient.getProductsBycategory(category, order, productFilterFields, address) :
           name ? await apiClient.getProductsByName(name, order, productFilterFields, address) :
@@ -141,6 +141,8 @@ const ProductList: FunctionComponent = () => {
     );
   }
 
+  const address = userAddress && userAddress.address !== "" ? userAddress : user?.address;
+
   return (
     <div>
       <Grid container spacing={3}>
@@ -171,15 +173,15 @@ const ProductList: FunctionComponent = () => {
         </Grid>
         :
         <>
-          {userAddress ?
-              <Grid
+          {address ?
+            <Grid
               container
               spacing={0}
               direction="column"
             >
               <Typography className={classes.changeAddress}>
-                Mostrant productes prop de {userAddress.address}.&nbsp;
-                <span 
+                Mostrant productes prop de {address.address}.&nbsp;
+                <span
                   onClick={onClickChangeAddress}
                   className={classes.link}
                 >
@@ -193,7 +195,7 @@ const ProductList: FunctionComponent = () => {
             productList.length ?
               productList.map((product: Product) => (
                 <ProductItem key={String(product.id)} product={product} />
-              )) : 
+              )) :
               !openDialog ? "No s'han trobat resultats amb aquests criteris de cerca" : ""
           }
           {openDialog && <AddressRequestDialog open={openDialog} onClose={() => setOpenDialog(false)} onSelectAddress={updateUserAddress} />}

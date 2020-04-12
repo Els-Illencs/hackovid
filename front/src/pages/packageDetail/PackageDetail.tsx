@@ -58,8 +58,8 @@ const PackageDetail: FC = () => {
                 name: packageName,
                 image: ''
             });
-           
-            packageApiClient.getPackageItem(packageId, userAddress).then(setProducts);
+            const address = userAddress && userAddress.address !== "" ? userAddress : user?.address;
+            packageApiClient.getPackageItem(packageId, address).then(setProducts);
         }
 
     }, [packageId, packageName, isLoadingUserData, user, userAddress]);
@@ -95,6 +95,7 @@ const PackageDetail: FC = () => {
         return (<></>);
     }
 
+    const address = userAddress && userAddress.address !== "" ? userAddress : user?.address;
     return (<>
         <Typography variant="h4" align="center">{prodPackage.name}</Typography>
 
@@ -112,14 +113,14 @@ const PackageDetail: FC = () => {
             style={{ margin: '15px 0' }}
             onClick={addProductsToShoppingCart}>AFEGEIX PRODUCTES A LA CISTELLA</Button>
 
-        {userAddress ?
+        {address ?
             <Grid
               container
               spacing={0}
               direction="column"
             >
               <Typography className={classes.changeAddress}>
-                Mostrant productes prop de {userAddress.address}.&nbsp;
+                Mostrant productes prop de {address.address}.&nbsp;
                 <span 
                   onClick={onClickChangeAddress}
                   className={classes.link}
