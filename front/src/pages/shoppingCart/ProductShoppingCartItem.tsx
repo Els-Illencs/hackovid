@@ -37,7 +37,8 @@ const useStyles = makeStyles(() =>
       alignItems: 'center',
     },
     quantity: {
-      width: "100%"
+      width: "100%",
+      marginRight: 16
     },
     card: {
       paddingBottom: "16px !important"
@@ -70,11 +71,11 @@ export const ProductShoppingCartItem: React.FunctionComponent<ProductShoppingCar
       <CardContent className={classes.card}>
         <div className={classes.mainContent}>
           <Grid container spacing={1}>
-            <Grid item xs={7}>
+            <Grid item xs={12}>
               {product.product_type_id == 1 &&
               <TextField 
                 fullWidth
-                style={{ maxWidth: 160 }}
+                style={{ maxWidth: 108 }}
                 className={classes.quantity} 
                 type="number" 
                 size="small"
@@ -87,7 +88,7 @@ export const ProductShoppingCartItem: React.FunctionComponent<ProductShoppingCar
               {product.product_type_id != 1 &&
               <TextField 
                 fullWidth
-                style={{ maxWidth: 160 }}
+                style={{ maxWidth: 108 }}
                 className={classes.quantity} 
                 type="number" 
                 size="small"
@@ -97,11 +98,9 @@ export const ProductShoppingCartItem: React.FunctionComponent<ProductShoppingCar
                 onChange={(event) => updateProduct(event.target.value)}
               />
               }
-            </Grid>
-            <Grid item xs={5}>
               <Button
                 fullWidth
-                style={{ maxWidth: 115 }}  
+                style={{ maxWidth: 82 }}  
                 onClick={deleteProduct} 
                 size="medium" 
                 color="secondary">
