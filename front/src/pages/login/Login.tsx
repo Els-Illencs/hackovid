@@ -6,7 +6,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { LoginApiClient } from '../../api/LoginApiClient';
 import { AppContext } from '../../app-components';
 import { getLoginRedirect, clearLoginRedirect } from '../../services/LoginService';
@@ -119,9 +119,9 @@ const Login: FunctionComponent = () => {
             autoComplete="current-password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-          />      
-        {isUserIncorrect && <Typography component="p" className={classes.emailError}>
-          El correu o la contrasenya és incorrecta.
+          />
+          {isUserIncorrect && <Typography component="p" className={classes.emailError}>
+            El correu o la contrasenya és incorrecta.
         </Typography>}
           <Button
             type="submit"
@@ -133,6 +133,9 @@ const Login: FunctionComponent = () => {
           >
             Accedeix
           </Button>
+          <Link to="/register">
+            No tens compte? Registra't
+          </Link>
         </form>
       </div>
     </Container>
