@@ -93,8 +93,8 @@ const Home: FC = () => {
                         text="Les grans plataformes proporcionen una enorme quantitat de serveis. Però no juguen amb la qualitat local! Recolzem les petites botiques perquè, com tu, creiem amb elles." />
                     <IconElement 
                         iconSrc="/icons/earth-mask.png"
-                        headline="Acabar amb la crisis del confinament" 
-                        text="La situació actual de confinament provoca un impacte de difícil reparació. Si no tens presència a internet i et mous a domicili, no existeixes. Anem a fer que existeixin!" />
+                        headline="Acabar amb la crisi del confinament" 
+                        text="La situació actual de confinament porta un impacte de difícil reparació. Si un comerç no té presencia a internet, no existeix. Anem a fer que existeixin!" />
                     <IconElement 
                         iconSrc="/icons/pig.png"
                         headline="Economia sostenible" 
@@ -117,11 +117,11 @@ const Home: FC = () => {
                     <IconElement 
                         iconSrc="/icons/basket-3.png"
                         headline="Comanda única" 
-                        text="Compra sense preocupar-te de quin comerç té el producte. Unificam , al nostre sistema, els productes sense discriminació. Pots fer una sola compra a diverses botigues!" />
+                        text="Compra sense preocupar-te de quin comerç té el producte. Unifiquem, al nostre sistema, els productes sense discriminació. Pots fer una sola compra a diverses botigues!" />
                     <IconElement 
                         iconSrc="/icons/search.png"
                         headline="Seguiment de la comanda" 
-                        text="Coneix lꞌestat de la teva compra! Si vas a buscar-la, evita fer-ho fins que estigui preparada; si te la duim, assabenta't de per on anem amb el servei intel·ligent de tracking." />
+                        text="Coneix lꞌestat de la teva compra! Si vas a buscar-la, evita fer-ho fins que estigui preparada; si te la portem, assabenta't de per on anem amb el servei intel·ligent de tracking." />
                 </IconElementGroup>
             </Section>
 

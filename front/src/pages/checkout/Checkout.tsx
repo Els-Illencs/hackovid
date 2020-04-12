@@ -171,7 +171,7 @@ export const Checkout: React.FunctionComponent = () => {
                     <Grid item xs={11}>
                       <h4>Mètode de pagament</h4>
                       <Typography component="p" className={classes.marginBottom}>
-                        Online
+                        En línia
                   </Typography>
                     </Grid>
                   </Grid>
@@ -248,7 +248,7 @@ export const Checkout: React.FunctionComponent = () => {
                         }}
                       >
                         <MenuItem value={''}>-</MenuItem>
-                        <MenuItem value={PaymentMethod.ONLINE}>Online</MenuItem>
+                        <MenuItem value={PaymentMethod.ONLINE}>En línia</MenuItem>
                         <MenuItem value={PaymentMethod.SHOP}>Tenda</MenuItem>
                       </Select>
                     </FormControl>

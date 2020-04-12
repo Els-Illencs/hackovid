@@ -7,7 +7,7 @@ import IconElement from './IconElement';
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const carouselElements = [
-  { iconSrc: "/icons/credit-card.png", text: "Pagament en línia rápid i segur!" },
+  { iconSrc: "/icons/credit-card.png", text: "Pagament en línia ràpid i segur!" },
   { iconSrc: "/icons/box.png", text: "T'ho portem a casa!" },
   { iconSrc: "/icons/basket-3.png", text: "Unifiquem en una sola comanda diferents comerços!" },
   { iconSrc: "/icons/hands.png", text: "Col·labora amb el petit comerç local!" }
