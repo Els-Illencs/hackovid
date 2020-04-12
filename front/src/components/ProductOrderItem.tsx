@@ -85,9 +85,11 @@ export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = 
                                 day: "2-digit"
                             }).format(new Date(order.createdat))}
                         </Typography>
+                        {order.price != undefined && order.price != null &&
                         <Typography variant="body1" gutterBottom>
                             <span className={classes.bold}>Preu total</span>: {order.price.toFixed(2)} €
                         </Typography>
+                        }
                     </Grid>
                     <Grid item xs={3}>
                         <Grid container justify="flex-end">
