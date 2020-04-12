@@ -37,7 +37,7 @@ const productOrderApiClient = new ProductOrderApiClient();
 export const ProductOrderDetail: React.FunctionComponent = () => {
     const classes = useStyles();
     const history = useHistory();
-    const { user: { isLoading: isLoadingUserData, user }, shoppingCart: { addProducts } } = useContext(AppContext);
+    const { user: { isLoading: isLoadingUserData, user, userAddress }, shoppingCart: { addProducts } } = useContext(AppContext);
     const [products, setProducts] = useState([] as OrderProducts[]);
     const [order, setOrder] = useState<Order | undefined>();
     const [isLoading, setIsLoading] = useState(true);
@@ -69,6 +69,13 @@ export const ProductOrderDetail: React.FunctionComponent = () => {
         history.push("/shopping-cart");
     }
 
+    let lat = 0;
+    let lng = 0;
+    const address = userAddress && userAddress.address !== "" ? userAddress : user?.address;
+    if (address || order) {
+        lat = order ? order.address_lat : address!.latitude!;
+        lng = order ? order.address_lng : address!.longitude!;
+    }
     return (
         <>
             {!isLoading && order && <Grid container className={classes.root}>
@@ -88,7 +95,7 @@ export const ProductOrderDetail: React.FunctionComponent = () => {
                     <ExpansionPanelDetails>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <MapRouteView products={products} />
+                                <MapRouteView products={products} lat={lat} lng={lng} />
                             </Grid>
                         </Grid>
                     </ExpansionPanelDetails>

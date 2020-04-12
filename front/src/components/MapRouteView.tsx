@@ -10,9 +10,11 @@ import { Product } from '../models/product/Product';
 
 export interface MapRouteViewProps {
     products: Product[];
+    lat: number;
+    lng: number;
 };
 
-export const MapRouteView: React.FunctionComponent<MapRouteViewProps> = ({ products }) => {
+export const MapRouteView: React.FunctionComponent<MapRouteViewProps> = ({ products, lat, lng }) => {
 
     const defaultTravelMode: string = "WALKING";
     const [travelMode, setTravelMode] = useState(defaultTravelMode);
@@ -22,13 +24,6 @@ export const MapRouteView: React.FunctionComponent<MapRouteViewProps> = ({ produ
         "BICYCLING": "En bicicleta",
         "DRIVING": "En cotxe"
     };
-
-    const originPoint: any = {
-        latitude: 39.5802543,
-        longitude: 2.6495922
-    };
-
-    const destinationPoint: any = originPoint;
 
     let wayPointsShops = {};
 
@@ -72,8 +67,14 @@ export const MapRouteView: React.FunctionComponent<MapRouteViewProps> = ({ produ
             </Grid>
             <Grid item xs={12}>
                 <MapComponent 
-                    origin={originPoint} 
-                    destination={destinationPoint} 
+                    origin={{
+                        latitude: lat,
+                        longitude: lng
+                    }}
+                    destination={{
+                        latitude: lat,
+                        longitude: lng
+                    }}
                     waypoints={waypoints} 
                     travelMode={travelMode}
                 />
