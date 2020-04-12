@@ -28,7 +28,7 @@ router.post('/register', async function (req, res, next) {
         products: products.map(({ id }, index) => {
             return {
                 id,
-                quantity: index
+                quantity: index + 1
             }
         }),
     }, userRes.id);
