@@ -7,6 +7,7 @@ import { ProductPackageItem } from "./ProductPackageItem";
 import { AppContext } from "../../app-components";
 import { AddressRequestDialog } from "../../components/AddressRequestDialog";
 import { PackageApiClient } from '../../api/PackageApiClient';
+import { useHistory } from "react-router-dom";
 
 const packageApiClient = new PackageApiClient();
 
@@ -30,6 +31,7 @@ const PackageDetail: FC = () => {
     const { shoppingCart, user: { isLoading: isLoadingUserData, user, userAddress, updateUserAddress } } = useContext(AppContext);
     const query = useQuery();
     const classes = useStyles();
+    const history = useHistory();
     const [prodPackage, setProdPackage] = useState<Package | null>(null);
     const [products, setProducts] = useState<ProductShoppingCart[] | null>(null);
     const [openDialog, setOpenDialog] = useState(false);
@@ -82,6 +84,7 @@ const PackageDetail: FC = () => {
 
     const addProductsToShoppingCart = () => {
         shoppingCart.addProducts(products!);
+        history.push('/shopping-cart');
     }
 
     if (openDialog) {
