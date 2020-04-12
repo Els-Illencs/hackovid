@@ -47,7 +47,7 @@ export const ProductOrderList: React.FunctionComponent = () => {
             >
                 <CircularProgress color="primary" />
             </Grid> : orderList.length ? orderList.map((order: Order) => (
-                <ProductOrderItem order={order} showDetailButton={true} />
+                <ProductOrderItem order={order} showDetailButton={true} hideRepeatButton={true} />
             )) : <div className={classes.noResultsFound}>No hi ha cap comanda realitzada</div>}
 
 

@@ -51,10 +51,11 @@ const DELIVER_ORDER: number = 1;
 
 export interface ProductOrderItemProps {
     order: Order;
-    showDetailButton?: boolean
+    showDetailButton?: boolean,
+    hideRepeatButton?: boolean,
 };
 
-export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = ({ order, showDetailButton }) => {
+export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = ({ order, showDetailButton, hideRepeatButton = false }) => {
 
     const classes = useStyles();
 
@@ -93,7 +94,7 @@ export const ProductOrderItem: React.FunctionComponent<ProductOrderItemProps> = 
                                     En curs
                         </Typography>
                             }
-                            {order.trackingstage >= maxStep &&
+                            {order.trackingstage >= maxStep && !hideRepeatButton &&
                                 <Button variant="contained" color="secondary">
                                     Repetir
                         </Button>
