@@ -28,15 +28,15 @@ const PackageList: FC<PackageListProps> = ({packages}) => {
     const classes = useStyles();
 
     return (
-        <SingleLineGridList cellHeight={180} cols={1.25} spacing={4}>
+        <SingleLineGridList cellHeight={180} spacing={4} cols={4} style={{ maxWidth: '100%' }}>
             {packages.map(p =>
-                <GridListTile style={{ maxWidth: 270 }}>
-                <Link to={`/package-detail?packageId=${p.id}&packageName=${p.name}`}>
-                    <img className={classes.image} src={p.image} alt={p.name} />
-                    <GridListTileBar
-                    className={classes.title}
-                    title={p.name} />
-                </Link>
+                <GridListTile style={{ minWidth: 200, maxWidth: 270 }}>
+                  <Link to={`/package-detail?packageId=${p.id}&packageName=${p.name}`}>
+                      <img className={classes.image} src={p.image} alt={p.name} />
+                      <GridListTileBar
+                      className={classes.title}
+                      title={p.name} />
+                  </Link>
                 </GridListTile>
             )}
         </SingleLineGridList>
