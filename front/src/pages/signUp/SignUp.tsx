@@ -86,7 +86,13 @@ const SignUp: FunctionComponent = () => {
         phone,
       });
 
-      history.push('/');
+      const redirect = await getLoginRedirect();
+      clearLoginRedirect();
+      if (redirect !== undefined) {
+        history.push(redirect);
+      } else {
+        history.push('/');
+      }
     } catch (e) {
       setIsErrorInSignUp(true);
       // TODO show some message if this error happens
