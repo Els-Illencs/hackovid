@@ -20,7 +20,7 @@ function App() {
     <MuiThemeProvider theme={AppTheme}>
       <AppLayout
         pages={[
-          { path: "/register", content: (<SignUp />), menuItem: { label: "Registrarse" }, fullScreen: true },
+          { path: "/register", content: (<SignUp />), menuItem: { label: "Registra't" }, fullScreen: true },
           { path: "/home", content: (<Home />), menuItem: { label: "Inici" } },
           { path: "/shopping-cart", content: (<ShoppingCart />), menuItem: { label: "Cistella" } },
           { path: "/login", content: (<Login />), fullScreen: true },

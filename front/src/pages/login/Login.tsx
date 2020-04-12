@@ -90,7 +90,7 @@ const Login: FunctionComponent = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Entra
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -98,7 +98,7 @@ const Login: FunctionComponent = () => {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Correu electrònic"
             name="email"
             autoComplete="email"
             autoFocus
@@ -113,7 +113,7 @@ const Login: FunctionComponent = () => {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="Contrasenya"
             type="password"
             id="password"
             autoComplete="current-password"

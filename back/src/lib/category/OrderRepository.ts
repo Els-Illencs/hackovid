@@ -42,6 +42,23 @@ export class OrderRepository {
         return res.rows;
     }
 
+    async createOrder(order: any, userId: number) {
+        const res = await pool.query<Order>(`
+            INSERT INTO orders (user_id, tracking_stage, order_type, rating, is_paid) VALUES 
+            (${userId}, 0, ${order.type}, ${order.rating}, ${order.isPaid})
+            RETURNING id;
+        `);
+
+        order.products.forEach(async (orderTmp: any) => {
+            await pool.query<Order>(`
+                INSERT INTO order_products (order_id, product_id, quantity) VALUES 
+                (${res.rows[0].id}, ${orderTmp.id}, ${orderTmp.quantity});
+            `);
+        });
+
+        return res.rows;
+    }
+
     async getOrderDetail(orderId: number) {
         const res = await pool.query<Order>(`
             SELECT id, user_id as userId, user_id as userId, created_at as createdAt, updated_at as updatedAt, tracking_stage as trackingStage, order_type as orderType, rating as rating, is_paid as isPaid

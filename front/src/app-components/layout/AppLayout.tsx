@@ -136,6 +136,11 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     setShoppingCartProducts(nextShoppingCartProducts);
   }
 
+  const resetShoppingCart = () => {
+    shoppingCartApiClient.saveItems([])
+    setShoppingCartProducts([]);
+  }
+
   const updateProductFromTheShoppingCart = (product: ProductShoppingCart) => {
     const index = shoppingCartProducts.findIndex(({ id }) => id === product.id);
     if (index === -1) {
@@ -180,6 +185,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
       addProducts: addProductsToTheShoppingCart,
       updateProduct: updateProductFromTheShoppingCart,
       deleteProduct: deleteProductFromTheShoppingCart,
+      reset: resetShoppingCart
     }
   }}>
     {matchPageWithAppBar && <ApplicationBar onMenuButtonClick={openDrawer} />}
@@ -196,7 +202,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
               </Grid>
               <Grid item xs={10}>
                 <Typography className={styles.userName} variant="body1">
-                  {user ? `Hola ${user.name}` : <Button component={Link} to="/login" onClick={saveLocationAndHideDrawer} className={styles.userNameLink}>Apply login</Button>}
+                  {user ? `Hola ${user.name}` : <Button component={Link} to="/login" onClick={saveLocationAndHideDrawer} className={styles.userNameLink}>Entra</Button>}
                 </Typography>
               </Grid>
             </>
