@@ -18,7 +18,7 @@ const IconElement: FC<{iconSrc: string, headline?: string, text: string}> = ({ic
     return (
         <Grid container justify="center" className={classes.iconElement}>
             <Grid item>
-                <img src={iconSrc} className={classes.icon} />
+                <img src={iconSrc} className={classes.icon} alt="" />
             </Grid>
             {headline && <Grid item xs={12}>
                 <Typography align="center"><Box component="span" fontWeight="bold">{headline}</Box></Typography>
