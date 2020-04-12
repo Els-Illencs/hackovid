@@ -111,7 +111,7 @@ export const ProductFilter: FunctionComponent<ProductFilterProps> = ({ productFi
                             <TextField
                                 id="maxPrice"
                                 name="maxPrice"
-                                label="Preu máxim"
+                                label="Preu màxim"
                                 type="number"
                                 onChange={onChangeProductFilterFieldsAction}
                             />
