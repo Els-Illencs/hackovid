@@ -71,6 +71,7 @@ export const ProductShoppingCartItem: React.FunctionComponent<ProductShoppingCar
         <div className={classes.mainContent}>
           <Grid container spacing={1}>
             <Grid item xs={7}>
+              {product.product_type_id == 1 &&
               <TextField 
                 fullWidth
                 style={{ maxWidth: 160 }}
@@ -82,6 +83,20 @@ export const ProductShoppingCartItem: React.FunctionComponent<ProductShoppingCar
                 value={quantity} 
                 onChange={(event) => updateProduct(event.target.value)}
               />
+              }
+              {product.product_type_id != 1 &&
+              <TextField 
+                fullWidth
+                style={{ maxWidth: 160 }}
+                className={classes.quantity} 
+                type="number" 
+                size="small"
+                InputProps={{ inputProps: { min: 0, step: 0.1 } }}
+                label="Quantitat" 
+                value={quantity} 
+                onChange={(event) => updateProduct(event.target.value)}
+              />
+              }
             </Grid>
             <Grid item xs={5}>
               <Button

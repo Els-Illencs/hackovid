@@ -65,6 +65,7 @@ export const ProductPackageItem: FC<ProductPackageItemProps> = ({ product, onDel
         <div className={classes.mainContent}>
           <Grid container spacing={1}>
             <Grid item xs={7}>
+            {product.product_type_id == 1 &&
               <TextField 
                 fullWidth
                 style={{ maxWidth: 160 }}
@@ -76,6 +77,20 @@ export const ProductPackageItem: FC<ProductPackageItemProps> = ({ product, onDel
                 value={product.quantity} 
                 onChange={changeQuantity}
               />
+              }
+              {product.product_type_id != 1 &&
+              <TextField 
+                fullWidth
+                style={{ maxWidth: 160 }}
+                className={classes.quantity} 
+                type="number" 
+                size="small"
+                InputProps={{ inputProps: { min: 0, step: 0.1 } }}
+                label="Quantitat" 
+                value={product.quantity} 
+                onChange={changeQuantity}
+              />
+              }
             </Grid>
             <Grid item xs={5}>
               <Button

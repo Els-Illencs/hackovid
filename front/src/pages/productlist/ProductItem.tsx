@@ -42,7 +42,7 @@ export const ProductItem: React.FunctionComponent<ProductItemProps> = ({ product
       quantity: +quantity,
     }
     shoppingCart.addProduct(shoppingCartProduct);
-  }
+  }//{product.product_type_id === 1 ? "€/unitat" : "€/Kg"}
 
   return (
     <ProductInfoItem product={product} >
@@ -50,6 +50,7 @@ export const ProductItem: React.FunctionComponent<ProductItemProps> = ({ product
         <div className={classes.mainContent}>
           <Grid container spacing={1}>
             <Grid item xs={7}>
+              {product.product_type_id == 1 &&
               <TextField 
                 fullWidth
                 style={{ maxWidth: 160 }}
@@ -61,6 +62,20 @@ export const ProductItem: React.FunctionComponent<ProductItemProps> = ({ product
                 value={quantity} 
                 onChange={(event) => setQuantity(event.target.value)}
               />
+              }
+              {product.product_type_id != 1 &&
+              <TextField 
+                fullWidth
+                style={{ maxWidth: 160 }}
+                className={classes.quantity} 
+                type="number" 
+                size="small" 
+                label="Quantitat"
+                InputProps={{  inputProps: { min: 0, step: 0.1 } }}
+                value={quantity} 
+                onChange={(event) => setQuantity(event.target.value)}
+              />
+              }
             </Grid>
             <Grid item xs={5}>
               <Button 
