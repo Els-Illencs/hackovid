@@ -1,16 +1,17 @@
 import React, { FC, ReactNode, useState, useEffect } from "react";
 import { ApplicationBar } from "./ApplicationBar";
 import { Switch, Route, Link, useRouteMatch, useHistory } from "react-router-dom";
-import { makeStyles, Drawer, List, ListItem, ListItemText, Grid, Typography, Button } from "@material-ui/core";
+import { makeStyles, Drawer, List, ListItem, ListItemText, Grid, Typography, Button, Divider } from "@material-ui/core";
 import { AppContext } from "../context/AppContext";
 import { ShoppingCartApiClient } from "../../api/ShoppingCartApiClient";
 import { ProductShoppingCart } from "../../models/product/Product";
 import { User } from "../../models/user/User";
 import { AccountCircle } from '@material-ui/icons';
-import { common } from '@material-ui/core/colors';
 import { UserAddress } from "../../models/user/UserAddress";
 import { UserApiClient } from "../../api/UserApiClient";
 import { saveLoginRedirect } from "../../services/LoginService";
+
+const ListDivider: FC = () => (<Divider style={{ margin: '10px 0' }} />);
 
 type Page = {
   path: string
@@ -96,6 +97,11 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     }
     getUserFromLocalStorage();
   }, []);
+
+  const disconnect = () => {
+    updateUser(undefined);
+    closeDrawer();
+  }
 
   // TODO move AppContext in a different file / component
   const addProductToTheShoppingCart = (product: ProductShoppingCart) => {
@@ -202,6 +208,10 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
                 {p.menuItem!.right}
               </ListItem>
             ))}
+            <ListDivider />
+            <ListItem button component={Link} to={"/"} onClick={disconnect} key={"key-disconnect"}>
+              <ListItemText primary={"Desconectar"} />
+            </ListItem>
           </List>
         </div>
       </Drawer>

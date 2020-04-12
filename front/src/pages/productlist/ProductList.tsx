@@ -16,8 +16,6 @@ const apiClient = new ProductApiClient();
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    loading: {
-    },
     filterAndOrderBar: {
       paddingBottom: "1rem"
     },
@@ -153,13 +151,17 @@ const ProductList: FunctionComponent = () => {
           justify="center"
           style={{ minHeight: '100vh' }}
         >
-          <CircularProgress className={classes.loading} color="primary" />
+          <CircularProgress color="primary" />
         </Grid>
         :
         <>
-          {productList.map((product: Product) => (
-            <ProductItem key={String(product.id)} product={product} />
-          ))}
+          {
+            productList.length ?
+              productList.map((product: Product) => (
+                <ProductItem key={String(product.id)} product={product} />
+              )) : 
+              "No s'han trobat resultats amb aquests criteris de cerca"
+          }
           {openDialog && <AddressRequestDialog open={openDialog} onClose={() => setOpenDialog(false)} onSelectAddress={updateUserAddress} />}
         </>
       }
