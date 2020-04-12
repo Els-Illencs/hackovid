@@ -45,7 +45,7 @@ export class OrderRepository {
     async createOrder(order: any, userId: number) {
         const res = await pool.query<Order>(`
             INSERT INTO orders (user_id, tracking_stage, order_type, rating, is_paid) VALUES 
-            (${userId}, 0, ${order.type}, ${order.rating}, ${order.isPaid})
+            (${userId}, ${order.trackingStage ? order.trackingStage : 0}, ${order.type}, ${order.rating}, ${order.isPaid})
             RETURNING id;
         `);
 
