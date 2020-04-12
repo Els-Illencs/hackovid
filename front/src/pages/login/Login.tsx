@@ -11,8 +11,6 @@ import { LoginApiClient } from '../../api/LoginApiClient';
 import { AppContext } from '../../app-components';
 import { getLoginRedirect, clearLoginRedirect } from '../../services/LoginService';
 import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
-import { UserAddress } from '../../models/user/UserAddress';
-import { User } from '../../models/user/User';
 
 const loginApiClient = new LoginApiClient();
 
@@ -46,17 +44,21 @@ const Login: FunctionComponent = () => {
 
   const [email, setEmail] = useState("");
   const [isEmailValidated, setIsEmailValidated] = useState(false);
+  const [isUserIncorrect, setIsUserIncorrect] = useState(false);
   const [password, setPassword] = useState("");
 
   const applyLogin = async (event) => {
     event.preventDefault();
+    setIsUserIncorrect(false);
     if (!isEmailCorrect()) {
       setIsEmailValidated(true);
       return;
     }
     try {
       const user = await loginApiClient.login(email, password);
-
+      if (user.id === undefined) {
+        throw Error("User does not exist");
+      }
       try {
         const results = await geocodeByAddress(user.address.address);
         if (results.length > 0) {
@@ -75,6 +77,7 @@ const Login: FunctionComponent = () => {
         history.push('/');
       }
     } catch (e) {
+      setIsUserIncorrect(true);
     }
   }
 
@@ -116,7 +119,10 @@ const Login: FunctionComponent = () => {
             autoComplete="current-password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-          />
+          />      
+        {isUserIncorrect && <Typography component="p" className={classes.emailError}>
+          El correu o la contrasenya és incorrecta.
+        </Typography>}
           <Button
             type="submit"
             fullWidth
