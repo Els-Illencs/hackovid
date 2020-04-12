@@ -6,7 +6,11 @@ const USER = 'user';
 
 export class UserApiClient {
   async saveUser(user: User | undefined): Promise<boolean> {
-    localStorage.setItem(USER, JSON.stringify(user));
+    if (!user) {
+      localStorage.removeItem(USER);
+    } else {
+      localStorage.setItem(USER, JSON.stringify(user));
+    }
     return true;
   }
 
