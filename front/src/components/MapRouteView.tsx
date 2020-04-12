@@ -14,7 +14,7 @@ export const MapRouteView: React.FunctionComponent = () => {
 
     const travelModeList: any = {
         "WALKING": "Caminant",
-        "BICYCLING": "En bicilceta",
+        "BICYCLING": "En bicicleta",
         "DRIVING": "En cotxe"
     };
 
@@ -27,8 +27,8 @@ export const MapRouteView: React.FunctionComponent = () => {
 
     const waypoints: any = [
         {
-            latitude: 39.5800973,
-            longitude: 2.6495213
+            latitude: 39.5787897,
+            longitude: 2.6483132
         },
         {
             latitude: 39.5794469,
@@ -45,7 +45,6 @@ export const MapRouteView: React.FunctionComponent = () => {
             <Grid item xs={12}>
                 <div>
                 <FormControl component="fieldset">
-                    <FormLabel component="legend">Escull el mitja de transport</FormLabel>
                     <RadioGroup row aria-label="travelMode" name="travelMode" value={travelMode} onChange={handleChange}>
                         <FormControlLabel value="WALKING" control={<Radio />} label={travelModeList["WALKING"]} />
                         <FormControlLabel value="BICYCLING" control={<Radio />} label={travelModeList["BICYCLING"]} />
