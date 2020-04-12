@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapComponent } from '../../components/MapComponent';
+import { MapComponent } from './MapComponent';
 import Grid from '@material-ui/core/Grid';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const MapPage: React.FunctionComponent = () => {
+export const MapRouteView: React.FunctionComponent = () => {
 
     const defaultTravelMode: string = "WALKING";
     const [travelMode, setTravelMode] = useState(defaultTravelMode);
