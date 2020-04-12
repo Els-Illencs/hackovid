@@ -5,8 +5,6 @@ import { ProductRepository } from '../lib/category/ProductRepository';
 import { OrderRepository } from '../lib/category/OrderRepository';
 
 const userRepository = new UserRepository();
-const productRepository = new ProductRepository();
-const orderRepository = new OrderRepository();
 
 const router = express.Router();
 
@@ -16,24 +14,7 @@ router.post('/register', async function (req, res, next) {
     const user = req.body;
     user.password = getHashPassword(user.password);
 
-    const userRes = await userRepository.addUser(user);
-
-    const products = (await productRepository.get(null, null, null, null, null, null, null)).splice(0, 5);
-
-    orderRepository.createOrder({
-        type: 1,
-        trackingStage: 5,
-        isPaid: true,
-        rating: 4,
-        products: products.map(({ id }, index) => {
-            return {
-                id,
-                quantity: index + 1
-            }
-        }),
-    }, userRes.id);
-
-    res.send(userRes);
+    res.send(await userRepository.addUser(user));
 });
 
 router.post('/login', async function (req, res, next) {
