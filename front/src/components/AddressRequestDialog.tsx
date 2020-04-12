@@ -141,6 +141,10 @@ export const AddressRequestDialog: React.FunctionComponent<AddressRequestDialogP
                     </div>
                   ))
                 }
+                <p>
+                  Actualment esteim en fase d'expansió i la majoría dels nostres comerços es troben
+                  dins Palma de Mallorca.
+                </p>
               </div>
             )) as any}
         />

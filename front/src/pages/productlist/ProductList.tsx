@@ -4,7 +4,7 @@ import { ProductFilterFields } from "../../models/product/ProductFilterFields";
 import { Product } from "../../models/product/Product";
 import { ProductItem } from "./ProductItem";
 import { OrderItems } from "./OrderItems";
-import { CircularProgress, makeStyles, Theme, createStyles, Grid } from "@material-ui/core";
+import { CircularProgress, makeStyles, Theme, createStyles, Grid, Typography } from "@material-ui/core";
 import { AddressRequestDialog } from "../../components/AddressRequestDialog";
 import { ProductFilter } from "../../components/ProductFilter";
 import { AppContext } from '../../app-components';
@@ -19,6 +19,14 @@ const useStyles = makeStyles((theme: Theme) =>
     filterAndOrderBar: {
       paddingBottom: "1rem"
     },
+    changeAddress: {
+      marginBottom: "1em"
+    },
+    link: {
+      textDecoration: "underline",
+      cursor: "pointer",
+      fontWeight: "bold"
+    }
   }),
 );
 
@@ -82,6 +90,11 @@ const ProductList: FunctionComponent = () => {
 
   const onChangeProductFilterFields = (productFilterFields: ProductFilterFields): void => {
     //setProductFilterFields(Object.assign({}, productFilterFields));
+  }
+
+  const onClickChangeAddress = (): void => {
+    setOpenDialog(true);
+    setProducts([]);
   }
 
   const onClickAplyFilter = (productFilterFields: ProductFilterFields): void => {
@@ -155,12 +168,30 @@ const ProductList: FunctionComponent = () => {
         </Grid>
         :
         <>
+          {userAddress ?
+              <Grid
+              container
+              spacing={0}
+              direction="column"
+            >
+              <Typography className={classes.changeAddress}>
+                Mostrant productes prop de {userAddress.address}.&nbsp;
+                <span 
+                  onClick={onClickChangeAddress}
+                  className={classes.link}
+                >
+                  Vols canviar-la?
+                </span>
+              </Typography>
+            </Grid> :
+            <></>
+          }
           {
             productList.length ?
               productList.map((product: Product) => (
                 <ProductItem key={String(product.id)} product={product} />
               )) : 
-              "No s'han trobat resultats amb aquests criteris de cerca"
+              !openDialog ? "No s'han trobat resultats amb aquests criteris de cerca" : ""
           }
           {openDialog && <AddressRequestDialog open={openDialog} onClose={() => setOpenDialog(false)} onSelectAddress={updateUserAddress} />}
         </>

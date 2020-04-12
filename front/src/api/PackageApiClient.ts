@@ -10,8 +10,8 @@ export class PackageApiClient {
         return res.data as Package[];
     }
     
-    async getPackageItem(packageId: number | null) {
-        const res = await Axios.get(`${process.env.REACT_APP_API_URL}packages?packageId=${packageId}`);
+    async getPackageItem(packageId: number | null, userAddress) {
+        const res = await Axios.get(`${process.env.REACT_APP_API_URL}packages?packageId=${packageId}&lat=${userAddress.latitude}&lng=${userAddress.longitude}`);
 
         return res.data as ProductShoppingCart[];
     }

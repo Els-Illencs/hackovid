@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState, useContext } from "react";
 import useQuery from "../../hooks/useQuery";
 import { Package } from "../../models/package/Package";
 import { ProductShoppingCart } from "../../models/product/Product";
-import { Typography, Button, makeStyles, createStyles } from "@material-ui/core";
+import { Typography, Button, makeStyles, Grid, createStyles } from "@material-ui/core";
 import { ProductPackageItem } from "./ProductPackageItem";
 import { AppContext } from "../../app-components";
 import { AddressRequestDialog } from "../../components/AddressRequestDialog";
@@ -15,6 +15,14 @@ const useStyles = makeStyles(() =>
         button: {
             width: "100%"
         },
+        changeAddress: {
+            marginBottom: "1em"
+        },
+        link: {
+          textDecoration: "underline",
+          cursor: "pointer",
+          fontWeight: "bold"
+        }
     }),
 );
 
@@ -49,10 +57,15 @@ const PackageDetail: FC = () => {
                 image: ''
             });
            
-            packageApiClient.getPackageItem(packageId).then(setProducts);
+            packageApiClient.getPackageItem(packageId, userAddress).then(setProducts);
         }
 
     }, [packageId, packageName, isLoadingUserData, user, userAddress]);
+
+    const onClickChangeAddress = (): void => {
+        setOpenDialog(true);
+        setProducts([]);
+    }
 
     const changeQuantity = (newQuantity: number, originalProduct: ProductShoppingCart, productIndex: number) => {
         const newProducts = products!.map((p, i) =>
@@ -96,13 +109,35 @@ const PackageDetail: FC = () => {
             style={{ margin: '15px 0' }}
             onClick={addProductsToShoppingCart}>AFEGEIX PRODUCTES A LA CISTELLA</Button>
 
-        {products.map((p, i) =>
-            <ProductPackageItem
-                product={p}
-                onChangeQuantity={(q, p) => changeQuantity(q, p, i)}
-                onDeleteProduct={() => deleteProduct(i)}
-                key={p.id} />
-        )}
+        {userAddress ?
+            <Grid
+              container
+              spacing={0}
+              direction="column"
+            >
+              <Typography className={classes.changeAddress}>
+                Mostrant productes prop de {userAddress.address}.&nbsp;
+                <span 
+                  onClick={onClickChangeAddress}
+                  className={classes.link}
+                >
+                  Vols canviar-la?
+                </span>
+              </Typography>
+            </Grid> :
+            <></>
+        }
+        {
+        products.length ? 
+            products.map((p, i) =>
+                <ProductPackageItem
+                    product={p}
+                    onChangeQuantity={(q, p) => changeQuantity(q, p, i)}
+                    onDeleteProduct={() => deleteProduct(i)}
+                    key={p.id} />
+            ) :
+            !openDialog ? "No s'han trobat productes d'aquest paquet prop de la teva ubicació" : ""
+        }
     </>);
 }
 
