@@ -29,7 +29,7 @@ export const MapPage: React.FunctionComponent = () => {
     const travelModeList: any = {
         "WALKING": "Caminant",
         "BICYCLING": "En bicilceta",
-        "DRIVING": "En transport"
+        "DRIVING": "En cotxe"
     };
 
     const originPoint: any = {
