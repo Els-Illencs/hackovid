@@ -37,6 +37,7 @@ const ContactUsForm: FC = () => {
                 onChange={e => setName(e.target.value)} />
             <TextField 
                 label="Direcció de correu electrònic"
+                type="email"
                 value={email} 
                 required 
                 fullWidth

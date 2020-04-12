@@ -133,6 +133,7 @@ const SignUp: FunctionComponent = () => {
           <TextField
             margin="normal"
             required
+            type="email"
             fullWidth
             id="email"
             label="Correu electrònic"
