@@ -87,7 +87,7 @@ export const ProductOrderDetail: React.FunctionComponent = () => {
 
                     <ExpansionPanelDetails>
                         <Grid container spacing={2}>
-                            <Grid item md={4} xs={12}>
+                            <Grid item xs={12}>
                                 <MapRouteView />
                             </Grid>
                         </Grid>
