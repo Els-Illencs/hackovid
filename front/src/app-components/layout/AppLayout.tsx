@@ -13,15 +13,21 @@ import { saveLoginRedirect } from "../../services/LoginService";
 
 const ListDivider: FC = () => (<Divider style={{ margin: '10px 0' }} />);
 
+export enum MenuShowOption {
+  Always,
+  OnlyWhenLogged,
+  OnlyWhenNotLogged
+}
+
 type Page = {
   path: string
   content: ReactNode,
   fullScreen?: boolean,
   menuItem?: {
     label: string,
-    right?: ReactNode
-  },
-  needsToBeLogged?: boolean;
+    right?: ReactNode,
+    show?: MenuShowOption
+  }
 };
 
 type AppLayoutProps = {
@@ -208,16 +214,21 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
             </>
           </Grid>
           <List>
-            {props.pages.filter(p => !!p.menuItem).filter(p => !p.needsToBeLogged || (p.needsToBeLogged && user !== undefined)).map((p) => (
+            {props.pages.filter(p => !!p.menuItem && (
+              !p.menuItem.show 
+              || (p.menuItem.show === MenuShowOption.OnlyWhenLogged && user !== undefined))
+              || (p.menuItem?.show === MenuShowOption.OnlyWhenNotLogged && user === undefined)).map((p) => (
               <ListItem button component={Link} to={p.path} onClick={closeDrawer} key={p.path}>
                 <ListItemText primary={p.menuItem!.label} />
                 {p.menuItem!.right}
               </ListItem>
             ))}
-            <ListDivider />
-            <ListItem button component={Link} to={"/"} onClick={disconnect} key={"key-disconnect"}>
-              <ListItemText primary={"Desconectar"} />
-            </ListItem>
+            {user !== undefined && (<>
+              <ListDivider />
+              <ListItem button component={Link} to={"/"} onClick={disconnect} key={"key-disconnect"} >
+                <ListItemText primary={"Desconectar"} />
+              </ListItem>
+            </>)}
           </List>
         </div>
       </Drawer>
