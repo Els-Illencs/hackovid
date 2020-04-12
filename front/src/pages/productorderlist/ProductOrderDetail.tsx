@@ -31,7 +31,7 @@ export const ProductOrderDetail: React.FunctionComponent = () => {
     const classes = useStyles();
     const { user: { isLoading: isLoadingUserData, user } } = useContext(AppContext);
     const [products, setProducts] = useState([] as OrderProducts[]);
-    const [order, setOrder] = useState({} as Order);
+    const [order, setOrder] = useState<Order | undefined>();
     const [isLoading, setIsLoading] = useState(true);
 
     const history = useHistory();
@@ -40,6 +40,7 @@ export const ProductOrderDetail: React.FunctionComponent = () => {
         const getOrder = async () => {
             setIsLoading(true);
             const orderId = history.location.pathname.split("order/")[1];
+            console.log("orderId", orderId);
             setOrder(await productOrderApiClient.getOrder(Number(orderId)));
             setIsLoading(false);
         }
@@ -47,18 +48,21 @@ export const ProductOrderDetail: React.FunctionComponent = () => {
             getOrder();
         }
     }, [user]);
-
+    
     useEffect(() => {
         const getProducts = async () => {
-            const products = await productOrderApiClient.getProductsByOrderId(order.id);
-            setProducts(products)
+            if (order) {
+                console.log(order, order.id)
+                const products = await productOrderApiClient.getProductsByOrderId(order.id);
+                setProducts(products)
+            }
         }
         getProducts();
     }, [order]);
 
     return (
         <>
-            {!isLoading && <Grid container className={classes.root}>
+            {!isLoading && order && <Grid container className={classes.root}>
                 <ProductOrderItem order={order} showDetailButton={false} />
                 {products.map((productTmp) => <ProductInfoItem key={String(productTmp.id)} product={orderProduct2Product(productTmp)} >
                     <Typography component="p" className={classes.quantity} >
