@@ -28,6 +28,16 @@ export type OrderProducts = {
     quantity: number,
 }
 
+export interface CreateOrder {
+    type: number,
+    rating: number,
+    products: {
+        id: number,
+        quantity: number
+    }[],
+    isPaid: boolean,
+};
+
 /*export module OrderType {
     export const PICK_UP_ORDER: number = 0;
     export const DELIVER_ORDER: number = 1;
