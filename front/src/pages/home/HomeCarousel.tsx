@@ -15,17 +15,19 @@ const carouselElements = [
 
 const HomeCarousel: FC = () => {
   const theme = useTheme();
-  const matchUpMd = useMediaQuery(theme.breakpoints.up('md'));
+  const matchUpSm = useMediaQuery(theme.breakpoints.up('sm'));
   const [activeStep, setActiveStep] = useState(0);
-  const carouselElementsNum = matchUpMd ? 4 : 2;
+  const carouselElementsNum = matchUpSm ? 4 : 2;
 
   return (
     <AutoPlaySwipeableViews index={activeStep} onChangeIndex={setActiveStep}>
       {splitInChunks(carouselElements, carouselElementsNum).map(elements => 
         <Grid container>
           {elements.map(e => 
-            <Grid item xs={6} md={3}>
-              <IconElement {...e} />
+            <Grid item xs={6} sm={3}>
+              <div style={{maxWidth: 210}}>
+                <IconElement {...e} />
+              </div>
             </Grid>
           )}
         </Grid>
