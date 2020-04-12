@@ -10,6 +10,8 @@ export type Order = {
     rating: number,
     isPaid: number,
     price: number
+    address_lat: number,
+    address_lng: number,
 }
 
 export type OrderProducts = {
@@ -35,7 +37,7 @@ export type OrderProducts = {
 export class OrderRepository {
     async getByUser(userId: number) {
         const res = await pool.query<Order>(`
-            SELECT id, user_id as userId, price, created_at as createdAt, updated_at as updatedAt, tracking_stage as trackingStage, order_type as orderType, rating as rating, is_paid as isPaid
+            SELECT id, user_id as userId, price, address_lat, address_lng, created_at as createdAt, updated_at as updatedAt, tracking_stage as trackingStage, order_type as orderType, rating as rating, is_paid as isPaid
             FROM orders
             WHERE user_id = ${userId}
             ORDER BY tracking_stage, created_at DESC
@@ -46,8 +48,8 @@ export class OrderRepository {
 
     async createOrder(order: any, userId: number) {
         const res = await pool.query<Order>(`
-            INSERT INTO orders (user_id, tracking_stage, order_type, rating, price, is_paid) VALUES 
-            (${userId}, ${order.trackingStage ? order.trackingStage : 0}, ${order.type}, ${order.rating}, ${order.price.toFixed(2)}, ${order.isPaid})
+            INSERT INTO orders (user_id, tracking_stage, order_type, rating, price, is_paid, address_lat, address_lng) VALUES 
+            (${userId}, ${order.trackingStage ? order.trackingStage : 0}, ${order.type}, ${order.rating}, ${order.price.toFixed(2)}, ${order.isPaid}, ${order.address_lat}, ${order.address_lng})
             RETURNING id;
         `);
 
@@ -63,7 +65,7 @@ export class OrderRepository {
 
     async getOrderDetail(orderId: number) {
         const res = await pool.query<Order>(`
-            SELECT id, user_id as userId, price, user_id as userId, created_at as createdAt, updated_at as updatedAt, tracking_stage as trackingStage, order_type as orderType, rating as rating, is_paid as isPaid
+            SELECT id, user_id as userId, price, user_id as userId, created_at as createdAt, updated_at as updatedAt, tracking_stage as trackingStage, order_type as orderType, rating as rating, is_paid as isPaid, address_lng, address_lat
             FROM orders 
             WHERE id = ${orderId}
             LIMIT 1
