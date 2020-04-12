@@ -12,7 +12,7 @@ Components:
 
 Others:
 * [License](LICENSE)
-* [GitHub workflow](.github/workflows.main.yml). Workflow executed by GitHub when a new commit is pushed. It deploys the app to the live environment.
+* [GitHub workflow](.github/workflows/main.yml). Workflow executed by GitHub when a new commit is pushed. It deploys the app to the live environment.
 
 ## Environments
 To ensure consistency across environments and setups, we use [Docker](https://www.docker.com/). This allow us to be sure that we have a repeatable environment and it simplifies the deployment to the live environment.
