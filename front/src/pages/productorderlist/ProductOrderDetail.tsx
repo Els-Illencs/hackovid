@@ -8,9 +8,13 @@ import { AppContext } from '../../app-components';
 import { ProductOrderApiClient } from '../../api/ProductOrderApiClient';
 import { ProductOrderItem } from '../../components/ProductOrderItem';
 import { useHistory } from "react-router-dom";
-import { MapComponent } from '../../components/MapComponent';
+import { MapRouteView } from '../../components/MapRouteView';
 import { Product } from '../../models/product/Product';
 import { Typography } from '@material-ui/core';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -21,6 +25,10 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingBottom: 16,
             paddingTop: 8,
             marginLeft: 16
+        }, 
+        expansionPanel: {
+            marginBottom: "1em",
+            width: "100%"
         }
     }),
 );
@@ -64,6 +72,28 @@ export const ProductOrderDetail: React.FunctionComponent = () => {
         <>
             {!isLoading && order && <Grid container className={classes.root}>
                 <ProductOrderItem order={order} showDetailButton={false} />
+                
+                <ExpansionPanel className={classes.expansionPanel}>
+                    <ExpansionPanelSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1c-content"
+                    id="panel1c-header"
+                    >
+                    <div >
+                        <Typography>Mostrar ruta més òptima per cercar la comanda</Typography>
+                    </div>
+                    </ExpansionPanelSummary>
+                    
+                    <ExpansionPanelDetails>
+                        <Grid container spacing={2}>
+                            <Grid item md={4} xs={12}>
+                                Puta barata del mapa
+                                <MapRouteView />
+                            </Grid>
+                        </Grid>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+
                 {products.map((productTmp) => <ProductInfoItem key={String(productTmp.id)} product={orderProduct2Product(productTmp)} >
                     <Typography component="p" className={classes.quantity} >
                         Quantitat: {productTmp.quantity}
