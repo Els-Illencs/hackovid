@@ -10,6 +10,8 @@ const {
 
 const apiKey = "AIzaSyBZs5eJrEQV0QWA3_a8JgaRop3SnUZ3AVg";
 
+var googleWaypoints: any = [];
+
 export const MapComponent = compose(
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?key=" + apiKey + "&v=3.exp&libraries=geometry,drawing,places",
@@ -21,21 +23,12 @@ export const MapComponent = compose(
   withGoogleMap,
   lifecycle({
     componentDidMount() {
-      
-      const defaultTravelMode = "WALKING";
-
       const travelModeList: any = {
         "DRIVING": google.maps.TravelMode.DRIVING,
         "WALKING": google.maps.TravelMode.WALKING,
         "BICYCLING": google.maps.TravelMode.BICYCLING,
         "TRANSIT": google.maps.TravelMode.TRANSIT
       };
-
-      const travelMode = travelModeList[this.props.travelMode ? this.props.travelMode : defaultTravelMode];
-
-      const DirectionsService = new google.maps.DirectionsService();
-      
-      var googleWaypoints: any = [];
 
       if(this.props.waypoints) {
         for (let point of this.props.waypoints) {
@@ -45,13 +38,40 @@ export const MapComponent = compose(
           });
         }
       }
+      const DirectionsService = new google.maps.DirectionsService();
 
       DirectionsService.route({
         origin: new google.maps.LatLng(this.props.origin.latitude, this.props.origin.longitude),
         destination: new google.maps.LatLng(this.props.destination.latitude, this.props.destination.longitude),
         waypoints: googleWaypoints,
         optimizeWaypoints: true,
-        travelMode: travelMode,
+        travelMode: travelModeList[this.props.travelMode],
+      }, (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          this.setState({
+            directions: result,
+          });
+        } else {
+          console.error(`error fetching directions ${result}`);
+        }
+      });
+    },
+    componentWillReceiveProps() {
+      const travelModeList: any = {
+        "DRIVING": google.maps.TravelMode.DRIVING,
+        "WALKING": google.maps.TravelMode.WALKING,
+        "BICYCLING": google.maps.TravelMode.BICYCLING,
+        "TRANSIT": google.maps.TravelMode.TRANSIT
+      };
+      
+      const DirectionsService = new google.maps.DirectionsService();
+
+      DirectionsService.route({
+        origin: new google.maps.LatLng(this.props.origin.latitude, this.props.origin.longitude),
+        destination: new google.maps.LatLng(this.props.destination.latitude, this.props.destination.longitude),
+        waypoints: googleWaypoints,
+        optimizeWaypoints: true,
+        travelMode: travelModeList[this.props.travelMode],
       }, (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
           this.setState({
