@@ -10,6 +10,7 @@ import { Redirect, useLocation } from 'react-router-dom';
 import PackageDetail from './pages/packageDetail/PackageDetail';
 import { ProductOrderList } from './pages/productorderlist/ProductOrderList';
 import { ProductOrderDetail } from './pages/productorderlist/ProductOrderDetail';
+import SignUp from './pages/signUp/SignUp';
 
 function App() {
   const { pathname } = useLocation();
@@ -18,6 +19,7 @@ function App() {
     <MuiThemeProvider theme={AppTheme}>
       <AppLayout
         pages={[
+          { path: "/register", content: (<SignUp />), menuItem: { label: "Registrarse" }, fullScreen: true },
           { path: "/home", content: (<Home />), menuItem: { label: "Inici" } },
           { path: "/shopping-cart", content: (<ShoppingCart />), menuItem: { label: "Cistella" } },
           { path: "/login", content: (<Login />), fullScreen: true },
