@@ -10,6 +10,7 @@ import { AccountCircle } from '@material-ui/icons';
 import { UserAddress } from "../../models/user/UserAddress";
 import { UserApiClient } from "../../api/UserApiClient";
 import { saveLoginRedirect } from "../../services/LoginService";
+import ScrollToTop from "./ScrollToTop";
 
 const ListDivider: FC = () => (<Divider style={{ margin: '10px 0' }} />);
 
@@ -195,6 +196,7 @@ const AppLayout: React.FunctionComponent<AppLayoutProps> = (props) => {
     }
   }}>
     {matchPageWithAppBar && <ApplicationBar onMenuButtonClick={openDrawer} />}
+    <ScrollToTop />
     <Container component="main" maxWidth="lg" className={classes.content}>
       <Drawer anchor="left" open={drawerOpen} onClose={closeDrawer}>
         <div style={{ minWidth: 260 }}>

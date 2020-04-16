@@ -16,7 +16,7 @@ router.get('/users/:user', async function (req, res, next) {
 
 router.get('/:order', async function (req, res, next) {
     const orderId = Number(req.params.order);
-    
+
     res.send(await orderRepository.getOrderDetail(orderId));
 });
 
@@ -24,7 +24,8 @@ router.post('/users/:user', async function (req, res, next) {
     const order = req.body;
     const userId = Number(req.params.user);
 
-    // fake data
+    
+    order.price = order.products.reduce((priceSum: number, productTmp: any) => priceSum + productTmp.price * productTmp.quantity, 0);
     res.send(await orderRepository.createOrder(order, userId));
 });
 

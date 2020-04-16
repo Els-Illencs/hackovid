@@ -6,8 +6,15 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import { Product } from '../models/product/Product';
 
-export const MapRouteView: React.FunctionComponent = () => {
+export interface MapRouteViewProps {
+    products: Product[];
+    lat: number;
+    lng: number;
+};
+
+export const MapRouteView: React.FunctionComponent<MapRouteViewProps> = ({ products, lat, lng }) => {
 
     const defaultTravelMode: string = "WALKING";
     const [travelMode, setTravelMode] = useState(defaultTravelMode);
@@ -18,14 +25,13 @@ export const MapRouteView: React.FunctionComponent = () => {
         "DRIVING": "En cotxe"
     };
 
-    const originPoint: any = {
-        latitude: 39.5802543,
-        longitude: 2.6495922
-    };
+    let wayPointsShops = {};
 
-    const destinationPoint: any = originPoint;
+    for(let product of products) {
+        wayPointsShops[product.shopid] = {latitude: product.shop_lat, longitude: product.shop_lng};
+    }
 
-    const waypoints: any = [
+    /*const waypoints: any = [
         {
             latitude: 39.5787897,
             longitude: 2.6483132
@@ -34,7 +40,13 @@ export const MapRouteView: React.FunctionComponent = () => {
             latitude: 39.5794469,
             longitude: 2.6504737
         }
-    ];
+    ];*/
+
+    const waypoints: any = [];
+
+    for (let wayPointsShopItem of Object.values(wayPointsShops)) {
+        waypoints.push(wayPointsShopItem);
+    }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setTravelMode(event.target.value);
@@ -55,8 +67,14 @@ export const MapRouteView: React.FunctionComponent = () => {
             </Grid>
             <Grid item xs={12}>
                 <MapComponent 
-                    origin={originPoint} 
-                    destination={destinationPoint} 
+                    origin={{
+                        latitude: lat,
+                        longitude: lng
+                    }}
+                    destination={{
+                        latitude: lat,
+                        longitude: lng
+                    }}
                     waypoints={waypoints} 
                     travelMode={travelMode}
                 />

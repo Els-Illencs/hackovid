@@ -6,6 +6,7 @@ import { ProductInfoItem } from "../../components/ProductInfoItem";
 import { useHistory } from "react-router-dom";
 import { saveLoginRedirect } from "../../services/LoginService";
 import { ProductOrderApiClient } from "../../api/ProductOrderApiClient";
+import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -70,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingBottom: 16,
       paddingTop: 8,
       marginLeft: 16
-  },
+    },
   }),
 );
 
@@ -122,20 +123,28 @@ export const Checkout: React.FunctionComponent = () => {
   }
 
   const buy = async () => {
-    await productOrderApiClient.applyOrder(user!.id, {
-      type: selectedDeliverTab,
-      rating: 3,
-      isPaid: paymentMethod === PaymentMethod.ONLINE,
-      products: products.map(({ id, quantity }) => {
-        return {
-          id,
-          quantity
-        }
-      }),
-    });
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(async ({ lat, lng }) => {
+        console.log(lat, lng);
+        await productOrderApiClient.applyOrder(user!.id, {
+          type: selectedDeliverTab,
+          rating: 3,
+          address_lat: lat,
+          address_lng: lng,
+          isPaid: paymentMethod === PaymentMethod.ONLINE,
+          products: products.map(({ id, quantity, price }) => {
+            return {
+              id,
+              quantity,
+              price
+            }
+          }),
+        });
+        reset();
+        setIsOrderDone(true);
+      })
 
-    reset();
-    setIsOrderDone(true);
   }
 
   return (
