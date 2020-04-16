@@ -1,5 +1,9 @@
 import React, { FC, useState, FormEvent } from "react";
 import { Container, TextField, FormControl, InputLabel, Select, MenuItem, Button, Grid, Snackbar, makeStyles, Theme, createStyles } from "@material-ui/core";
+import { ContactApiClient } from '../../api/ContactApiClient';
+
+const apiClient = new ContactApiClient();
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,6 +25,7 @@ const ContactUsForm: FC = () => {
 
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        apiClient.createContact(name, email, reason, message);
         setConfirmationMessageIsOpen(true);
         setName('');
         setEmail('');
@@ -45,7 +50,7 @@ const ContactUsForm: FC = () => {
             <FormControl required fullWidth>
                 <InputLabel id="home-contact-us-reason-label">Motiu de la consulta</InputLabel>      
                 <Select 
-                    labelId="demo-simple-select-label"
+                    label="home-contact-us-reason-label"
                     value={reason}
                     onChange={e => setReason(e.target.value as any)}>
                     <MenuItem value="1">Vull col·laborar com a comerç</MenuItem>

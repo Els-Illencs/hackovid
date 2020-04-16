@@ -173,7 +173,7 @@ const Home: FC = () => {
                     No dubtis en contactar amb nosaltres si ens necessites!
                 </Typography>
                 <Typography variant="subtitle1" align="center">
-                    Som aquí, a prop teu. Igual que na Maria quan t'atèn a la fruiteria.
+                    Som aquí, a prop teu. Igual que na Maria quan t'atén a la fruiteria.
                 </Typography>
                 <ContactUsForm />
             </Section>

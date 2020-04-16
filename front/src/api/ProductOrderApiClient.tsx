@@ -16,7 +16,6 @@ export class ProductOrderApiClient {
     }
 
     async getProductsByOrderId(orderId: number) {
-        console.log("here");
         const res = await Axios.get(`${process.env.REACT_APP_API_URL}orders/${orderId}/products`);
 
         return res.data as OrderProducts[];

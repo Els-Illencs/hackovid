@@ -10,6 +10,7 @@ import products from './routes/products';
 import packages from './routes/packages';
 import orders from './routes/orders';
 import users from './routes/users';
+import contacts from './routes/contacts';
 
 const app = express();
 
@@ -26,5 +27,6 @@ app.use('/products', products);
 app.use('/packages', packages);
 app.use('/orders', orders);
 app.use('/users', users);
+app.use('/contacts', contacts);
 
 export default app;
